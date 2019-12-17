@@ -1,0 +1,60 @@
+{
+  "mirthandmalice:DullShard": {
+    "NAME": "Dull Shard",
+    "FLAVOR": "It seems to have once shined with color, but is dark and clouded now.",
+    "DESCRIPTIONS": [
+      ""
+    ]
+  },
+  "mirthandmalice:Du-Vu Doll": {
+    "NAME": "Du-Vu Doll",
+    "FLAVOR": "A doll devised to gain strength from malicious energy.",
+    "DESCRIPTIONS": [
+      "For each #rCurse in either deck, start each combat with #b",
+      " #yStrength.",
+      " You have no #rCurses.",
+      " You have #b",
+      " #rCurses."
+    ]
+  },
+  "mirthandmalice:Eternal Feather": {
+    "NAME": "Eternal Feather",
+    "FLAVOR": "This feather appears to be completely indestructible. What bird does this possibly come from?",
+    "DESCRIPTIONS": [
+      "For every #b",
+      " cards in your deck, heal #b",
+      " HP whenever you enter a Rest Site. NL This occurs for both decks."
+    ]
+  },
+  "mirthandmalice:Mummified Hand": {
+    "NAME": "Mummified Hand",
+    "FLAVOR": "Frequently twitches, especially when your pulse is high.",
+    "DESCRIPTIONS": [
+      "Whenever a #yPower card is played, a random card in the player's hand costs #b0 that turn."
+    ]
+  },
+  "mirthandmalice:Bloody Idol": {
+    "NAME": "Bloody Idol",
+    "FLAVOR": "The idol now weeps a constant stream of blood.",
+    "DESCRIPTIONS": [
+      "Whenever either player gains #yGold, heal #b",
+      " HP."
+    ]
+  },
+  "mirthandmalice:TheAbacus": {
+    "NAME": "The Abacus",
+    "FLAVOR": "\"One...Two...Three...\"",
+    "DESCRIPTIONS": [
+      "Whenever a discard pile is shuffled, gain #b",
+      " #yBlock."
+    ]
+  },
+  "mirthandmalice:Sundial": {
+    "NAME": "Sundial",
+    "FLAVOR": "\"Early man's foolish obsession with time caused them to look to the sky for guidance, hoping for something permanent.\" - Zoroth",
+    "DESCRIPTIONS": [
+      "Every #b",
+      " times a draw pile is shuffled, gain [E] [E] ."
+    ]
+  }
+}

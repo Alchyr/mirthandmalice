@@ -1,0 +1,69 @@
+[
+  {
+    "PROPER_NAME": "Yin",
+    "NAMES": [
+      "yin"
+    ],
+    "DESCRIPTION": "This card will take effect when a #yYang card is played after it. The #yYang card's effects will replace [#eeeeee][ ][]. If the next card played is not a #yYang card or the turn is ended, this card will return to your hand and be #yRetained."
+  },
+  {
+    "PROPER_NAME": "Yang",
+    "NAMES": [
+      "yang"
+    ],
+    "DESCRIPTION": "This card will take effect when a #yYin card is played before it. This card's effects will replace [#eeeeee][ ][] on the #yYin card. If the last card played is not a #yYin card, this card will return to your hand and be #yRetained."
+  },
+  {
+    "PROPER_NAME": "Frozen",
+    "NAMES": [
+      "frozen"
+    ],
+    "DESCRIPTION": "Frozen reduces attack damage dealt by its amount. Frozen decreases by #b1 whenever the affected enemy is attacked."
+  },
+  {
+    "PROPER_NAME": "Aflame",
+    "NAMES": [
+      "aflame"
+    ],
+    "DESCRIPTION": "Aflame increases attack damage taken by its amount. Aflame decreases by #b1 whenever the affected enemy is attacked."
+  },
+  {
+    "PROPER_NAME": "Flame",
+    "NAMES": [
+      "flame",
+      "flames"
+    ],
+    "DESCRIPTION": "An enemy that doesn't attack, and damages ALL enemies upon death."
+  },
+  {
+    "PROPER_NAME": "Echo",
+    "NAMES": [
+      "echo"
+    ],
+    "DESCRIPTION": "This effect triggers if the last card played is of the specified type."
+  },
+  {
+    "PROPER_NAME": "Burst",
+    "NAMES": [
+      "burst",
+      "burst:"
+    ],
+    "DESCRIPTION": "This effect triggers if the target has already been attacked this turn."
+  },
+  {
+    "PROPER_NAME": "Seal",
+    "NAMES": [
+      "seal",
+      "seals"
+    ],
+    "DESCRIPTION": "Negates the next HP cost."
+  },
+  {
+    "PROPER_NAME": "Fragment",
+    "NAMES": [
+      "fragment",
+      "fragments"
+    ],
+    "DESCRIPTION": "Fragments are #b0 cost Attacks that deal damage based on the total number of Fragments in combat."
+  }
+]

@@ -1,0 +1,183 @@
+{
+  "mirthandmalice:LobbyPanel": {
+    "TEXT": [
+      "Name",
+      "Public?",
+      "Host Character",
+      "No Lobbies Found.",
+      "Yes",
+      "No",
+      "Searching...",
+      "Lobby is no longer valid.",
+      "Joining...",
+      "Key",
+      "'s Lobby",
+      "Public",
+      "Random",
+      "Create",
+      "Enter the password.",
+      "Waiting for password...",
+      "Incorrect password."
+    ]
+  },
+  "mirthandmalice:LobbySearch": {
+    "TEXT": [
+      "Cancel",
+      "Yin and Yang - Looking at lobbies"
+    ]
+  },
+  "mirthandmalice:MapVote": {
+    "TEXT": [
+      "Destination chosen!"
+    ]
+  },
+  "mirthandmalice:AutoResolve": {
+    "TEXT": [
+      "Resolving...",
+      "Players disagree. Conflict will be automatically resolved in ",
+      " seconds."
+    ]
+  },
+  "mirthandmalice:ClaimReward": {
+    "TEXT": [
+      " chose to pick up ",
+      " chose to pick up the Sapphire Key.",
+      " chose to pick up the Emerald Key.",
+      "."
+    ]
+  },
+  "mirthandmalice:BossRelic": {
+    "TEXT": [
+      "Boss relic chosen!",
+      "Players disagree. Conflict will be automatically resolved in 60 seconds.",
+      " voted for ",
+      "."
+    ]
+  },
+  "mirthandmalice:Bottling": {
+    "TEXT": [
+      " put ",
+      " in ",
+      "."
+    ]
+  },
+  "mirthandmalice:PotionUse": {
+    "TEXT": [
+      " used their ",
+      " on ",
+      "."
+    ]
+  },
+  "mirthandmalice:Ranwid": {
+    "TEXT": [
+      "'s ",
+      "[Locked] ",
+      " does not enough Gold."
+    ]
+  },
+  "mirthandmalice:Bonfire": {
+    "TEXT": [
+      " sacrificed a Curse.",
+      " sacrificed a Basic card.",
+      " sacrificed a Common card.",
+      " sacrificed an Uncommon card.",
+      " sacrificed a Rare card."
+    ]
+  },
+  "mirthandmalice:DiscardWait": {
+    "TEXT": [
+      "Waiting for ",
+      " to choose cards to discard."
+    ]
+  },
+  "mirthandmalice:Discovery": {
+    "TEXT": [
+      "Waiting for ",
+      " to choose a card."
+    ]
+  },
+  "mirthandmalice:Resting": {
+    "TEXT": [
+      "Heal for 50% of your Max HP (",
+      " HP from ",
+      "Heal for 15% of your Max HP (",
+      " rested.",
+      " recalled the Ruby Key."
+    ]
+  },
+  "mirthandmalice:EndTurn": {
+    "TEXT": [
+      "I've already ended my turn!",
+      " ended their turn."
+    ]
+  },
+  "mirthandmalice:DrawPilePanel": {
+    "TEXT": [
+      "'s Draw Pile is #rempty.",
+      "'s Draw Pile",
+      "At the start of each turn, NL #b",
+      " cards are drawn from here. NL NL Click to view the cards in ",
+      "'s draw pile (shuffled).",
+      "'s draw pile."
+    ]
+  },
+  "mirthandmalice:MasterDeckView": {
+    "TEXT": [
+      " starts each combat with all the cards in here.",
+      "View all of the cards in your deck. NL NL Right click to view ",
+      "'s deck."
+    ]
+  },
+  "mirthandmalice:DiscardPilePanel": {
+    "TEXT": [
+      "'s Discard Pile Pile is #rempty.",
+      "'s Discard Pile",
+      "If the draw pile is empty, the discard pile is shuffled into the draw pile. NL NL Click to view the cards in ",
+      "'s discard pile."
+    ]
+  },
+  "mirthandmalice:EnergyPanel": {
+    "TEXT": [
+      "'s current energy count. Cards require energy to play."
+    ]
+  },
+  "mirthandmalice:Refute": {
+    "TEXT": [
+      "Select a Card to Exhaust.",
+      "Waiting for ",
+      " to choose a card."
+    ]
+  },
+  "mirthandmalice:Originate": {
+    "TEXT": [
+      "to Copy",
+      "Waiting for ",
+      " to choose a card."
+    ]
+  },
+  "mirthandmalice:Counterfeit": {
+    "TEXT": [
+      "to Counterfeit",
+      "Waiting for ",
+      " to choose a card."
+    ]
+  },
+  "mirthandmalice:Revision": {
+    "TEXT": [
+      "to Move",
+      "Waiting for ",
+      " to choose cards."
+    ]
+  },
+  "mirthandmalice:Fantasy": {
+    "TEXT": [
+      "Waiting for ",
+      " to create a card."
+    ]
+  },
+  "mirthandmalice:CardChoice": {
+    "TEXT": [
+      "Choose an Option"
+    ]
+  }
+}
