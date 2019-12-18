@@ -266,6 +266,26 @@ public class MirthAndMalice extends CustomPlayer {
         }
     }
 
+    public boolean forceTryDraw(int force)
+    {
+        if (force == 0)
+        {
+            return tryDraw();
+        }
+        else
+        {
+            if (!forceDrawPileValid(force) || forceIsHandFull(force))
+            {
+                return false;
+            }
+
+            CardCrawlGame.sound.playAV("CARD_DRAW_8", -0.12F, 0.25F);
+            this.forceDraw(force,1);
+            this.onCardDrawOrDiscard();
+            return true;
+        }
+    }
+
     public boolean tryDraw()
     {
         if (otherPlayerHand.size() >= BaseMod.MAX_HAND_SIZE && this.hand.size() >= BaseMod.MAX_HAND_SIZE)
@@ -309,6 +329,21 @@ public class MirthAndMalice extends CustomPlayer {
         }
     }
 
+    public boolean forceDrawPileValid(int force)
+    {
+        if (force == 0)
+        {
+            return drawPileValid();
+        }
+        else if (force < 0)
+        {
+            return !otherPlayerDraw.isEmpty();
+        }
+        else
+        {
+            return drawPile.isEmpty();
+        }
+    }
     public boolean drawPileValid()
     {
         if (TrackCardSource.useOtherEnergy) {
@@ -345,6 +380,22 @@ public class MirthAndMalice extends CustomPlayer {
             return !otherPlayerDraw.isEmpty();
         }
     }
+
+    public boolean forceIsHandFull(int force)
+    {
+        if (force == 0)
+        {
+            return isHandFull();
+        }
+        else if (force < 0)
+        {
+            return otherPlayerHand.size() >= BaseMod.MAX_HAND_SIZE;
+        }
+        else
+        {
+            return hand.size() >= BaseMod.MAX_HAND_SIZE;
+        }
+    }
     public boolean isHandFull()
     {
         if (TrackCardSource.useOtherEnergy)
@@ -379,6 +430,22 @@ public class MirthAndMalice extends CustomPlayer {
             return otherPlayerHand.size() >= BaseMod.MAX_HAND_SIZE;
         }
     }
+
+    public boolean forceDiscardPileEmpty(int force)
+    {
+        if (force == 0)
+        {
+            return discardPileEmpty();
+        }
+        else if (force < 0)
+        {
+            return otherPlayerDiscard.isEmpty();
+        }
+        else
+        {
+            return discardPile.isEmpty();
+        }
+    }
     public boolean discardPileEmpty()
     {
         if (TrackCardSource.useOtherEnergy)
@@ -404,13 +471,24 @@ public class MirthAndMalice extends CustomPlayer {
         if (TrackCardSource.useMyEnergy)
             return otherPlayerDiscard.isEmpty();
 
-        if (mirthDraw ^ isMirth)
-        {
+        if (mirthDraw ^ isMirth) {
             return discardPile.isEmpty();
         }
-        else
-        {
+        else {
             return otherPlayerDiscard.isEmpty();
+        }
+    }
+
+    public AbstractGameAction forceGetShuffleAction(int force)
+    {
+        if (force == 0) {
+            return getShuffleAction();
+        }
+        else if (force < 0) {
+            return new OtherPlayerDeckShuffleAction();
+        }
+        else {
+            return new EmptyDeckShuffleAction();
         }
     }
     public AbstractGameAction getShuffleAction()
@@ -446,6 +524,72 @@ public class MirthAndMalice extends CustomPlayer {
         return isMirth ? characterStrings.NAMES[2] : characterStrings.NAMES[1];
     }
 
+    public void forceDraw(int force, int numCards)
+    {
+        for(int i = 0; i < numCards; ++i) {
+            if (forceIsHandFull(force) || !forceDrawPileValid(force))
+            {
+                break;
+            }
+            else if (force < 0)
+            {
+                logger.info(getOtherPlayerName() + " draw");
+                if (!this.otherPlayerDraw.isEmpty()) {
+                    AbstractCard c = this.otherPlayerDraw.getTopCard();
+                    c.current_x = CardGroup.DRAW_PILE_X;
+                    c.current_y = CardGroup.DRAW_PILE_Y + OTHER_DRAW_OFFSET;
+                    c.setAngle(0.0F, true);
+                    c.lighten(false);
+                    c.drawScale = 0.12F;
+                    c.targetDrawScale = 0.75F;
+                    c.triggerWhenDrawn();
+                    this.otherPlayerHand.addToHand(c);
+                    this.otherPlayerDraw.removeTopCard();
+
+                    for (AbstractPower p : this.powers)
+                    {
+                        p.onCardDraw(c);
+                    }
+                    for (AbstractRelic r : this.relics)
+                    {
+                        r.onCardDraw(c);
+                    }
+                    this.otherPlayerHand.refreshHandLayout();
+                } else {
+                    logger.info("ERROR: How did this happen? No cards in other player's draw pile?? Player.java");
+                }
+            }
+            else
+            {
+                logger.info(name + " draw");
+                if (!this.drawPile.isEmpty()) {
+                    AbstractCard c = this.drawPile.getTopCard();
+                    c.current_x = CardGroup.DRAW_PILE_X;
+                    c.current_y = CardGroup.DRAW_PILE_Y;
+                    c.setAngle(0.0F, true);
+                    c.lighten(false);
+                    c.drawScale = 0.12F;
+                    c.targetDrawScale = 0.75F;
+                    c.triggerWhenDrawn();
+                    this.hand.addToHand(c);
+                    this.drawPile.removeTopCard();
+
+                    for (AbstractPower p : this.powers)
+                    {
+                        p.onCardDraw(c);
+                    }
+                    for (AbstractRelic r : this.relics)
+                    {
+                        r.onCardDraw(c);
+                    }
+                }
+                else {
+                    logger.info("ERROR: How did this happen? No cards in draw pile?? Player.java");
+                }
+            }
+        }
+    }
+
     @Override
     public void draw(int numCards) {
         boolean failedDraw = false;
@@ -460,6 +604,7 @@ public class MirthAndMalice extends CustomPlayer {
             }
             else if (TrackCardSource.useOtherEnergy)
             {
+                logger.info(getOtherPlayerName() + " draw, based on card source");
                 if (!this.otherPlayerDraw.isEmpty()) {
                     AbstractCard c = this.otherPlayerDraw.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -488,6 +633,7 @@ public class MirthAndMalice extends CustomPlayer {
             }
             else if (TrackCardSource.useMyEnergy)
             {
+                logger.info(name + " draw, based on card source");
                 if (!this.drawPile.isEmpty()) {
                     AbstractCard c = this.drawPile.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -516,6 +662,7 @@ public class MirthAndMalice extends CustomPlayer {
             }
             else if (mirthDraw ^ isMirth) //One is true, one is false. So, either mokou is drawing and this isn't mokou, or this is mokou and it's keine's draw.
             {
+                logger.info(getOtherPlayerName() + " draw, based on standard swap");
                 if (!this.otherPlayerDraw.isEmpty()) {
                     AbstractCard c = this.otherPlayerDraw.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -538,12 +685,14 @@ public class MirthAndMalice extends CustomPlayer {
                     }
                     this.otherPlayerHand.refreshHandLayout();
                     failedDraw = false;
+                    mirthDraw = !mirthDraw;
                 } else {
-                    logger.info("ERROR: How did this happen? No cards in draw pile?? Player.java");
+                    logger.info("ERROR: How did this happen? No cards in other player's draw pile?? Player.java");
                 }
             }
             else //Both are true or both are false.
             {
+                logger.info(name + " draw, based on standard swap");
                 if (!this.drawPile.isEmpty()) {
                     AbstractCard c = this.drawPile.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -565,11 +714,11 @@ public class MirthAndMalice extends CustomPlayer {
                         r.onCardDraw(c);
                     }
                     failedDraw = false;
+                    mirthDraw = !mirthDraw;
                 } else {
                     logger.info("ERROR: How did this happen? No cards in draw pile?? Player.java");
                 }
             }
-            mirthDraw = !mirthDraw;
         }
     }
 
@@ -586,6 +735,7 @@ public class MirthAndMalice extends CustomPlayer {
             }
             else if (TrackCardSource.useMyEnergy)
             {
+                logger.info(getOtherPlayerName() + " draw, based on card source (drawOther)");
                 if (!this.otherPlayerDraw.isEmpty()) {
                     AbstractCard c = this.otherPlayerDraw.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -614,6 +764,7 @@ public class MirthAndMalice extends CustomPlayer {
             }
             else if (TrackCardSource.useOtherEnergy)
             {
+                logger.info(name + " draw, based on card source (drawOther)");
                 if (!this.drawPile.isEmpty()) {
                     AbstractCard c = this.drawPile.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -642,6 +793,7 @@ public class MirthAndMalice extends CustomPlayer {
             }
             else if (mirthDraw ^ isMirth) //One is true, one is false. So, either mokou is drawing and this isn't mokou, or this is mokou and it's keine's draw.
             {
+                logger.info(name + " draw, based on standard swap (drawOther)");
                 if (!this.drawPile.isEmpty()) {
                     AbstractCard c = this.drawPile.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -666,9 +818,11 @@ public class MirthAndMalice extends CustomPlayer {
                 } else {
                     logger.info("ERROR: How did this happen? No cards in draw pile?? Player.java");
                 }
+                mirthDraw = !mirthDraw;
             }
             else //Both are true or both are false.
             {
+                logger.info(getOtherPlayerName() + " draw, based on standard swap (drawOther)");
                 if (!this.otherPlayerDraw.isEmpty()) {
                     AbstractCard c = this.otherPlayerDraw.getTopCard();
                     c.current_x = CardGroup.DRAW_PILE_X;
@@ -694,8 +848,8 @@ public class MirthAndMalice extends CustomPlayer {
                 } else {
                     logger.info("ERROR: How did this happen? No cards in draw pile?? Player.java");
                 }
+                mirthDraw = !mirthDraw;
             }
-            mirthDraw = !mirthDraw;
         }
     }
 
