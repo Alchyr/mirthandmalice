@@ -8,19 +8,19 @@ import static mirthandmalice.MirthAndMaliceMod.assetPath;
 
 public class AstrologerOrb extends CustomEnergyOrb {
     private static final String[] orbTextures = {
-            assetPath("img/Character/orb/layer1.png"),
-            assetPath("img/Character/orb/layer2.png"),
-            assetPath("img/Character/orb/layer3.png"),
-            assetPath("img/Character/orb/layer4.png"),
-            assetPath("img/Character/orb/layer5.png"),
-            assetPath("img/Character/orb/layer6.png"),
-            assetPath("img/Character/orb/layer1d.png"),
-            assetPath("img/Character/orb/layer2d.png"),
-            assetPath("img/Character/orb/layer3d.png"),
-            assetPath("img/Character/orb/layer4d.png"),
-            assetPath("img/Character/orb/layer5d.png") };
+            assetPath("img/character/orb/layer1.png"),
+            assetPath("img/character/orb/layer2.png"),
+            assetPath("img/character/orb/layer3.png"),
+            assetPath("img/character/orb/layer4.png"),
+            assetPath("img/character/orb/layer5.png"),
+            assetPath("img/character/orb/layer6.png"),
+            assetPath("img/character/orb/layer1d.png"),
+            assetPath("img/character/orb/layer2d.png"),
+            assetPath("img/character/orb/layer3d.png"),
+            assetPath("img/character/orb/layer4d.png"),
+            assetPath("img/character/orb/layer5d.png") };
 
-    private static final String VFXTexture = assetPath("img/Character/orb/vfx.png");
+    private static final String VFXTexture = assetPath("img/character/orb/vfx.png");
 
     private static final float[] layerSpeeds = new float[] {10.0F, 30.0F, 15.0F, -20.0F, 0.0F};
 

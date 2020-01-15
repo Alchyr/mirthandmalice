@@ -27,7 +27,7 @@ public class StasisAction {
     private static boolean stoleFromOther = false;
     private static AbstractCard lastCard = null;
 
-    //Well, update happened, and it's still not seeded, so guess I'll just have to do the whole thing myself
+    //Controls who card is stolen from, and ensures consistent rng usage.
 
     @SpirePrefixPatch
     public static SpireReturn stealFromOther(ApplyStasisAction __instance)
@@ -88,7 +88,7 @@ public class StasisAction {
                             }
                         }
 
-                        c = possibleCards.get(AbstractDungeon.aiRng.random(0, possibleCards.size() - 1));
+                        c = possibleCards.get(AbstractDungeon.cardRandomRng.random(0, possibleCards.size() - 1));
                         p.otherPlayerDiscard.removeCard(c);
                     }
                     else { //draw is not empty.
@@ -112,7 +112,7 @@ public class StasisAction {
                             }
                         }
 
-                        c = possibleCards.get(AbstractDungeon.aiRng.random(0, possibleCards.size() - 1));
+                        c = possibleCards.get(AbstractDungeon.cardRandomRng.random(0, possibleCards.size() - 1));
                         p.otherPlayerDraw.removeCard(c);
                     }
                 }
@@ -139,7 +139,7 @@ public class StasisAction {
                             }
                         }
 
-                        c = possibleCards.get(AbstractDungeon.aiRng.random(0, possibleCards.size() - 1));
+                        c = possibleCards.get(AbstractDungeon.cardRandomRng.random(0, possibleCards.size() - 1));
                         p.discardPile.removeCard(c);
                     }
                     else { //draw is not empty.
@@ -163,7 +163,7 @@ public class StasisAction {
                             }
                         }
 
-                        c = possibleCards.get(AbstractDungeon.aiRng.random(0, possibleCards.size() - 1));
+                        c = possibleCards.get(AbstractDungeon.cardRandomRng.random(0, possibleCards.size() - 1));
                         p.drawPile.removeCard(c);
                     }
                 }

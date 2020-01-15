@@ -1,7 +1,9 @@
 package mirthandmalice.patch.actions;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
+import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
+import com.megacrit.cardcrawl.actions.common.DrawCardAction;
 import com.megacrit.cardcrawl.actions.unique.GamblingChipAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -37,9 +39,10 @@ public class GamblingChip {
     {
         if (currentAction != __instance)
         {
+            currentAction = __instance;
+
             if (AbstractDungeon.player instanceof MirthAndMalice && MultiplayerHelper.active)
             {
-                MirthAndMalice p = (MirthAndMalice)AbstractDungeon.player;
                 if (TrackCardSource.useOtherEnergy) //played by other player.
                 {
                     AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(uiStrings.TEXT[0] + partnerName + uiStrings.TEXT[1]));
@@ -63,7 +66,6 @@ public class GamblingChip {
                         //Don't cancel this action, though.
                     }
                 }
-                currentAction = __instance;
             }
         }
         return SpireReturn.Continue();
@@ -120,7 +122,7 @@ public class GamblingChip {
         @Override
         public int[] Locate(CtBehavior ctMethodToPatch) throws Exception
         {
-            Matcher finalMatcher = new Matcher.MethodCallMatcher(GameActionManager.class, "addToTop");
+            Matcher finalMatcher = new Matcher.NewExprMatcher(DrawCardAction.class);
             return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
         }
     }

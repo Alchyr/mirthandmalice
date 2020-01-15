@@ -1,3 +1,4 @@
+/* No longer necessary.
 package mirthandmalice.patch.events;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
@@ -37,3 +38,4 @@ public class VampiresRemoval {
         }
     }
 }
+*/

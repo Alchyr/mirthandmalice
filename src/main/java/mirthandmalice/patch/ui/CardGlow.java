@@ -21,7 +21,8 @@ import static mirthandmalice.MirthAndMaliceMod.logger;
 
 @SpirePatch(
         clz = CardGlowBorder.class,
-        method = SpirePatch.CONSTRUCTOR
+        method = SpirePatch.CONSTRUCTOR,
+        paramtypez = { AbstractCard.class, Color.class }
 )
 public class CardGlow {
     private static Field hoveredMonsterField;
