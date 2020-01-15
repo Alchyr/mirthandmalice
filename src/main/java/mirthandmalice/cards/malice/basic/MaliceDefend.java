@@ -32,6 +32,7 @@ public class MaliceDefend extends MaliceCard {
         setBlock(BLOCK, UPG_BLOCK);
 
         tags.add(BASIC_DEFEND);
+        tags.add(CardTags.STARTER_DEFEND);
     }
 
     @Override

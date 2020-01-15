@@ -35,6 +35,7 @@ public class MaliceStrike extends MaliceCard {
 
         tags.add(BASIC_STRIKE);
         tags.add(AbstractCard.CardTags.STRIKE);
+        tags.add(CardTags.STARTER_STRIKE);
     }
 
     @Override

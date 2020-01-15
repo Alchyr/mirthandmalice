@@ -36,6 +36,7 @@ public class MirthStrike extends MirthCard {
 
         tags.add(BASIC_STRIKE);
         tags.add(AbstractCard.CardTags.STRIKE);
+        tags.add(CardTags.STARTER_STRIKE);
     }
 
     @Override

@@ -33,11 +33,12 @@ public class TakeRedKey {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void obtainKey()
     {
         if (AbstractDungeon.getCurrRoom() instanceof RestRoom)
         {
-            ArrayList<AbstractCampfireOption> buttons = (ArrayList)ReflectionHacks.getPrivate(((RestRoom) AbstractDungeon.getCurrRoom()).campfireUI, CampfireUI.class, "buttons");
+            ArrayList<AbstractCampfireOption> buttons = (ArrayList<AbstractCampfireOption>)ReflectionHacks.getPrivate(((RestRoom) AbstractDungeon.getCurrRoom()).campfireUI, CampfireUI.class, "buttons");
             AbstractCampfireOption toRemove = null;
             for (AbstractCampfireOption o : buttons)
             {
@@ -49,7 +50,7 @@ public class TakeRedKey {
             }
             if (toRemove != null)
             {
-                ((ArrayList)ReflectionHacks.getPrivate(((RestRoom) AbstractDungeon.getCurrRoom()).campfireUI, CampfireUI.class, "buttons")).remove(toRemove);
+                buttons.remove(toRemove);
             }
         }
         if (!Settings.hasRubyKey)
