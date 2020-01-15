@@ -161,6 +161,8 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
 {
     public static final String modID = "mirthandmalice";
 
+    public static final boolean FULL_DEBUG = true;
+
     public static final Logger logger = LogManager.getLogger(modID);
 
     // Mod panel stuff
