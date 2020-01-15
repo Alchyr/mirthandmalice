@@ -12,6 +12,8 @@ import mirthandmalice.patch.enums.CharacterEnums;
 
 import java.util.ArrayList;
 
+import static mirthandmalice.MirthAndMaliceMod.logger;
+
 @SpirePatch(
         clz = ColorTabBarFix.Render.class,
         method = "Insert"
@@ -22,6 +24,7 @@ public class LocalizedColorNamesInLibrary {
             locator = Locator.class,
             localvars = { "i", "tabName" }
     )
+    @SuppressWarnings("unchecked")
     public static void changeTabName(ColorTabBar __instance, SpriteBatch sb, float y, ColorTabBar.CurrentTab tab, int i, @ByRef String[] tabName)
     {
         if (modTabs == null)

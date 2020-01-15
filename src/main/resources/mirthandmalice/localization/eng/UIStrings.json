@@ -1,4 +1,15 @@
 {
+  "mirthandmalice:Matchmaking": {
+    "TEXT": [
+      "Left lobby.",
+      "Entered game.",
+      "Playing as the Immortal and Guardian - In Lobby (",
+      "Playing as the Immortal and Guardian - Starting game...",
+      "Another player has joined the lobby.",
+      "Other player left.",
+      " bought "
+    ]
+  },
   "mirthandmalice:LobbyPanel": {
     "TEXT": [
       "Name",

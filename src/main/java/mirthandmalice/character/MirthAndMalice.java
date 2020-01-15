@@ -41,13 +41,13 @@ import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbInterface;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.CardDisappearEffect;
 import mirthandmalice.actions.character.OtherPlayerDeckShuffleAction;
-import mirthandmalice.cards.yang.basic.MaliceDefend;
-import mirthandmalice.cards.yang.basic.MaliceStrike;
-import mirthandmalice.cards.yang.basic.Originate;
-import mirthandmalice.cards.yang.uncommon.Forget;
-import mirthandmalice.cards.yin.basic.MirthDefend;
-import mirthandmalice.cards.yin.basic.MirthStrike;
-import mirthandmalice.cards.yin.basic.Scorch;
+import mirthandmalice.cards.malice.basic.MaliceDefend;
+import mirthandmalice.cards.malice.basic.MaliceStrike;
+import mirthandmalice.cards.malice.basic.Originate;
+import mirthandmalice.cards.malice.uncommon.Forget;
+import mirthandmalice.cards.mirth.basic.MirthDefend;
+import mirthandmalice.cards.mirth.basic.MirthStrike;
+import mirthandmalice.cards.mirth.basic.Scorch;
 import mirthandmalice.patch.energy_division.SetEnergyGain;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
@@ -55,10 +55,7 @@ import mirthandmalice.patch.game_initialize.EnergyFontGen;
 import mirthandmalice.ui.AstrologerOrb;
 import mirthandmalice.ui.MokouOrb;
 import mirthandmalice.ui.OtherEnergyPanel;
-import mirthandmalice.util.AltEnergyManager;
-import mirthandmalice.util.AltHandCardgroup;
-import mirthandmalice.util.MultiplayerHelper;
-import mirthandmalice.util.TextureLoader;
+import mirthandmalice.util.*;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -939,6 +936,16 @@ public class MirthAndMalice extends CustomPlayer {
                 }
             }
             this.otherPlayerHand.applyPowers();
+        }
+
+        //EXTREME DEBUG CODE: COMMENT OUT IF NOT NEEDED
+        if (HandleMatchmaking.isHost)
+        {
+
+        }
+        else //send data to host to display
+        {
+
         }
     }
 

@@ -42,7 +42,7 @@ public class OtherPlayerEndOfTurnDiscard {
                 AbstractDungeon.actionManager.addToTop(new OtherPlayerDiscardAction(player, null, tempSize, true));
             }
 
-            ArrayList<AbstractCard> cards = (ArrayList)player.otherPlayerHand.group.clone();
+            ArrayList<AbstractCard> cards = new ArrayList<>(player.otherPlayerHand.group);
             Collections.shuffle(cards);
             for (AbstractCard c : cards)
             {

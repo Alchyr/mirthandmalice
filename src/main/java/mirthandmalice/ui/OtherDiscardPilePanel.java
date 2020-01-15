@@ -199,14 +199,14 @@ public class OtherDiscardPilePanel extends AbstractPanel {
 
             this.renderButton(sb);
             String msg = Integer.toString(p.otherPlayerDiscard.size());
-            this.gl.setText(FontHelper.deckCountFont, msg);
+            this.gl.setText(FontHelper.speech_font, msg);
             sb.setColor(Color.WHITE);
             sb.draw(ImageMaster.DECK_COUNT_CIRCLE, this.current_x + COUNT_OFFSET_X, this.current_y + COUNT_OFFSET_Y, COUNT_CIRCLE_W, COUNT_CIRCLE_W);
             if (Settings.isControllerMode) {
                 sb.draw(CInputActionSet.discardPile.getKeyImg(), this.current_x - 32.0F + 220.0F * Settings.scale, this.current_y - 32.0F + 40.0F * Settings.scale, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale * 0.75F, Settings.scale * 0.75F, 0.0F, 0, 0, 64, 64, false, false);
             }
 
-            FontHelper.renderFontCentered(sb, FontHelper.deckCountFont, msg, this.current_x + COUNT_X, this.current_y + COUNT_Y);
+            FontHelper.renderFontCentered(sb, FontHelper.speech_font, msg, this.current_x + COUNT_X, this.current_y + COUNT_Y);
             if (!this.isHidden) {
                 this.hb.render(sb);
                 if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.DISCARD_VIEW) {

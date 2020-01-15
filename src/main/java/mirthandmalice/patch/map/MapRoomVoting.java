@@ -16,7 +16,7 @@ import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.util.MultiplayerHelper;
 
 import static mirthandmalice.util.HandleMatchmaking.isHost;
-import static mirthandmalice.util.HandleMatchmaking.isMokou;
+import static mirthandmalice.util.HandleMatchmaking.isMirth;
 import static mirthandmalice.MirthAndMaliceMod.*;
 
 public class MapRoomVoting {
@@ -190,12 +190,12 @@ public class MapRoomVoting {
         {
             if (__instance.equals(otherSelected))
             {
-                sb.setColor(isMokou ? MALICE_COLOR : MIRTH_COLOR);
+                sb.setColor(isMirth ? MALICE_COLOR : MIRTH_COLOR);
                 sb.draw(ImageMaster.MAP_CIRCLE_5, (float)__instance.x * SPACING_X + OFFSET_X - 96.0F + __instance.offsetX, (float)__instance.y * Settings.MAP_DST_Y + OFFSET_Y + DungeonMapScreen.offsetY - 96.0F + __instance.offsetY, 96.0F, 96.0F, 192.0F, 192.0F, (scale * 0.95F + 0.2F) * Settings.scale, (scale * 0.95F + 0.2F) * Settings.scale, angle, 0, 0, 192, 192, false, false);
             }
             else if (__instance.equals(mySelected))
             {
-                sb.setColor(isMokou ? MIRTH_COLOR : MALICE_COLOR);
+                sb.setColor(isMirth ? MIRTH_COLOR : MALICE_COLOR);
                 sb.draw(ImageMaster.MAP_CIRCLE_5, (float)__instance.x * SPACING_X + OFFSET_X - 96.0F + __instance.offsetX, (float)__instance.y * Settings.MAP_DST_Y + OFFSET_Y + DungeonMapScreen.offsetY - 96.0F + __instance.offsetY, 96.0F, 96.0F, 192.0F, 192.0F, (scale * 0.95F + 0.2F) * Settings.scale, (scale * 0.95F + 0.2F) * Settings.scale, angle, 0, 0, 192, 192, false, false);
             }
         }

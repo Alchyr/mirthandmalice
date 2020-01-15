@@ -5,7 +5,7 @@ import com.megacrit.cardcrawl.helpers.CardLibrary;
 
 public class LibraryEnums {
     @SpireEnum
-    public static CardLibrary.LibraryType MIRTHMALICE_MUSE;
+    public static CardLibrary.LibraryType MIRTHMALICE_MIRTH;
     @SpireEnum
     public static CardLibrary.LibraryType MIRTHMALICE_MALICE;
     @SpireEnum

@@ -41,6 +41,7 @@ import mirthandmalice.patch.rewards.ObtainRewards;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import static mirthandmalice.patch.combat.PotionUse.*;
@@ -49,7 +50,7 @@ import static mirthandmalice.MirthAndMaliceMod.*;
 
 //Handles all multiplayer post-game start. For setting up multiplayer, see HandleMatchmaking.java as well as UseMultiplayerQueue.java
 public class MultiplayerHelper implements SteamNetworkingCallback {
-    public static final Charset CHARSET = Charset.forName("UTF-8");
+    public static final Charset CHARSET = StandardCharsets.UTF_8;
 
     private static final int defaultChannel = 1;
 
@@ -239,7 +240,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
             String[] args = msg.substring(7).split(" ");
             if (args.length == 2)
             {
-                int index = Integer.valueOf(args[1]);
+                int index = Integer.parseInt(args[1]);
                 if (index >= 0)
                 {
                     switch (args[0])
@@ -294,7 +295,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         {
             if (AbstractDungeon.player instanceof MirthAndMalice)
             {
-                int index = Integer.valueOf(msg.substring(13));
+                int index = Integer.parseInt(msg.substring(13));
                 if (index >= 0 && index < ((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.group.size())
                 {
                     AbstractCard toDiscard = ((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.group.get(index);
@@ -304,7 +305,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         }
         else if (msg.startsWith("draw"))
         {
-            int amt = Integer.valueOf(msg.substring(4));
+            int amt = Integer.parseInt(msg.substring(4));
 
             if (amt >= 1)
             {
@@ -339,19 +340,19 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         }
         else if (msg.startsWith("room_option_choose"))
         {
-            RoomEventVoting.selectOption(Integer.valueOf(msg.substring(18)));
+            RoomEventVoting.selectOption(Integer.parseInt(msg.substring(18)));
         }
         else if (msg.startsWith("room_option"))
         {
-            RoomEventVoting.receiveVote(Integer.valueOf(msg.substring(11)));
+            RoomEventVoting.receiveVote(Integer.parseInt(msg.substring(11)));
         }
         else if (msg.startsWith("generic_option_choose"))
         {
-            GenericEventVoting.selectOption(Integer.valueOf(msg.substring(21)));
+            GenericEventVoting.selectOption(Integer.parseInt(msg.substring(21)));
         }
         else if (msg.startsWith("generic_option"))
         {
-            GenericEventVoting.receiveVote(Integer.valueOf(msg.substring(14)));
+            GenericEventVoting.receiveVote(Integer.parseInt(msg.substring(14)));
         }
         else if (msg.startsWith("vote_node"))
         {
@@ -400,7 +401,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
             AbstractRelic tryPurchase = ReportPurchase.forcePurchase(id);
             if (tryPurchase != null) //if true, the relic attempting to be purchased was found in the shop and successfuly obtained.
             {
-                MultiplayerHelper.sendP2PMessage(MultiplayerHelper.partnerName + " bought " + RelicLibrary.getRelic(id).name + ".");
+                MultiplayerHelper.sendP2PMessage(MultiplayerHelper.partnerName + HandleMatchmaking.TEXT[6] + RelicLibrary.getRelic(id).name + ".");
                 MultiplayerHelper.sendP2PString("confirm_purchase_relic" + id);
             }
         }
@@ -423,7 +424,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         else if (msg.startsWith("bottle"))
         {
             char bottleChar = msg.charAt(6);
-            int index = Integer.valueOf(msg.substring(7));
+            int index = Integer.parseInt(msg.substring(7));
             if (index >= 0)
             {
                 ReportBottling.receiveBottling(bottleChar, index);
@@ -512,7 +513,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         {
             if (AbstractDungeon.player != null)
             {
-                AbstractDungeon.player.decreaseMaxHealth(Integer.valueOf(msg.substring(11)));
+                AbstractDungeon.player.decreaseMaxHealth(Integer.parseInt(msg.substring(11)));
             }
         }
         else if (msg.startsWith("bonfire"))
@@ -533,7 +534,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         {
             active = false;
             stopGameStart();
-            chat.receiveMessage("Other player left.");
+            chat.receiveMessage(HandleMatchmaking.TEXT[5]);
             logger.info("Other player left.");
             currentPartner = null;
         }
@@ -545,7 +546,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         }
         else if (msg.startsWith("ascension"))
         {
-            int level = Integer.valueOf(msg.substring(9));
+            int level = Integer.parseInt(msg.substring(9));
             if (level != 0)
             {
                 AbstractDungeon.isAscensionMode = true;
@@ -570,7 +571,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
             partnerName = msg.substring(7);
             if (HandleMatchmaking.isHost)
             {
-                chat.receiveMessage("Another player has joined the lobby.");
+                chat.receiveMessage(HandleMatchmaking.TEXT[4]);
                 logger.info("Connection established.");
                 HandleMatchmaking.leave();
                 sendP2PString("leave");
@@ -622,11 +623,11 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
             if (params.length == 5)
             {
                 logger.info("Other player played a card.");
-                int cardIndex = Integer.valueOf(params[0]);
+                int cardIndex = Integer.parseInt(params[0]);
                 String cardID = params[1];
-                int targetIndex = Integer.valueOf(params[2]);
-                float x = Float.valueOf(params[3]);
-                float y = Float.valueOf(params[4]);
+                int targetIndex = Integer.parseInt(params[2]);
+                float x = Float.parseFloat(params[3]);
+                float y = Float.parseFloat(params[4]);
 
                 if (cardIndex >= 0 && cardIndex < p.otherPlayerHand.size())
                 {
@@ -676,10 +677,10 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         if (params.length == 5)
         {
             logger.info("Received confirmation to play a card.");
-            int cardIndex = Integer.valueOf(params[0]);
-            int targetIndex = Integer.valueOf(params[2]);
-            float x = Float.valueOf(params[3]);
-            float y = Float.valueOf(params[4]);
+            int cardIndex = Integer.parseInt(params[0]);
+            int targetIndex = Integer.parseInt(params[2]);
+            float x = Float.parseFloat(params[3]);
+            float y = Float.parseFloat(params[4]);
 
             if (cardIndex >= 0 && cardIndex < AbstractDungeon.player.hand.size())
             {

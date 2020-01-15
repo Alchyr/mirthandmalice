@@ -10,8 +10,8 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <SlayTheSpire.version>07-17-2019</SlayTheSpire.version>
-        <ModTheSpire.version>3.11.0</ModTheSpire.version>
+        <SlayTheSpire.version>01-14-2020</SlayTheSpire.version>
+        <ModTheSpire.version>3.15.0</ModTheSpire.version>
         <Steam.path>C:/Program Files (x86)/Steam/steamapps</Steam.path>
     </properties>
 
@@ -35,7 +35,7 @@
             <artifactId>basemod</artifactId>
             <version>5.14.1</version>
             <scope>system</scope>
-            <systemPath>${Steam.path}/workshop/content/646570/1605833019/beta/BaseMod.jar</systemPath>
+            <systemPath>${Steam.path}/workshop/content/646570/1605833019/BaseMod.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.evacipated.cardcrawl.mod</groupId>

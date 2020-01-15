@@ -63,6 +63,7 @@ public class ReportPurchase {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static AbstractRelic forcePurchase(String id)
     {
         if (AbstractDungeon.shopScreen != null)
@@ -81,7 +82,8 @@ public class ReportPurchase {
         }
         return null;
     }
-    public static AbstractRelic normalPurchase(String id)
+    @SuppressWarnings("unchecked")
+    public static void normalPurchase(String id)
     {
         if (AbstractDungeon.shopScreen != null)
         {
@@ -93,10 +95,10 @@ public class ReportPurchase {
                     //r.price = 0;
                     forcePurchase = r; //prevent purchaseRelic from reporting purchase to other player
                     r.purchaseRelic();
-                    return r.relic;
+                    //return r.relic;
                 }
             }
         }
-        return null;
+        //return null;
     }
 }

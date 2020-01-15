@@ -25,6 +25,7 @@ import com.megacrit.cardcrawl.random.Random;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import javassist.CtClass;
 import javassist.NotFoundException;
+import mirthandmalice.actions.cards._IMPROVE;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.clapper.util.classutil.*;
@@ -64,6 +65,9 @@ heart ai?
 fairy in a bottle code - fix
 
 
+Improve chatbox - allow multiline, increase message length limit
+
+
 +Upon entering next act and generating map, if other player has already voted, re-check voted node so that it is rendered/works properly.
 
 Cards: Anything that affects order of cards in hand.
@@ -95,7 +99,7 @@ The Divine Fountain - Make sure it works
 +We Meet Again/Ranwid - +Gold option: If other player cannot afford it, cannot take
                         +Potion option: Also can take a potion in list used to track other player potions
                         Card option: Fine as is.. probably?
-Lab - Ensure when potions are claimed, other player cannot
+Lab - Ensure when potions are claimed, other player cannot? Should be fine.
 
 Powers:
 +Hex - Sync generation based on who played card
@@ -112,7 +116,7 @@ Dead Branch - Ensure card generation actually generates the same card for both p
 Gambling Chip - test - should be functional.
 +Girya - Patch campsite option
 Shovel - Test. It probably will need adjustment.
-Unceasing Top - If one player's hand is empty, they draw? This one will be a pain.
+Unceasing Top - If one player's hand is empty, they draw? This one will be a pain. Why is it in so many places :(
 Astrolabe - Make sure transformation works properly
 Calling Bell - Ensure both players obtain the relics if one of them chooses to take one. This should work, since it's a combat reward screen, but not 100% sure.
 +Eternal Feather - Count both decks
@@ -403,6 +407,8 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
         LastCardType.lastCardCopy = null;
         PotionUse.queuedPotionUse.clear();
         HandCardSelectReordering.reset();
+
+        _IMPROVE._clean();
     }
 
     //patched in hook
@@ -518,6 +524,7 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
 
     @Override
     public void receiveEditCards() {
+        logger.info("Adding Mirth and Malice cards.");
         try {
             autoAddCards();
         } catch (URISyntaxException | IllegalAccessException | InstantiationException | NotFoundException | ClassNotFoundException e) {
@@ -671,6 +678,7 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
             AbstractCard card = (AbstractCard) Loader.getClassPool().getClassLoader().loadClass(cls.getName()).newInstance();
 
             BaseMod.addCard(card);
+            logger.info("Added card " + card.cardID + "\t\tColor " + card.color.name());
         }
     }
 

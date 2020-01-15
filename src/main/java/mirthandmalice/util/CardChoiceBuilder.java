@@ -1,3 +1,4 @@
+/*
 package mirthandmalice.util;
 
 import basemod.ReflectionHacks;
@@ -39,7 +40,7 @@ public class CardChoiceBuilder {
         AbstractDungeon.cardRewardScreen.codexCard = null;
         ((SingingBowlButton)ReflectionHacks.getPrivate(AbstractDungeon.cardRewardScreen, CardRewardScreen.class, "bowlButton")).hide();
         ((SkipCardButton)ReflectionHacks.getPrivate(AbstractDungeon.cardRewardScreen, CardRewardScreen.class, "skipButton")).hide();
-        AbstractDungeon.cardRewardScreen.onCardSelect = true;
+        //AbstractDungeon.cardRewardScreen.onCardSelect = true;
         AbstractDungeon.topPanel.unhoverHitboxes();
 
         AbstractDungeon.cardRewardScreen.rewardGroup = options;
@@ -70,3 +71,4 @@ public class CardChoiceBuilder {
         }
     }
 }
+*/

@@ -1,2 +1,6 @@
 # Project exclude paths
-/target/
+/target/antrun/
+/target/classes/
+/target/maven-archiver/
+/target/maven-status/
+/target/generated-sources/

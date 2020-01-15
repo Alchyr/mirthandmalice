@@ -38,8 +38,6 @@ public class SuperFastDamageAction extends AbstractGameAction {
                 return;
             }
 
-            this.target.damageFlash = true;// 74
-            this.target.damageFlashFrames = 4;// 75
             AbstractDungeon.effectList.add(new FlashAtkImgEffect(this.target.hb.cX, this.target.hb.cY, this.attackEffect, this.muteSfx));
 
             if (this.attackEffect == AttackEffect.POISON) {

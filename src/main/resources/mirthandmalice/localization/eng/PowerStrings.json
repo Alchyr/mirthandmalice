@@ -1,12 +1,12 @@
 {
-  "museandmalice:Forget": {
+  "mirthandmalice:Forget": {
     "NAME": "Forget",
     "DESCRIPTIONS": [
       "Upon losing HP, apply #b",
       " #yWeak."
     ]
   },
-  "museandmalice:Weight": {
+  "mirthandmalice:Weight": {
     "NAME": "Weight",
     "DESCRIPTIONS": [
       "This enemy's #yVulnerable stacks additively until the end of the turn.",
@@ -14,13 +14,13 @@
       " turns."
     ]
   },
-  "museandmalice:Volatile": {
+  "mirthandmalice:Volatile": {
     "NAME": "Volatile",
     "DESCRIPTIONS": [
       "On death, deals damage equal to half of its Max HP to ALL enemies."
     ]
   },
-  "museandmalice:Record": {
+  "mirthandmalice:Record": {
     "NAME": "Record",
     "DESCRIPTIONS": [
       "Add a copy of the next card played to ",
@@ -31,28 +31,28 @@
       "'s"
     ]
   },
-  "museandmalice:Ruthless": {
+  "mirthandmalice:Ruthless": {
     "NAME": "Ruthless",
     "DESCRIPTIONS": [
       "Whenever an enemy dies, gain #b",
       " #yStrength."
     ]
   },
-  "museandmalice:Inhibition": {
+  "mirthandmalice:Inhibition": {
     "NAME": "Inhibition",
     "DESCRIPTIONS": [
       "At the start of your turn, gain #b",
-      " #ymuseandmalice:Seal."
+      " #ymirthandmalice:Seal."
     ]
   },
-  "museandmalice:Execration": {
+  "mirthandmalice:Execration": {
     "NAME": "Execration",
     "DESCRIPTIONS": [
       "Whenever you apply a debuff to an enemy, gain #b",
       " #yStrength."
     ]
   },
-  "museandmalice:Seal": {
+  "mirthandmalice:Seal": {
     "NAME": "Seal",
     "DESCRIPTIONS": [
       "Prevents the next time you would lose HP by spending it.",
@@ -60,12 +60,12 @@
       " times you would lose HP by spending it."
     ]
   },
-  "museandmalice:Ignition": {
+  "mirthandmalice:Ignition": {
     "NAME": "Ignition",
     "DESCRIPTIONS": [
-      "Whenever you would gain #yStrength, summon a #ymuseandmalice:Flame instead.",
+      "Whenever you would gain #yStrength, summon a #ymirthandmalice:Flame instead.",
       "Whenever you would gain #yStrength, summon #b",
-      " #ymuseandmalice:Flames instead."
+      " #ymirthandmalice:Flames instead."
     ]
   }
 }

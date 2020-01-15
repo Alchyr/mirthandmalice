@@ -182,7 +182,7 @@ public class LobbyMenu {
 
                 data.id = lobby;
                 data.name = matchmaking.getLobbyData(lobby, HandleMatchmaking.lobbyNameKey);
-                data.hostIsMokou = matchmaking.getLobbyData(lobby, HandleMatchmaking.hostIsMokouKey).equals(metadataTrue);
+                data.hostIsMokou = matchmaking.getLobbyData(lobby, HandleMatchmaking.hostIsMirthKey).equals(metadataTrue);
                 data.isPublic = matchmaking.getLobbyData(lobby, HandleMatchmaking.lobbyPublicKey).equals(metadataTrue);
 
                 this.lobbies.add(data);
@@ -426,15 +426,15 @@ public class LobbyMenu {
 
                             if (mokouToggle.enabled)
                             {
-                                HandleMatchmaking.isMokou = true;
+                                HandleMatchmaking.isMirth = true;
                             }
                             else if (keineToggle.enabled)
                             {
-                                HandleMatchmaking.isMokou = false;
+                                HandleMatchmaking.isMirth = false;
                             }
                             else if (randomToggle.enabled)
                             {
-                                HandleMatchmaking.isMokou = MathUtils.randomBoolean();
+                                HandleMatchmaking.isMirth = MathUtils.randomBoolean();
                             }
 
                             //Set character
@@ -442,9 +442,9 @@ public class LobbyMenu {
                             {
                                 if (CardCrawlGame.characterManager.getAllCharacters().get(i) instanceof MirthAndMalice)
                                 {
-                                    if (((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).isMirth ^ HandleMatchmaking.isMokou) //doesn't match
+                                    if (((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).isMirth ^ HandleMatchmaking.isMirth) //doesn't match
                                     {
-                                        ((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).setMirth(HandleMatchmaking.isMokou);
+                                        ((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).setMirth(HandleMatchmaking.isMirth);
                                     }
                                 }
                             }

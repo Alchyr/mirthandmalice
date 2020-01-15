@@ -193,11 +193,11 @@ public class OtherDrawPilePanel extends AbstractPanel {
             sb.setColor(Color.WHITE);
             sb.draw(deckTexture, this.current_x + OTHER_DECK_X, this.current_y + OTHER_DECK_Y + this.bob.y / 2.0F, 64.0F, 64.0F, 128.0F, 128.0F, this.scale * Settings.scale, this.scale * Settings.scale, 0.0F, 0, 0, 128, 128, false, false);
             String msg = Integer.toString(p.otherPlayerDraw.size());
-            this.gl.setText(FontHelper.deckCountFont, msg);
+            this.gl.setText(FontHelper.speech_font, msg);
             sb.setColor(Color.WHITE);
             sb.draw(ImageMaster.DECK_COUNT_CIRCLE, this.current_x + COUNT_OFFSET_X, this.current_y + COUNT_OFFSET_Y, COUNT_CIRCLE_W, COUNT_CIRCLE_W);
 
-            FontHelper.renderFontCentered(sb, FontHelper.deckCountFont, msg, this.current_x + COUNT_X, this.current_y + COUNT_Y);
+            FontHelper.renderFontCentered(sb, FontHelper.speech_font, msg, this.current_x + COUNT_X, this.current_y + COUNT_Y);
             if (!this.isHidden) {
                 this.hb.render(sb);
                 if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.GAME_DECK_VIEW) {
@@ -207,9 +207,9 @@ public class OtherDrawPilePanel extends AbstractPanel {
 
             if (this.hb.hovered && !AbstractDungeon.isScreenUp && AbstractDungeon.getMonsters() != null && !AbstractDungeon.getMonsters().areMonstersDead()) {
                 if (!AbstractDungeon.player.hasRelic(FrozenEye.ID)) {
-                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, p.getOtherPlayerName() + TEXT[1], TEXT[2] + MathUtils.ceil(AbstractDungeon.player.gameHandSize / 2) + TEXT[3] + p.getOtherPlayerName() + TEXT[4]);
+                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, p.getOtherPlayerName() + TEXT[1], TEXT[2] + MathUtils.ceil(AbstractDungeon.player.gameHandSize / 2.0f) + TEXT[3] + p.getOtherPlayerName() + TEXT[4]);
                 } else {
-                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, p.getOtherPlayerName() + TEXT[1], TEXT[2] + MathUtils.ceil(AbstractDungeon.player.gameHandSize / 2) + TEXT[3] + p.getOtherPlayerName() + TEXT[5]);
+                    TipHelper.renderGenericTip(DECK_TIP_X, DECK_TIP_Y, p.getOtherPlayerName() + TEXT[1], TEXT[2] + MathUtils.ceil(AbstractDungeon.player.gameHandSize / 2.0f) + TEXT[3] + p.getOtherPlayerName() + TEXT[5]);
                 }
             }
         }

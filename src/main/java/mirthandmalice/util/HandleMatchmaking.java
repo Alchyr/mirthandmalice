@@ -6,6 +6,8 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.localization.UIStrings;
 import mirthandmalice.character.MirthAndMalice;
 
 import java.nio.ByteBuffer;
@@ -18,13 +20,18 @@ import static mirthandmalice.MirthAndMaliceMod.*;
 public class HandleMatchmaking implements SteamMatchmakingCallback {
     private final ByteBuffer chatMessage = ByteBuffer.allocateDirect(4096);
 
+    private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("Matchmaking"));
+    public static final String[] TEXT = uiStrings.TEXT;
+
     public static final String lobbyNameKey = "name";
-    public static final String hostIsMokouKey = "host_is_mokou";
+    public static final String hostIsMirthKey = "host_is_mirth";
     public static final String lobbyPublicKey = "is_public";
     public static final String lobbyPasswordKey = "password";
+    public static final String lobbyAscensionKey = "ascension";
     private static final String lobbyModsKey = "mod_list";
     private static final String lobbyCharacterKey = "character";
     private static final String lobbyKeysUnlockedKey = "final_act";
+
     public static final String metadataTrue = "true";
     public static final String metadataFalse = "false";
 
@@ -40,7 +47,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
     private static boolean triedFar;
     private static SteamID currentLobbyID;
 
-    public static boolean isMokou;
+    public static boolean isMirth;
 
     public static boolean isHost;
 
@@ -121,7 +128,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
         activeMultiplayer = false;
         if (currentLobbyID != null)
         {
-            chat.receiveMessage("Left lobby.");
+            chat.receiveMessage(TEXT[0]); //Left Lobby.
             logger.info("Left lobby " + currentLobbyID + ".");
             matchmaking.leaveLobby(currentLobbyID);
             currentLobbyID = null;
@@ -191,7 +198,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
     public void onLobbyEnter(SteamID steamIDLobby, int chatPermissions, boolean blocked, SteamMatchmaking.ChatRoomEnterResponse response) {
         if (joinorcreate)
         {
-            chat.receiveMessage("Entered game.");
+            chat.receiveMessage(TEXT[1]); //Entered game.
 
             logger.info("Lobby entered: " + steamIDLobby);
             logger.info("  - response: " + response);
@@ -205,7 +212,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
                 logger.info("    - " + i + ": accountID=" + member.getAccountID());
             }
 
-            isMokou = isHost ? isMokou : !matchmaking.getLobbyData(steamIDLobby, hostIsMokouKey).equals(metadataTrue);
+            isMirth = isHost ? isMirth : !matchmaking.getLobbyData(steamIDLobby, hostIsMirthKey).equals(metadataTrue);
 
             currentLobbyID = steamIDLobby;
             joinorcreate = false;
@@ -217,9 +224,9 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
             {
                 if (CardCrawlGame.characterManager.getAllCharacters().get(i) instanceof MirthAndMalice)
                 {
-                    if (((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).isMirth ^ isMokou) //doesn't match
+                    if (((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).isMirth ^ isMirth) //doesn't match
                     {
-                        ((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).setMirth(isMokou);
+                        ((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).setMirth(isMirth);
                     }
                 }
             }
@@ -228,11 +235,11 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
             {
                 //start game
                 //MultiplayerHelper.sendP2PString(hostID, "start");
-                BaseMod.setRichPresence("Playing as the Immortal and Guardian - Starting game...");
+                BaseMod.setRichPresence(TEXT[3]);
             }
             else
             {
-                BaseMod.setRichPresence("Playing as the Immortal and Guardian - In Lobby (" + numMembers + " / 2)");
+                BaseMod.setRichPresence(TEXT[2] + numMembers + " / 2)");
             }
         }
         else
@@ -405,7 +412,8 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
                 matchmaking.setLobbyData(steamIDLobby, lobbyCharacterKey, CardCrawlGame.chosenCharacter.name());
                 matchmaking.setLobbyData(steamIDLobby, lobbyPublicKey, lobbyMenu.publicRoom.enabled ? metadataTrue : metadataFalse);
                 matchmaking.setLobbyData(steamIDLobby, lobbyKeysUnlockedKey, Settings.isFinalActAvailable ? metadataTrue : metadataFalse);
-                matchmaking.setLobbyData(steamIDLobby, hostIsMokouKey, isMokou ? metadataTrue : metadataFalse);
+                matchmaking.setLobbyData(steamIDLobby, hostIsMirthKey, isMirth ? metadataTrue : metadataFalse);
+                matchmaking.setLobbyData(steamIDLobby, lobbyAscensionKey, AbstractDungeon.isAscensionMode ? String.valueOf(AbstractDungeon.ascensionLevel) : "0");
 
                 matchmaking.setLobbyData(steamIDLobby, lobbyNameKey, lobbyMenu.nameInput.getText());
 
@@ -420,7 +428,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
                 joinorcreate = false;
                 activeMultiplayer = true;
                 //matchmaking.joinLobby(steamIDLobby);
-                BaseMod.setRichPresence("Playing as the Immortal and Guardian - In Lobby (1 / 2)");
+                BaseMod.setRichPresence(TEXT[2] + "1 / 2)");
                 logger.info(currentUser.getSteamID());
             }
         }
