@@ -15,10 +15,7 @@ import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.events.city.Ghosts;
-import com.megacrit.cardcrawl.helpers.ModHelper;
-import com.megacrit.cardcrawl.helpers.SeedHelper;
-import com.megacrit.cardcrawl.helpers.TipTracker;
-import com.megacrit.cardcrawl.helpers.TrialHelper;
+import com.megacrit.cardcrawl.helpers.*;
 import com.megacrit.cardcrawl.localization.*;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.random.Random;
@@ -195,6 +192,8 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
     public static final Color MALICE_COLOR = new Color(0.3f, 0.25f, 0.25f, 1.0f);
     public static final Color GRAY_COLOR = new Color(0.45f, 0.45f, 0.45f, 1.0f);
 
+    private static final float PING_X_OFFSET = 50.0f;
+    private static final float PING_Y_OFFSET = 50.0f;
 
 
     public static String makeID(String partialID)
@@ -493,6 +492,11 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
 
         if (lobbyMenu != null)
             lobbyMenu.render(sb);
+
+        if (MultiplayerHelper.active)
+        {
+            FontHelper.renderFont(sb, FontHelper.tipBodyFont, "Ping: " + MultiplayerHelper.lastPing, Settings.WIDTH / 2.0f - PING_X_OFFSET, PING_Y_OFFSET, Color.WHITE.cpy());
+        }
     }
 
     public MirthAndMaliceMod()

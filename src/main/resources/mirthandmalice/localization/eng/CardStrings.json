@@ -15,6 +15,14 @@
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block."
   },
+  "mirthandmalice:Smack": {
+    "NAME": "Smack",
+    "DESCRIPTION": "Deal !D! damage."
+  },
+  "mirthandmalice:Mercurial": {
+    "NAME": "Mercurial",
+    "DESCRIPTION": "Deal !D! damage. NL Both of you draw a card and discard a card."
+  },
   "mirthandmalice:Originate": {
     "NAME": "Originate",
     "DESCRIPTION": "Add a copy of a random card in your hand to your partner's hand. NL It costs 1 less this combat.",

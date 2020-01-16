@@ -1,5 +1,6 @@
 package mirthandmalice.util;
 
+import com.badlogic.gdx.Gdx;
 import com.codedisaster.steamworks.SteamID;
 import com.codedisaster.steamworks.SteamNetworking;
 import com.codedisaster.steamworks.SteamNetworkingCallback;
@@ -69,6 +70,8 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
     public static ArrayList<String> otherPlayerPotions = new ArrayList<>();
     public static int otherPlayerGold = -1; //set at start of run
 
+    private static float ping = 0;
+    public static float lastPing = 0;
 
     public static void init()
     {
@@ -144,14 +147,16 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                     if (communication.readP2PPacket(sender, packetReceiveBuffer, defaultChannel) > 0)
                     {
                         int received = packetReceiveBuffer.limit();
-                        logger.info("Received " + received + " bytes from " + sender.getAccountID());
+                        //logger.info("Received " + received + " bytes from " + sender.getAccountID());
 
                         String msg = CHARSET.decode(packetReceiveBuffer).toString();
-                        logger.info("Message: " + msg);
+                        if (!msg.equals("ping")) //don't want to spam logger with the pings
+                            logger.info("Received message: " + msg);
 
                         processMessage(sender, msg);
                     }
                 }
+                ping += Gdx.graphics.getDeltaTime();
             }
         }
         catch (Exception e)
@@ -163,7 +168,13 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
     private static void processMessage(SteamID sender, String msg)
     {
         //Note to future self: Use 3 character code as first three characters of message so that you can just use a switch.
-        if (msg.startsWith("chat_message"))
+        if (msg.equals("ping"))
+        {
+            lastPing = ping;
+            ping = 0;
+            sendP2PString("ping");
+        }
+        else if (msg.startsWith("chat_message"))
         {
             msg = msg.substring(12);
             chat.receiveMessage(msg);
@@ -575,6 +586,9 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                 logger.info("Connection established.");
                 HandleMatchmaking.leave();
                 sendP2PString("leave");
+                sendP2PString("ping");
+                ping = 0;
+                lastPing = 0;
                 beginGameStartTimer();
             }
             else

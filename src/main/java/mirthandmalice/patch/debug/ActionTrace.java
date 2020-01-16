@@ -3,7 +3,6 @@ package mirthandmalice.patch.debug;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import javassist.CtBehavior;
 
 import static mirthandmalice.MirthAndMaliceMod.FULL_DEBUG;
@@ -27,14 +26,21 @@ public class ActionTrace {
             {
                 logger.debug("Action Queue:");
                 int position = 0;
+                StringBuilder queueString = new StringBuilder("Queue:\n");
                 for (AbstractGameAction gameAction : __instance.actions)
                 {
-                    logger.debug(position+++ ": " + gameAction.getClass().getName());
+                    queueString.append(position++).append(": ").append(gameAction.getClass().getName());
                 }
+
+                logger.info(queueString.toString());
             }
         }
     }
 
+    @SpirePatch(
+            clz = GameActionManager.class,
+            method = "update"
+    )
     public static class COMPLETION
     {
         @SpireInsertPatch(
@@ -44,7 +50,7 @@ public class ActionTrace {
         {
             if (FULL_DEBUG && __instance.previousAction != null)
             {
-                logger.debug("Action complete: " + __instance.previousAction.getClass().getName());
+                logger.info("Action complete: " + __instance.previousAction.getClass().getName() + ". Remaining actions: " + __instance.actions.size());
             }
         }
 
