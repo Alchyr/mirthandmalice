@@ -1,6 +1,7 @@
 package mirthandmalice.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 import com.codedisaster.steamworks.SteamID;
 import com.codedisaster.steamworks.SteamNetworking;
 import com.codedisaster.steamworks.SteamNetworkingCallback;
@@ -71,7 +72,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
     public static int otherPlayerGold = -1; //set at start of run
 
     private static float ping = 0;
-    public static float lastPing = 0;
+    public static int lastPing = 0;
 
     public static void init()
     {
@@ -103,7 +104,9 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
 
             packetSendBuffer.flip();
 
-            logger.info("Sending P2P message: " + msg);
+            if (!msg.equals("ping"))
+                logger.info("Sending P2P message: " + msg);
+
             communication.sendP2PPacket(dest, packetSendBuffer, SteamNetworking.P2PSend.Reliable, defaultChannel);
             currentPartner = dest;
         }
@@ -146,7 +149,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
 
                     if (communication.readP2PPacket(sender, packetReceiveBuffer, defaultChannel) > 0)
                     {
-                        int received = packetReceiveBuffer.limit();
+                        //int received = packetReceiveBuffer.limit();
                         //logger.info("Received " + received + " bytes from " + sender.getAccountID());
 
                         String msg = CHARSET.decode(packetReceiveBuffer).toString();
@@ -157,6 +160,13 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                     }
                 }
                 ping += Gdx.graphics.getDeltaTime();
+
+                if (ping > 1)
+                {
+                    ping = 0;
+                    lastPing = 999;
+                    sendP2PString("ping");
+                }
             }
         }
         catch (Exception e)
@@ -170,7 +180,10 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         //Note to future self: Use 3 character code as first three characters of message so that you can just use a switch.
         if (msg.equals("ping"))
         {
-            lastPing = ping;
+            if (lastPing != 999)
+            {
+                lastPing = MathUtils.floor(1000 * ping); //convert to milliseconds
+            }
             ping = 0;
             sendP2PString("ping");
         }

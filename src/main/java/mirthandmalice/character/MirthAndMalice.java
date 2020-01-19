@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.EmptyDeckShuffleAction;
-import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.curses.AscendersBane;
@@ -37,14 +36,10 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BurningBlood;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
-import com.megacrit.cardcrawl.stances.WrathStance;
 import com.megacrit.cardcrawl.ui.panels.TopPanel;
 import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbInterface;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.CardDisappearEffect;
-import com.megacrit.cardcrawl.vfx.stance.CalmParticleEffect;
-import com.megacrit.cardcrawl.vfx.stance.DivinityParticleEffect;
-import com.megacrit.cardcrawl.vfx.stance.WrathParticleEffect;
 import mirthandmalice.actions.character.OtherPlayerDeckShuffleAction;
 import mirthandmalice.cards.malice.basic.MaliceDefend;
 import mirthandmalice.cards.malice.basic.MaliceStrike;
@@ -55,6 +50,7 @@ import mirthandmalice.cards.mirth.basic.MirthStrike;
 import mirthandmalice.cards.mirth.basic.Scorch;
 import mirthandmalice.effects.MaliceParticleEffect;
 import mirthandmalice.effects.MirthMaliceAuraEffect;
+import mirthandmalice.effects.MirthParticleEffect;
 import mirthandmalice.patch.energy_division.SetEnergyGain;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
@@ -237,7 +233,7 @@ public class MirthAndMalice extends CustomPlayer {
             manifestSmallParticleTimer += MathUtils.random(0.05f, 0.01f);
             if (ManifestField.mirthManifested.get(this))
             {
-                AbstractDungeon.effectsQueue.add(new CalmParticleEffect());
+                AbstractDungeon.effectsQueue.add(new MirthParticleEffect());
             }
             else
             {

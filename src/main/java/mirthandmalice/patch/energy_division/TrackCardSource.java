@@ -7,6 +7,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import javassist.CtBehavior;
 import mirthandmalice.actions.character.DontUseSpecificEnergyAction;
+import mirthandmalice.actions.character.ManifestAction;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.card_use.DiscardToCorrectPile;
 import mirthandmalice.patch.enums.CharacterEnums;
@@ -34,10 +35,18 @@ public class TrackCardSource {
             if (__instance instanceof MirthAndMalice) {
                 if (DiscardToCorrectPile.useOtherDiscard) //Takes advantage of same code that decides where cards go when played
                 {
+                    if (c.type == AbstractCard.CardType.ATTACK)
+                    {
+                        AbstractDungeon.actionManager.addToBottom(new ManifestAction(!((MirthAndMalice) __instance).isMirth));
+                    }
                     useOtherEnergy = true;
                 }
-                else
+                else //use own discard
                 {
+                    if (c.type == AbstractCard.CardType.ATTACK)
+                    {
+                        AbstractDungeon.actionManager.addToBottom(new ManifestAction(((MirthAndMalice) __instance).isMirth));
+                    }
                     useMyEnergy = true;
                 }
             }
