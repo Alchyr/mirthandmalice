@@ -16,6 +16,7 @@ import com.megacrit.cardcrawl.ui.campfire.AbstractCampfireOption;
 import com.megacrit.cardcrawl.ui.campfire.RestOption;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect;
 import javassist.CtBehavior;
+import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.enums.CharacterEnums;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
@@ -36,7 +37,7 @@ public class AdjustRestAmount {
         )
         public static void adjustAmount(RestOption __instance, boolean active, @ByRef int[] healAmt)
         {
-            if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE);
+            if (AbstractDungeon.player instanceof MirthAndMalice);
             {
                 healAmt[0] = MathUtils.round(healAmt[0] * 0.5f); //30% -> 15% or 100% -> 50%
             }
@@ -48,7 +49,7 @@ public class AdjustRestAmount {
         )
         public static void adjustDescription(RestOption __instance, boolean active, int healAmt)
         {
-            if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE);
+            if (AbstractDungeon.player instanceof MirthAndMalice);
             {
                 String text;
                 if (ModHelper.isModEnabled(NightTerrors.ID)) {

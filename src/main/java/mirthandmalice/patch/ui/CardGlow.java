@@ -14,6 +14,7 @@ import com.megacrit.cardcrawl.vfx.cardManip.CardGlowBorder;
 import mirthandmalice.patch.card_use.LastCardType;
 import mirthandmalice.patch.combat.BurstActive;
 import mirthandmalice.patch.enums.CustomCardTags;
+import mirthandmalice.patch.manifestation.ManifestField;
 
 import java.lang.reflect.Field;
 
@@ -26,30 +27,32 @@ import static mirthandmalice.MirthAndMaliceMod.logger;
 )
 public class CardGlow {
     private static Field hoveredMonsterField;
+    private static Field colorField;
 
     static {
         try {
             hoveredMonsterField = AbstractPlayer.class.getDeclaredField("hoveredMonster");
             hoveredMonsterField.setAccessible(true);
+
+            colorField = AbstractGameEffect.class.getDeclaredField("color");
+            colorField.setAccessible(true);
         }
         catch (Exception e) {
-            logger.error("Failed to initialize Field hoveredMonster of AbstractPlayer.");
-            logger.error(e.getMessage());
+            logger.error("Failed to initialize a Field for color patch.", e);
         }
     }
 
     @SpirePostfixPatch
-    public static void PostFix(CardGlowBorder __instance, AbstractCard c)
-    {
+    public static void PostFix(CardGlowBorder __instance, AbstractCard c) throws IllegalAccessException {
         if (AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT) {
             if (c.hasTag(CustomCardTags.MK_ECHO_ATTACK) && LastCardType.type == AbstractCard.CardType.ATTACK) {
-                ReflectionHacks.setPrivate(__instance, AbstractGameEffect.class, "color", Color.RED.cpy());
+                colorField.set(__instance, Color.RED.cpy());
             }
             if (c.hasTag(CustomCardTags.MK_ECHO_SKILL) && LastCardType.type == AbstractCard.CardType.SKILL) {
-                ReflectionHacks.setPrivate(__instance, AbstractGameEffect.class, "color", Color.GREEN.cpy());
+                colorField.set(__instance, Color.GREEN.cpy());
             }
             if (c.hasTag(CustomCardTags.MK_ECHO_POWER) && LastCardType.type == AbstractCard.CardType.POWER) {
-                ReflectionHacks.setPrivate(__instance, AbstractGameEffect.class, "color", Color.GOLD.cpy());
+                colorField.set(__instance, Color.GOLD.cpy());
             }
 
             if ((c.target == AbstractCard.CardTarget.ENEMY || c.target == AbstractCard.CardTarget.SELF_AND_ENEMY) &&
@@ -62,7 +65,7 @@ public class CardGlow {
                     {
                         if (BurstActive.active.get(target))
                         {
-                            ReflectionHacks.setPrivate(__instance, AbstractGameEffect.class, "color", Color.RED.cpy());
+                            colorField.set(__instance, Color.RED.cpy());
                         }
                     }
                     else
@@ -81,7 +84,7 @@ public class CardGlow {
                         {
                             if (BurstActive.active.get(target))
                             {
-                                ReflectionHacks.setPrivate(__instance, AbstractGameEffect.class, "color", Color.RED.cpy());
+                                colorField.set(__instance, Color.RED.cpy());
                             }
                         }
                     }
@@ -89,6 +92,15 @@ public class CardGlow {
                 catch (Exception e) {
                     logger.error(e.getMessage());
                 }
+            }
+
+            if (!ManifestField.isManifested())
+            {
+                Color color = (Color) colorField.get(__instance);
+
+                color.r *= 0.75f;
+                color.g *= 0.75f;
+                color.b *= 0.75f;
             }
         }
     }

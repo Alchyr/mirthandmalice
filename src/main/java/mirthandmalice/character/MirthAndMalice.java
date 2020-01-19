@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.EmptyDeckShuffleAction;
+import com.megacrit.cardcrawl.actions.watcher.ChangeStanceAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.cards.curses.AscendersBane;
@@ -36,10 +37,14 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.relics.BurningBlood;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.screens.CharSelectInfo;
+import com.megacrit.cardcrawl.stances.WrathStance;
 import com.megacrit.cardcrawl.ui.panels.TopPanel;
 import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbInterface;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.CardDisappearEffect;
+import com.megacrit.cardcrawl.vfx.stance.CalmParticleEffect;
+import com.megacrit.cardcrawl.vfx.stance.DivinityParticleEffect;
+import com.megacrit.cardcrawl.vfx.stance.WrathParticleEffect;
 import mirthandmalice.actions.character.OtherPlayerDeckShuffleAction;
 import mirthandmalice.cards.malice.basic.MaliceDefend;
 import mirthandmalice.cards.malice.basic.MaliceStrike;
@@ -48,10 +53,13 @@ import mirthandmalice.cards.malice.uncommon.Forget;
 import mirthandmalice.cards.mirth.basic.MirthDefend;
 import mirthandmalice.cards.mirth.basic.MirthStrike;
 import mirthandmalice.cards.mirth.basic.Scorch;
+import mirthandmalice.effects.MaliceParticleEffect;
+import mirthandmalice.effects.MirthMaliceAuraEffect;
 import mirthandmalice.patch.energy_division.SetEnergyGain;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
 import mirthandmalice.patch.game_initialize.EnergyFontGen;
+import mirthandmalice.patch.manifestation.ManifestField;
 import mirthandmalice.ui.AstrologerOrb;
 import mirthandmalice.ui.MokouOrb;
 import mirthandmalice.ui.OtherEnergyPanel;
@@ -79,6 +87,8 @@ public class MirthAndMalice extends CustomPlayer {
     private static final String SpritePath = assetPath("img/character/spriter/Character.scml");
 
     public boolean isMirth;
+    private float manifestParticleTimer = 0;
+    private float manifestSmallParticleTimer = 0;
 
     private AbstractCard.CardColor cardColor;
     private BitmapFont energyFont;
@@ -213,6 +223,33 @@ public class MirthAndMalice extends CustomPlayer {
         this.mirthDraw = true;
 
         super.preBattlePrep();
+    }
+
+    @Override
+    public void combatUpdate() {
+        super.combatUpdate();
+
+        manifestParticleTimer -= Gdx.graphics.getDeltaTime();
+        manifestSmallParticleTimer -= Gdx.graphics.getDeltaTime();
+
+        while (manifestSmallParticleTimer <= 0.0f)
+        {
+            manifestSmallParticleTimer += MathUtils.random(0.05f, 0.01f);
+            if (ManifestField.mirthManifested.get(this))
+            {
+                AbstractDungeon.effectsQueue.add(new CalmParticleEffect());
+            }
+            else
+            {
+                AbstractDungeon.effectsQueue.add(new MaliceParticleEffect());
+            }
+        }
+
+        if (manifestParticleTimer <= 0.0f)
+        {
+            manifestParticleTimer = MathUtils.random(0.3F, 0.4F);
+            AbstractDungeon.effectList.add(new MirthMaliceAuraEffect(ManifestField.mirthManifested.get(this)));
+        }
     }
 
     @Override
