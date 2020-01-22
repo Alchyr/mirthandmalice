@@ -41,13 +41,17 @@ import com.megacrit.cardcrawl.ui.panels.energyorb.EnergyOrbInterface;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import com.megacrit.cardcrawl.vfx.cardManip.CardDisappearEffect;
 import mirthandmalice.actions.character.OtherPlayerDeckShuffleAction;
+import mirthandmalice.cards.malice.basic.Caution;
 import mirthandmalice.cards.malice.basic.MaliceDefend;
 import mirthandmalice.cards.malice.basic.MaliceStrike;
-import mirthandmalice.cards.malice.basic.Originate;
+import mirthandmalice.cards.malice.basic.Wilt;
+import mirthandmalice.cards.malice.uncommon.Originate;
 import mirthandmalice.cards.malice.uncommon.Forget;
+import mirthandmalice.cards.mirth.basic.ImitatedInnocence;
+import mirthandmalice.cards.mirth.basic.Indulgence;
 import mirthandmalice.cards.mirth.basic.MirthDefend;
 import mirthandmalice.cards.mirth.basic.MirthStrike;
-import mirthandmalice.cards.mirth.basic.Scorch;
+import mirthandmalice.cards.mirth.common.Scorch;
 import mirthandmalice.effects.MaliceParticleEffect;
 import mirthandmalice.effects.MirthMaliceAuraEffect;
 import mirthandmalice.effects.MirthParticleEffect;
@@ -230,13 +234,14 @@ public class MirthAndMalice extends CustomPlayer {
 
         while (manifestSmallParticleTimer <= 0.0f)
         {
-            manifestSmallParticleTimer += MathUtils.random(0.05f, 0.01f);
             if (ManifestField.mirthManifested.get(this))
             {
+                manifestSmallParticleTimer += MathUtils.random(0.05f, 0.02f);
                 AbstractDungeon.effectsQueue.add(new MirthParticleEffect());
             }
             else
             {
+                manifestSmallParticleTimer += MathUtils.random(0.1f, 0.15f);
                 AbstractDungeon.effectsQueue.add(new MaliceParticleEffect());
             }
         }
@@ -1191,40 +1196,40 @@ public class MirthAndMalice extends CustomPlayer {
             startDeck.add(MirthStrike.ID);
             startDeck.add(MirthStrike.ID);
             startDeck.add(MirthStrike.ID);
-            startDeck.add(MirthStrike.ID);
             startDeck.add(MirthDefend.ID);
             startDeck.add(MirthDefend.ID);
             startDeck.add(MirthDefend.ID);
-            startDeck.add(Scorch.ID);
+            startDeck.add(Indulgence.ID);
+            startDeck.add(ImitatedInnocence.ID);
 
             otherPlayerMasterDeck.group.add(new MaliceStrike());
             otherPlayerMasterDeck.group.add(new MaliceStrike());
             otherPlayerMasterDeck.group.add(new MaliceStrike());
-            otherPlayerMasterDeck.group.add(new MaliceStrike());
             otherPlayerMasterDeck.group.add(new MaliceDefend());
             otherPlayerMasterDeck.group.add(new MaliceDefend());
             otherPlayerMasterDeck.group.add(new MaliceDefend());
-            otherPlayerMasterDeck.group.add(new Originate());
+            otherPlayerMasterDeck.group.add(new Caution());
+            otherPlayerMasterDeck.group.add(new Wilt());
         }
         else
         {
             startDeck.add(MaliceStrike.ID);
             startDeck.add(MaliceStrike.ID);
             startDeck.add(MaliceStrike.ID);
-            startDeck.add(MaliceStrike.ID);
             startDeck.add(MaliceDefend.ID);
             startDeck.add(MaliceDefend.ID);
             startDeck.add(MaliceDefend.ID);
-            startDeck.add(Originate.ID);
+            startDeck.add(Caution.ID);
+            startDeck.add(Wilt.ID);
 
             otherPlayerMasterDeck.group.add(new MirthStrike());
             otherPlayerMasterDeck.group.add(new MirthStrike());
             otherPlayerMasterDeck.group.add(new MirthStrike());
-            otherPlayerMasterDeck.group.add(new MirthStrike());
             otherPlayerMasterDeck.group.add(new MirthDefend());
             otherPlayerMasterDeck.group.add(new MirthDefend());
             otherPlayerMasterDeck.group.add(new MirthDefend());
-            otherPlayerMasterDeck.group.add(new Scorch());
+            otherPlayerMasterDeck.group.add(new Indulgence());
+            otherPlayerMasterDeck.group.add(new ImitatedInnocence());
         }
 
         return startDeck;
@@ -1261,8 +1266,8 @@ public class MirthAndMalice extends CustomPlayer {
 
     @Override
     public int getAscensionMaxHPLoss() {
-        return 6;
-    }
+        return 10;
+    } //a bit much, perhaps? But, this character will be quite overtuned at low ascension.
 
     @Override
     public AbstractCard.CardColor getCardColor() {
@@ -1309,12 +1314,14 @@ public class MirthAndMalice extends CustomPlayer {
     @Override
     public AbstractGameAction.AttackEffect[] getSpireHeartSlashEffect() {
         return new AbstractGameAction.AttackEffect[] {
-                AbstractGameAction.AttackEffect.FIRE,
                 AbstractGameAction.AttackEffect.POISON,
-                AbstractGameAction.AttackEffect.FIRE,
+                AbstractGameAction.AttackEffect.SLASH_DIAGONAL,
                 AbstractGameAction.AttackEffect.POISON,
-                AbstractGameAction.AttackEffect.FIRE,
-                AbstractGameAction.AttackEffect.POISON
+                AbstractGameAction.AttackEffect.POISON,
+                AbstractGameAction.AttackEffect.SLASH_HORIZONTAL,
+                AbstractGameAction.AttackEffect.SLASH_VERTICAL,
+                AbstractGameAction.AttackEffect.POISON,
+                AbstractGameAction.AttackEffect.SLASH_HEAVY
         };
     }
 

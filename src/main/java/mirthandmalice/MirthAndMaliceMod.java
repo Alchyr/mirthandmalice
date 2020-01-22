@@ -25,6 +25,7 @@ import javassist.CtClass;
 import javassist.NotFoundException;
 import mirthandmalice.actions.cards._IMPROVE;
 import mirthandmalice.patch.manifestation.ManifestField;
+import mirthandmalice.patch.ui.ManifestTip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.clapper.util.classutil.*;
@@ -195,7 +196,7 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
     public static final Color GRAY_COLOR = new Color(0.45f, 0.45f, 0.45f, 1.0f);
 
     private static final float PING_X_OFFSET = 50.0f;
-    private static final float PING_Y_OFFSET = 50.0f;
+    private static final float PING_Y_OFFSET = 30.0f;
 
 
     public static String makeID(String partialID)
@@ -585,6 +586,10 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
 
             if (keywords != null) {
                 for (KeywordWithProper keyword : keywords) {
+                    if (keyword.ID.equals("Manifest")) //for the sake of localization
+                    {
+                        ManifestTip.manifestKeyword = keyword.NAMES[0];
+                    }
                     BaseMod.addKeyword(prefix, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
                 }
             }
@@ -597,6 +602,10 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
 
             if (keywords != null) {
                 for (KeywordWithProper keyword : keywords) {
+                    if (keyword.ID.equals("Manifest")) //for the sake of localization
+                    {
+                        ManifestTip.manifestKeyword = keyword.NAMES[0];
+                    }
                     BaseMod.addKeyword(prefix, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
                 }
             }

@@ -33,7 +33,7 @@ public class MaliceParticleEffect extends AbstractGameEffect {
         this.color = new Color(MathUtils.random(0.3F, 0.6F), MathUtils.random(0.4F, 0.7F), MathUtils.random(0.3F, 0.6F), 0.0F);
 
         float distance = MathUtils.random(MIN_OFFSET, MAX_OFFSET) * (MathUtils.randomBoolean() ? 1 : -1);
-        this.rotation = MathUtils.random(-MathUtils.PI, MathUtils.PI);
+        this.rotation = MathUtils.random(0, MathUtils.PI2);
 
         this.x = AbstractDungeon.player.hb.cX + MathUtils.cos(rotation) * distance;
         this.y = AbstractDungeon.player.hb.cY + MathUtils.sin(rotation) * distance;

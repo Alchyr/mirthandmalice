@@ -12,9 +12,20 @@ import mirthandmalice.patch.manifestation.ManifestField;
 public class ManifestAction extends AbstractGameAction {
     private boolean toMirth;
 
-    public ManifestAction(boolean toMirth)
+    /*public ManifestAction(boolean toMirth)
     {
         this.toMirth = toMirth;
+    }*/
+    public ManifestAction(boolean toOther)
+    {
+        if (AbstractDungeon.player instanceof MirthAndMalice)
+        {
+            this.toMirth = !(((MirthAndMalice) AbstractDungeon.player).isMirth && toOther);
+        }
+        else
+        {
+            this.toMirth = true;
+        }
     }
 
     @Override
@@ -23,7 +34,7 @@ public class ManifestAction extends AbstractGameAction {
         {
             ManifestField.mirthManifested.set(AbstractDungeon.player, toMirth);
 
-            CardCrawlGame.sound.playAV("ORB_DARK_CHANNEL", MathUtils.random(-0.15f, 0.15f),0.6f);
+            CardCrawlGame.sound.playAV("ORB_DARK_CHANNEL", toMirth ? MathUtils.random(0.3f, 0.4f) : MathUtils.random(-0.3f, -0.2f),0.8f);
 
             AbstractDungeon.actionManager.addToTop(new UpdateHandAction());
             AbstractDungeon.actionManager.addToTop(new WaitAction(0.3f));

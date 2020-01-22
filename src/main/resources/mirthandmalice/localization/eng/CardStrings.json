@@ -15,6 +15,22 @@
     "NAME": "Defend",
     "DESCRIPTION": "Gain !B! Block."
   },
+  "mirthandmalice:Caution": {
+    "NAME": "Caution",
+    "DESCRIPTION": "Gain !B! Block. NL mirthmalice:Fade."
+  },
+  "mirthandmalice:Wilt": {
+    "NAME": "Wilt",
+    "DESCRIPTION": "Apply !M! mirthmalice:Atrophy."
+  },
+  "mirthandmalice:Indulgence": {
+    "NAME": "Indulgence",
+    "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthmalice:Fade."
+  },
+  "mirthandmalice:ImitatedInnocence": {
+    "NAME": "Imitated Innocence",
+    "DESCRIPTION": "mirthandmalice:Aria. NL Gain !B! Block."
+  },
   "mirthandmalice:Smack": {
     "NAME": "Smack",
     "DESCRIPTION": "Deal !D! damage."

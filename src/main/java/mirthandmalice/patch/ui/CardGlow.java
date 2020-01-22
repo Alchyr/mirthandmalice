@@ -98,9 +98,9 @@ public class CardGlow {
             {
                 Color color = (Color) colorField.get(__instance);
 
-                color.r *= 0.75f;
-                color.g *= 0.75f;
-                color.b *= 0.75f;
+                color.r = (color.r + 0.8f) / 2.0f;
+                color.g *= 0.3f;
+                color.b *= 0.3f;
             }
         }
     }

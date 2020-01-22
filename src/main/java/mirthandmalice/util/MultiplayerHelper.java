@@ -161,11 +161,11 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                 }
                 ping += Gdx.graphics.getDeltaTime();
 
-                if (ping > 1)
+                if (ping > 5)
                 {
                     ping = 0;
                     lastPing = 999;
-                    sendP2PString("ping");
+                    //sendP2PString("ping");
                 }
             }
         }
@@ -180,10 +180,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         //Note to future self: Use 3 character code as first three characters of message so that you can just use a switch.
         if (msg.equals("ping"))
         {
-            if (lastPing != 999)
-            {
-                lastPing = MathUtils.floor(1000 * ping); //convert to milliseconds
-            }
+            lastPing = MathUtils.floor(500 * (lastPing / 1000.0f + ping)); //convert to milliseconds average
             ping = 0;
             sendP2PString("ping");
         }

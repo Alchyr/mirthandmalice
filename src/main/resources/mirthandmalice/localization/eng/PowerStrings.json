@@ -6,6 +6,21 @@
       " #yWeak."
     ]
   },
+  "mirthandmalice:Atrophy": {
+    "NAME": "Atrophy",
+    "DESCRIPTIONS": [
+      "Loses #b",
+      " HP when you debuff it."
+    ]
+  },
+  "mirthandmalice:Excess": {
+    "NAME": "Excess",
+    "DESCRIPTIONS": [
+      "At the start of your turn, lose #b",
+      " HP, then remove all #yExcess.",
+      "At the start of its turn, loses #b"
+    ]
+  },
   "mirthandmalice:Weight": {
     "NAME": "Weight",
     "DESCRIPTIONS": [

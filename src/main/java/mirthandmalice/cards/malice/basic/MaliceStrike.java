@@ -24,7 +24,7 @@ public class MaliceStrike extends MaliceCard {
     //1 [0] - Whenever the enemy takes damage this turn, apply 1 Weak to it.
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int DAMAGE = 6;
+    private static final int DAMAGE = 5;
     private static final int UPG_DAMAGE = 3;
 
     public MaliceStrike()

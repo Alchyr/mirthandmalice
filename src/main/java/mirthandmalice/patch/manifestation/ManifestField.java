@@ -11,6 +11,7 @@ import mirthandmalice.character.MirthAndMalice;
         method = SpirePatch.CLASS
 )
 public class ManifestField {
+    //Code to change who is manifested upon playing an attack can be found in TrackCardSource
     public static SpireField<Boolean> mirthManifested = new SpireField<>(()->true);
 
     public static boolean isManifested()

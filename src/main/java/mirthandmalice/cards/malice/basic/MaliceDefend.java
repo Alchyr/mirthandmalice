@@ -15,9 +15,9 @@ public class MaliceDefend extends MaliceCard {
     private final static CardInfo cardInfo = new CardInfo(
             "K_Defend",
             1,
-            AbstractCard.CardType.SKILL,
-            AbstractCard.CardTarget.NONE,
-            AbstractCard.CardRarity.BASIC
+            CardType.SKILL,
+            CardTarget.SELF,
+            CardRarity.BASIC
     );
 
     public final static String ID = makeID(cardInfo.cardName);
