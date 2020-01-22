@@ -9,6 +9,9 @@ import mirthandmalice.actions.general.UpdateHandAction;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.manifestation.ManifestField;
 
+import static mirthandmalice.MirthAndMaliceMod.FULL_DEBUG;
+import static mirthandmalice.MirthAndMaliceMod.logger;
+
 public class ManifestAction extends AbstractGameAction {
     private boolean toMirth;
 
@@ -20,11 +23,23 @@ public class ManifestAction extends AbstractGameAction {
     {
         if (AbstractDungeon.player instanceof MirthAndMalice)
         {
-            this.toMirth = !(((MirthAndMalice) AbstractDungeon.player).isMirth && toOther);
+            if (((MirthAndMalice) AbstractDungeon.player).isMirth)
+            {
+                this.toMirth = !toOther;
+            }
+            else
+            {
+                this.toMirth = toOther;
+            }
         }
         else
         {
             this.toMirth = true;
+        }
+
+        if (FULL_DEBUG)
+        {
+            logger.info("Manifest action: To " + (toMirth ? "Mirth" : "Malice"));
         }
     }
 

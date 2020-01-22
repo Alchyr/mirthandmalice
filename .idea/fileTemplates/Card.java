@@ -2,7 +2,7 @@
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
-import mirthandmalice.abstracts.#if ( ${PACKAGE_NAME.contains( "neutral" )})NeutralCard#elseif ( ${PACKAGE_NAME.contains( "mirth" )})MirthCard#else MaliceCard#end;
+import mirthandmalice.abstracts.#if ( ${PACKAGE_NAME.contains( "neutral" )})NeutralCard#elseif ( ${PACKAGE_NAME.contains( "cards.mirth" )})MirthCard#else MaliceCard#end;
 import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;

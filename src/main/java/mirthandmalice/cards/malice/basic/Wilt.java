@@ -14,7 +14,7 @@ public class Wilt extends MirthCard {
             "Wilt",
             0,
             CardType.SKILL,
-            CardTarget.NONE,
+            CardTarget.ENEMY,
             CardRarity.BASIC);
     // s
 

@@ -12,6 +12,8 @@ import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.card_use.DiscardToCorrectPile;
 import mirthandmalice.patch.enums.CharacterEnums;
 
+import static mirthandmalice.MirthAndMaliceMod.logger;
+
 public class TrackCardSource {
     public static boolean useOtherEnergy = false;
     public static boolean useMyEnergy = false;

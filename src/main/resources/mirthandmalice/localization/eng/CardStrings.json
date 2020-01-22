@@ -17,15 +17,15 @@
   },
   "mirthandmalice:Caution": {
     "NAME": "Caution",
-    "DESCRIPTION": "Gain !B! Block. NL mirthmalice:Fade."
+    "DESCRIPTION": "Gain !B! Block. NL mirthandmalice:Fade."
   },
   "mirthandmalice:Wilt": {
     "NAME": "Wilt",
-    "DESCRIPTION": "Apply !M! mirthmalice:Atrophy."
+    "DESCRIPTION": "Apply !M! mirthandmalice:Atrophy."
   },
   "mirthandmalice:Indulgence": {
     "NAME": "Indulgence",
-    "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthmalice:Fade."
+    "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthandmalice:Fade."
   },
   "mirthandmalice:ImitatedInnocence": {
     "NAME": "Imitated Innocence",

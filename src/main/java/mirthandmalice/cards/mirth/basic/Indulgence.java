@@ -15,7 +15,7 @@ public class Indulgence extends MirthCard {
             "Indulgence",
             2,
             CardType.ATTACK,
-            CardTarget.NONE,
+            CardTarget.ENEMY,
             CardRarity.BASIC);
     // attack
 
