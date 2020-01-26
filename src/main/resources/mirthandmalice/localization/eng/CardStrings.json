@@ -31,6 +31,11 @@
     "NAME": "Imitated Innocence",
     "DESCRIPTION": "mirthandmalice:Aria. NL Gain !B! Block."
   },
+  "mirthandmalice:Futility": {
+    "NAME": "Futility",
+    "DESCRIPTION": "mirthandmalice:Aria. NL Gain !M! Weak.",
+    "UPGRADE_DESCRIPTION": "mirthandmalice:Aria. NL Gain !M! Weak. NL Draw a card."
+  },
   "mirthandmalice:Smack": {
     "NAME": "Smack",
     "DESCRIPTION": "Deal !D! damage."
@@ -116,8 +121,8 @@
     "NAME": "Chronicle",
     "DESCRIPTION": "Whenever you draw a card that did not start in your deck, gain !M! Strength."
   },
-  "mirthandmalice:Protect": {
-    "NAME": "Protect",
+  "mirthandmalice:Guard": {
+    "NAME": "Guard",
     "DESCRIPTION": "Gain !B! Block for each card in your partner's hand."
   },
   "mirthandmalice:Prosperity": {

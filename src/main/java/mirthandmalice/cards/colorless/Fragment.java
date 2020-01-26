@@ -11,9 +11,11 @@ import mirthandmalice.abstracts.BaseCard;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.enums.CustomCardTags;
 import mirthandmalice.util.CardInfo;
+import mirthandmalice.util.annotations.Disabled;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
+@Disabled
 public class Fragment extends BaseCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Fragment",

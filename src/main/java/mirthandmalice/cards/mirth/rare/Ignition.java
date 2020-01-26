@@ -8,9 +8,11 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MirthCard;
 import mirthandmalice.powers.IgnitionPower;
 import mirthandmalice.util.CardInfo;
+import mirthandmalice.util.annotations.Disabled;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
+@Disabled
 public class Ignition extends MirthCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Ignition",

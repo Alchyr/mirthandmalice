@@ -10,9 +10,11 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MirthCard;
 import mirthandmalice.actions.character.SummonSparkAction;
 import mirthandmalice.util.CardInfo;
+import mirthandmalice.util.annotations.Disabled;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
+@Disabled
 public class Warmup extends MirthCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Warmup",

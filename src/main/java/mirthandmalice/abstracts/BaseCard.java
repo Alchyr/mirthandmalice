@@ -2,10 +2,7 @@ package mirthandmalice.abstracts;
 
 import basemod.abstracts.CustomCard;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
-import com.megacrit.cardcrawl.actions.common.ApplyPowerAction;
-import com.megacrit.cardcrawl.actions.common.DamageAction;
-import com.megacrit.cardcrawl.actions.common.DamageAllEnemiesAction;
-import com.megacrit.cardcrawl.actions.common.GainBlockAction;
+import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
@@ -239,6 +236,9 @@ public abstract class BaseCard extends CustomCard {
     }
     protected void fade() {
         addToBot(new ManifestAction(TrackCardSource.useMyEnergy));
+    }
+    protected void drawCards(int amount) {
+        addToBot(new DrawCardAction(amount));
     }
     protected void block() {
         addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, this.block));

@@ -26,6 +26,7 @@ import javassist.NotFoundException;
 import mirthandmalice.actions.cards._IMPROVE;
 import mirthandmalice.patch.manifestation.ManifestField;
 import mirthandmalice.patch.ui.ManifestTip;
+import mirthandmalice.util.annotations.Disabled;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.clapper.util.classutil.*;
@@ -66,6 +67,14 @@ fairy in a bottle code - fix
 
 
 Improve chatbox - allow multiline, increase message length limit
+
+
+Shuffle Malice's card pools at start of run then reset rng to prevent similarity in rewards due to shared cards
+Instead of unlock all, send relic pool to non-host player to ensure match
+If any relic is found to be disabled, send list of not found/disabled relics back to host
+These relics will be removed from host pool
+
+
 
 
 +Upon entering next act and generating map, if other player has already voted, re-check voted node so that it is rendered/works properly.
@@ -676,18 +685,28 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
         for (ClassInfo classInfo : foundClasses) {
             CtClass cls = Loader.getClassPool().get(classInfo.getClassName());
 
+            if (cls == null) {
+                continue;
+            }
+            else if (cls.hasAnnotation(Disabled.class))
+            {
+                logger.info("Skipping disabled card: " + cls.getSimpleName());
+                continue;
+            }
+
             boolean isCard = false;
             CtClass superCls = cls;
-            while (superCls != null) {
+
+            while (!isCard) {
                 superCls = superCls.getSuperclass();
                 if (superCls == null) {
                     break;
                 }
                 if (superCls.getName().equals(AbstractCard.class.getName())) {
                     isCard = true;
-                    break;
                 }
             }
+
             if (!isCard) {
                 continue;
             }

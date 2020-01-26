@@ -9,9 +9,11 @@ import mirthandmalice.abstracts.MirthCard;
 import mirthandmalice.actions.character.SummonSparkAction;
 import mirthandmalice.powers.SealPower;
 import mirthandmalice.util.CardInfo;
+import mirthandmalice.util.annotations.Disabled;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
+@Disabled
 public class Release extends MirthCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Release",
