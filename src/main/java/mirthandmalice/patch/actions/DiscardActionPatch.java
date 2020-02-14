@@ -88,7 +88,7 @@ public class DiscardActionPatch {
     }
 
     @SpirePostfixPatch
-    public static void finish(GamblingChipAction __instance)
+    public static void finish(DiscardAction __instance)
     {
         if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active && mustSignal && __instance.isDone)
         {
