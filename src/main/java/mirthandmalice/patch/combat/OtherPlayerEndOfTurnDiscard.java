@@ -39,7 +39,7 @@ public class OtherPlayerEndOfTurnDiscard {
             if (!AbstractDungeon.player.hasRelic(RunicPyramid.ID) && !AbstractDungeon.player.hasPower(EquilibriumPower.POWER_ID)) {
                 int tempSize = player.otherPlayerHand.size();
 
-                AbstractDungeon.actionManager.addToTop(new OtherPlayerDiscardAction(player, null, tempSize, true));
+                AbstractDungeon.actionManager.addToTop(new OtherPlayerDiscardAction(player, player, tempSize, true));
             }
 
             ArrayList<AbstractCard> cards = new ArrayList<>(player.otherPlayerHand.group);

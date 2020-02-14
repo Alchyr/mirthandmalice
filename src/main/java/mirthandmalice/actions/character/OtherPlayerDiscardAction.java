@@ -21,6 +21,7 @@ import mirthandmalice.patch.combat.SoulAltDiscard;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.util.MultiplayerHelper;
 
+import static mirthandmalice.MirthAndMaliceMod.makeID;
 import static mirthandmalice.util.MultiplayerHelper.partnerName;
 
 public class OtherPlayerDiscardAction extends AbstractGameAction {
@@ -178,7 +179,7 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
 
     static {
         uiStrings = CardCrawlGame.languagePack.getUIString("DiscardAction");
-        otherStrings = CardCrawlGame.languagePack.getUIString("DiscardWait");
+        otherStrings = CardCrawlGame.languagePack.getUIString(makeID("DiscardWait"));
         TEXT = uiStrings.TEXT;
         otherText = otherStrings.TEXT;
         DURATION = Settings.ACTION_DUR_XFAST;
