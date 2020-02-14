@@ -3,7 +3,8 @@
     "ID": "Manifest",
     "PROPER_NAME": "Manifest",
     "NAMES": [
-      "manifest"
+      "manifest",
+      "manifested"
     ],
     "DESCRIPTION": "Only one of you can be #yManifested at the same time. If you are not #yManifested, gain #b50% less #yBlock and deal #b50% less damage. Playing an #yAttack will cause you to #yManifest."
   },
@@ -15,9 +16,23 @@
     "DESCRIPTION": "If you are #yManifested, this card also affects ALL enemies."
   },
   {
-    "PROPER_NAME": "Fade",
+    "PROPER_NAME": "Fortune",
     "NAMES": [
-      "fade"
+      "fortune"
+    ],
+    "DESCRIPTION": "When a card marked with #yFortune is drawn, you and ALL enemies gain 3 #yBlock, then the mark is removed."
+  },
+  {
+    "PROPER_NAME": "Misfortune",
+    "NAMES": [
+      "misfortune"
+    ],
+    "DESCRIPTION": "When a card marked with #yMisfortune is drawn, ALL enemies lose 5 HP, then the mark is removed."
+  },
+  {
+    "PROPER_NAME": "Relinquish",
+    "NAMES": [
+      "relinquish"
     ],
     "DESCRIPTION": "If you are #yManifested, your partner #yManifests."
   },

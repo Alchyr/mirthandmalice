@@ -58,6 +58,7 @@ import mirthandmalice.effects.MirthParticleEffect;
 import mirthandmalice.patch.energy_division.SetEnergyGain;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
+import mirthandmalice.patch.fortune_misfortune.FortuneMisfortune;
 import mirthandmalice.patch.game_initialize.EnergyFontGen;
 import mirthandmalice.patch.manifestation.ManifestField;
 import mirthandmalice.ui.AstrologerOrb;
@@ -577,6 +578,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.otherPlayerHand.addToHand(c);
                     this.otherPlayerDraw.removeTopCard();
@@ -605,6 +607,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.hand.addToHand(c);
                     this.drawPile.removeTopCard();
@@ -648,6 +651,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.otherPlayerHand.addToHand(c);
                     this.otherPlayerDraw.removeTopCard();
@@ -677,6 +681,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.hand.addToHand(c);
                     this.drawPile.removeTopCard();
@@ -706,6 +711,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.otherPlayerHand.addToHand(c);
                     this.otherPlayerDraw.removeTopCard();
@@ -736,6 +742,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.hand.addToHand(c);
                     this.drawPile.removeTopCard();
@@ -779,6 +786,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.otherPlayerHand.addToHand(c);
                     this.otherPlayerDraw.removeTopCard();
@@ -808,6 +816,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.hand.addToHand(c);
                     this.drawPile.removeTopCard();
@@ -837,6 +846,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.hand.addToHand(c);
                     this.drawPile.removeTopCard();
@@ -866,6 +876,7 @@ public class MirthAndMalice extends CustomPlayer {
                     c.lighten(false);
                     c.drawScale = 0.12F;
                     c.targetDrawScale = 0.75F;
+                    
                     c.triggerWhenDrawn();
                     this.otherPlayerHand.addToHand(c);
                     this.otherPlayerDraw.removeTopCard();

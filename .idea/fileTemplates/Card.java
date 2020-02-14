@@ -7,7 +7,7 @@ import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
-public class ${NAME} extends #if ( ${PACKAGE_NAME.contains( "neutral" )})NeutralCard#elseif ( ${PACKAGE_NAME.contains( "mirth" )})MirthCard#else MaliceCard#end {
+public class ${NAME} extends #if ( ${PACKAGE_NAME.contains( "neutral" )})NeutralCard#elseif ( ${PACKAGE_NAME.contains( "cards.mirth" )})MirthCard#else MaliceCard#end {
     private final static CardInfo cardInfo = new CardInfo(
             "${NAME}",
             ${COST},
@@ -17,7 +17,10 @@ public class ${NAME} extends #if ( ${PACKAGE_NAME.contains( "neutral" )})Neutral
     );
     // ${TYPE}
     
-    public final static String ID = makeID(cardInfo.cardName);
+    public static final String ID = makeID(cardInfo.cardName);
+    
+    #if (${UPGRADE_COST} != "")    private static final int UPG_COST = ${UPGRADE_COST};
+#end
 
     #if (${DAMAGE} != "")    private static final int DAMAGE = ${DAMAGE};
 #end#if (${UPGRADE_DAMAGE} != "")    private static final int UPG_DAMAGE = ${UPGRADE_DAMAGE};
@@ -32,6 +35,8 @@ public class ${NAME} extends #if ( ${PACKAGE_NAME.contains( "neutral" )})Neutral
     public ${NAME}() {
         super(cardInfo, #if (${UPGRADE_DESCRIPTION} != "") true#else false#end);
         
+#if (${UPGRADE_COST} != "")        setCostUpgrade(UPG_COST);
+#end
 #if (${DAMAGE} != "")        setDamage(DAMAGE#end#if (${UPGRADE_DAMAGE} != ""), UPG_DAMAGE);#elseif (${DAMAGE} != "") );#end
 #if (${BLOCK} != "")        setBlock(BLOCK#end#if (${UPGRADE_BLOCK} != ""), UPG_BLOCK);#elseif (${BLOCK} != "") );#end
 #if (${MAGIC} != "")        setMagic(MAGIC#end#if (${UPGRADE_MAGIC} != ""), UPG_MAGIC);#elseif (${MAGIC} != "") );#end

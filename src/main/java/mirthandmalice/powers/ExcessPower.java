@@ -30,9 +30,9 @@ public class ExcessPower extends BasePower {
 
     public void updateDescription() {
         if (this.owner != null && !this.owner.isPlayer) {
-            this.description = DESCRIPTIONS[2] + this.amount + DESCRIPTIONS[1];
+            this.description = descriptions()[2] + this.amount + descriptions()[1];
         } else {
-            this.description = DESCRIPTIONS[0] + this.amount + DESCRIPTIONS[1];
+            this.description = descriptions()[0] + this.amount + descriptions()[1];
         }
     }
 }

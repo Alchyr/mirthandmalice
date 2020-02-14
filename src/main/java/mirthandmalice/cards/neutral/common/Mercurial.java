@@ -3,12 +3,17 @@ package mirthandmalice.cards.neutral.common;
 import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.DamageAction;
+import com.megacrit.cardcrawl.actions.common.DiscardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.NeutralCard;
+import mirthandmalice.actions.character.ForceDrawAction;
+import mirthandmalice.actions.character.OtherPlayerDiscardAction;
+import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
@@ -18,7 +23,7 @@ public class Mercurial extends NeutralCard {
             "Mercurial",
             1,
             CardType.ATTACK,
-            CardTarget.NONE,
+            CardTarget.ENEMY,
             CardRarity.COMMON);
     // attack
 
@@ -37,6 +42,26 @@ public class Mercurial extends NeutralCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), MathUtils.randomBoolean() ? AbstractGameAction.AttackEffect.SLASH_VERTICAL : AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
+
+        AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(TrackCardSource.useOtherEnergy, 1));
+        AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(!TrackCardSource.useOtherEnergy, 1));
+
+        if (TrackCardSource.useMyEnergy)
+        {
+            AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, 1, false, false));
+            if (p instanceof MirthAndMalice)
+            {
+                AbstractDungeon.actionManager.addToBottom(new OtherPlayerDiscardAction((MirthAndMalice)p, p, 1, false, false));
+            }
+        }
+        else
+        {
+            if (p instanceof MirthAndMalice)
+            {
+                AbstractDungeon.actionManager.addToBottom(new OtherPlayerDiscardAction((MirthAndMalice)p, p, 1, false, false));
+            }
+            AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, 1, false, false));
+        }
     }
 
     @Override

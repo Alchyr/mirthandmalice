@@ -61,7 +61,7 @@ public class MessageHelper {
 
         if (args[1].equals("1"))
         {
-            for (int i = 0; i < Integer.valueOf(args[2]); ++i)
+            for (int i = 0; i < Integer.parseInt(args[2]); ++i)
             {
                 c.upgrade();
             }
@@ -74,18 +74,18 @@ public class MessageHelper {
             name += args[4];
 
         c.name = name;
-        c.cost = Integer.valueOf(args[5]);
-        c.costForTurn = Integer.valueOf(args[6]);
+        c.cost = Integer.parseInt(args[5]);
+        c.costForTurn = Integer.parseInt(args[6]);
         if (c.cost != c.costForTurn)
             c.isCostModifiedForTurn = true;
-        c.baseDamage = Integer.valueOf(args[7]);
-        c.damage = Integer.valueOf(args[8]);
+        c.baseDamage = Integer.parseInt(args[7]);
+        c.damage = Integer.parseInt(args[8]);
         c.isDamageModified = c.baseDamage != c.damage;
-        c.baseBlock = Integer.valueOf(args[9]);
-        c.block = Integer.valueOf(args[10]);
+        c.baseBlock = Integer.parseInt(args[9]);
+        c.block = Integer.parseInt(args[10]);
         c.isBlockModified = c.baseBlock != c.block;
-        c.baseMagicNumber = Integer.valueOf(args[11]);
-        c.magicNumber = Integer.valueOf(args[12]);
+        c.baseMagicNumber = Integer.parseInt(args[11]);
+        c.magicNumber = Integer.parseInt(args[12]);
         c.isMagicNumberModified = c.baseMagicNumber != c.magicNumber;
 
         return c;

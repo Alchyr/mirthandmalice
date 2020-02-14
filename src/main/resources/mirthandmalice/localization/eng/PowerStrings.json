@@ -6,6 +6,14 @@
       " #yWeak."
     ]
   },
+  "Patience": {
+    "NAME": "Patience",
+    "DESCRIPTIONS": [
+      "#yRetain your hand this turn.",
+      "#yRetain your hand for #b",
+      " turns."
+    ]
+  },
   "mirthandmalice:Atrophy": {
     "NAME": "Atrophy",
     "DESCRIPTIONS": [

@@ -17,7 +17,7 @@
   },
   "mirthandmalice:Caution": {
     "NAME": "Caution",
-    "DESCRIPTION": "Gain !B! Block. NL mirthandmalice:Fade."
+    "DESCRIPTION": "Gain !B! Block. NL mirthandmalice:Relinquish."
   },
   "mirthandmalice:Wilt": {
     "NAME": "Wilt",
@@ -25,7 +25,11 @@
   },
   "mirthandmalice:Indulgence": {
     "NAME": "Indulgence",
-    "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthandmalice:Fade."
+    "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthandmalice:Relinquish."
+  },
+  "mirthandmalice:Masked": {
+    "NAME": "Masked",
+    "DESCRIPTION": "Gain !B! Block. NL mirthandmalice:Relinquish."
   },
   "mirthandmalice:ImitatedInnocence": {
     "NAME": "Imitated Innocence",
@@ -36,9 +40,35 @@
     "DESCRIPTION": "mirthandmalice:Aria. NL Gain !M! Weak.",
     "UPGRADE_DESCRIPTION": "mirthandmalice:Aria. NL Gain !M! Weak. NL Draw a card."
   },
+  "mirthandmalice:Lull": {
+    "NAME": "Lull",
+    "DESCRIPTION": "Gain !B! Block. NL Skip your next turn. NL mirthandmalice:Relinquish."
+  },
+  "mirthandmalice:Gift": {
+    "NAME": "Gift",
+    "DESCRIPTION": "Gain !B! Block. NL Mark this card with mirthandmalice:Fortune.",
+    "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Mark this card and a random card in your hand with mirthandmalice:Fortune."
+  },
+  "mirthandmalice:Intrigue": {
+    "NAME": "Intrigue",
+    "DESCRIPTION": "Deal !D! damage. NL Mark a random card in your draw pile with mirthandmalice:Misfortune.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Mark a random card in each draw pile with mirthandmalice:Misfortune."
+  },
+  "mirthandmalice:Balance": {
+    "NAME": "Balance",
+    "DESCRIPTION": "Draw cards until you have as many cards as your partner.",
+    "UPGRADE_DESCRIPTION": "Draw cards until you have more cards than your partner.",
+    "EXTENDED_DESCRIPTION": [
+      "Imbalance"
+    ]
+  },
   "mirthandmalice:Smack": {
     "NAME": "Smack",
-    "DESCRIPTION": "Deal !D! damage."
+    "DESCRIPTION": "Deal !D! damage. NL If you're mirthandmalice:Manifested, apply !M! Vulnerable."
+  },
+  "mirthandmalice:Flicker": {
+    "NAME": "Flicker",
+    "DESCRIPTION": "Deal !D! damage to ALL enemies. NL mirthandmalice:Relinquish."
   },
   "mirthandmalice:Mercurial": {
     "NAME": "Mercurial",
@@ -61,9 +91,18 @@
     "NAME": "Constrain",
     "DESCRIPTION": "Deal !D! damage. NL Gain 1 mirthandmalice:Seal."
   },
+  "mirthandmalice:ColdComfort": {
+    "NAME": "Cold Comfort",
+    "DESCRIPTION": "ALL enemies gain !M! Block. NL Mark all Attacks in your partner's hand with mirthandmalice:Misfortune.",
+    "UPGRADE_DESCRIPTION": "ALL enemies gain !M! Block. NL Mark all cards in your partner's hand with mirthandmalice:Misfortune."
+  },
   "mirthandmalice:Repose": {
     "NAME": "Repose",
     "DESCRIPTION": "Draw !M! cards. NL Gain !M! mirthandmalice:Seals. NL Exhaust."
+  },
+  "mirthandmalice:TestingFate": {
+    "NAME": "Testing Fate",
+    "DESCRIPTION": "Shuffle ALL cards marked with mirthandmalice:Fortune or mirthandmalice:Misfortune into their draw piles."
   },
   "mirthandmalice:Perusal": {
     "NAME": "Perusal",
@@ -98,9 +137,9 @@
     "NAME": "Untarnished",
     "DESCRIPTION": "Gain !B! Block. NL Gain !M! Artifact. NL Exhaust."
   },
-  "mirthandmalice:Foresight": {
-    "NAME": "Foresight",
-    "DESCRIPTION": "Gain !B! Block. NL Add a copy of this card into your draw pile."
+  "mirthandmalice:Bide": {
+    "NAME": "Bide",
+    "DESCRIPTION": "Gain !B! Block. NL Add a copy of this card into your draw pile. NL Exhaust."
   },
   "mirthandmalice:Purify": {
     "NAME": "Purify",
@@ -180,8 +219,8 @@
     "NAME": "Reflection",
     "DESCRIPTION": "Discard your hand. NL Your partner gains [E] for each card discarded. NL Exhaust."
   },
-  "mirthandmalice:Huddle": {
-    "NAME": "Unity",
+  "mirthandmalice:InnerConnection": {
+    "NAME": "Inner Connection",
     "DESCRIPTION": "Gain !B! Block. NL Draw 1 card each."
   },
   "mirthandmalice:Blazing": {
@@ -230,10 +269,6 @@
   "mirthandmalice:Indomitable": {
     "NAME": "Determination",
     "DESCRIPTION": "Gain !B! Block. NL Apply !M! Weak to ALL enemies."
-  },
-  "mirthandmalice:Intrigue": {
-    "NAME": "Intrigue",
-    "DESCRIPTION": "Deal !D! damage. NL mirthandmalice:Echo Attack: Deal !M! damage."
   },
   "mirthandmalice:Stabilize": {
     "NAME": "Stabilize",

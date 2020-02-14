@@ -25,6 +25,26 @@ public class TrackCardSource {
     //Anything that triggers onUse will thus go before the first action, and anything that adds to bottom will go after the last action
     //When energy modification occurs: If last card played this turn is from unspecified player, or source is potion, affect both players.
     //If possible, also relics affect both players? Try to only card stuff be affected by cards. Main concern is X-costs, which use energy differently than other cards.
+
+
+    public static boolean isPlayedByMirth()
+    {
+        //Use this during a card's method to check if this card was played by Mirth or Malice
+        if (AbstractDungeon.player instanceof MirthAndMalice)
+        {
+            if (useOtherEnergy)
+            {
+                return !((MirthAndMalice) AbstractDungeon.player).isMirth;
+            }
+            else //I played it
+            {
+                return ((MirthAndMalice) AbstractDungeon.player).isMirth;
+            }
+        }
+        return false;
+    }
+
+
     @SpirePatch(
             clz = AbstractPlayer.class,
             method = "useCard"
@@ -39,7 +59,7 @@ public class TrackCardSource {
                 {
                     if (c.type == AbstractCard.CardType.ATTACK)
                     {
-                        AbstractDungeon.actionManager.addToBottom(new ManifestAction(!((MirthAndMalice) __instance).isMirth));
+                        AbstractDungeon.actionManager.addToBottom(new ManifestAction(true));
                     }
                     useOtherEnergy = true;
                 }
@@ -47,7 +67,7 @@ public class TrackCardSource {
                 {
                     if (c.type == AbstractCard.CardType.ATTACK)
                     {
-                        AbstractDungeon.actionManager.addToBottom(new ManifestAction(((MirthAndMalice) __instance).isMirth));
+                        AbstractDungeon.actionManager.addToBottom(new ManifestAction(false));
                     }
                     useMyEnergy = true;
                 }

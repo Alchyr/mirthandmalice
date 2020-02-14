@@ -234,7 +234,7 @@ public abstract class BaseCard extends CustomCard {
     protected void manifest() {
         addToBot(new ManifestAction(TrackCardSource.useOtherEnergy));
     }
-    protected void fade() {
+    protected void relinquish() {
         addToBot(new ManifestAction(TrackCardSource.useMyEnergy));
     }
     protected void drawCards(int amount) {

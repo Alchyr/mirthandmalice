@@ -5,6 +5,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MirthCard;
+import mirthandmalice.actions.general.MarkCardAction;
 import mirthandmalice.powers.ExcessPower;
 import mirthandmalice.util.CardInfo;
 

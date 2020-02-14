@@ -61,6 +61,7 @@ public class DrawCardActionModifications {
                     if ((forceDraw >= 0 ? deckSize + discardSize : 0) +
                             (forceDraw <= 0  ? otherDeckSize + otherDiscardSize : 0) == 0) {
                         logger.info("No cards to draw.");
+
                         __instance.isDone = true;
                     } else if ((forceDraw < 0 || player.hand.size() == BaseMod.MAX_HAND_SIZE)
                             && (forceDraw > 0 || player.otherPlayerHand.size() == BaseMod.MAX_HAND_SIZE)) {

@@ -2,12 +2,8 @@ package mirthandmalice.cards.malice.basic;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MaliceCard;
-import mirthandmalice.abstracts.MirthCard;
-import mirthandmalice.actions.character.ManifestAction;
-import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
@@ -36,7 +32,7 @@ public class Caution extends MaliceCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         block();
-        fade();
+        relinquish();
     }
 
     @Override

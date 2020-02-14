@@ -11,8 +11,12 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.screens.select.HandCardSelectScreen;
 import javassist.CtBehavior;
+import mirthandmalice.abstracts.ReceiveSignalCardsAction;
+import mirthandmalice.actions.cards.ReceiveGamblingChipCardsAction;
+import mirthandmalice.actions.character.ReceiveDiscardCardsAction;
 import mirthandmalice.actions.character.WaitForSignalAction;
 import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.patch.combat.HandCardSelectReordering;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
 import mirthandmalice.util.MultiplayerHelper;
@@ -31,8 +35,8 @@ public class GamblingChip {
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("DiscardWait"));
 
     private static GamblingChipAction currentAction = null;
-    private static HashMap<AbstractCard, Integer> cardIndexes = new HashMap<>();
-    private static ArrayList<String> discardMessages = new ArrayList<>();
+    private static int handIndex = -1;
+    private static boolean mustSignal = false;
 
     @SpirePrefixPatch
     public static SpireReturn waitForPlayer(GamblingChipAction __instance)
@@ -40,11 +44,14 @@ public class GamblingChip {
         if (currentAction != __instance)
         {
             currentAction = __instance;
+            handIndex = -1;
+            mustSignal = false;
 
             if (AbstractDungeon.player instanceof MirthAndMalice && MultiplayerHelper.active)
             {
-                if (TrackCardSource.useOtherEnergy) //played by other player.
+                if (TrackCardSource.useOtherEnergy) //triggered by other player.
                 {
+                    AbstractDungeon.actionManager.addToTop(new ReceiveGamblingChipCardsAction());
                     AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(uiStrings.TEXT[0] + partnerName + uiStrings.TEXT[1]));
                     __instance.isDone = true;
                     return SpireReturn.Return(null);
@@ -52,35 +59,25 @@ public class GamblingChip {
                 else
                 {
                     //Track card indexes in hand for later use
-                    cardIndexes.clear();
-                    discardMessages.clear();
-
-                    for (int i = 0; i < AbstractDungeon.player.hand.group.size(); ++i)
-                    {
-                        cardIndexes.put(AbstractDungeon.player.hand.group.get(i), i);
-                    }
-
-                    if (!TrackCardSource.useMyEnergy) //this came from a neutral source. Both players have this action. Have to wait.
-                    {
-                        AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(uiStrings.TEXT[0] + partnerName + uiStrings.TEXT[1]));
-                        //Don't cancel this action, though.
-                    }
+                    HandCardSelectReordering.saveHandPreOpenScreen();
+                    mustSignal = true;
                 }
             }
         }
         return SpireReturn.Continue();
     }
 
-    @SpireInsertPatch(
+    /*@SpireInsertPatch(
         locator = DrawLocator.class
     )
     public static void reportDraw(GamblingChipAction __instance)
     {
         if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active)
         {
-            MultiplayerHelper.sendP2PString("draw" + AbstractDungeon.handCardSelectScreen.selectedCards.group.size());
+            //number of drawn cards:
+            AbstractDungeon.handCardSelectScreen.selectedCards.group.size()
         }
-    }
+    }*/
 
     @SpireInsertPatch(
         locator = DiscardLocator.class,
@@ -90,28 +87,27 @@ public class GamblingChip {
     {
         if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active)
         {
-            if (cardIndexes.containsKey(c))
+            if (handIndex < 0)
             {
-                int index = cardIndexes.get(c);
-                if (index >= 0)
+                if (!TrackCardSource.useMyEnergy) //this came from a neutral source. Both players have this action. Have to wait after choosing.
                 {
-                    discardMessages.add("other_discard" + index); //indexes are not changed until after all discard actions are queued, so this is fine
+                    AbstractDungeon.actionManager.addToTop(new ReceiveGamblingChipCardsAction());
+                    AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(uiStrings.TEXT[0] + partnerName + uiStrings.TEXT[1]));
+                    //Don't cancel this action, though.
                 }
+
+                handIndex = AbstractDungeon.player.hand.size();
             }
+
+            MultiplayerHelper.sendP2PString(ReceiveSignalCardsAction.signalCardString(handIndex++, AbstractDungeon.player.hand, true));
         }
     }
 
-    @SpireInsertPatch(
-        locator = EndLocator.class
-    )
+    @SpirePostfixPatch
     public static void finish(GamblingChipAction __instance)
     {
-        if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active)
+        if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active && mustSignal && __instance.isDone)
         {
-            for (String s : discardMessages)
-            {
-                MultiplayerHelper.sendP2PString(s);
-            }
             MultiplayerHelper.sendP2PString("signal");
         }
     }
@@ -133,15 +129,6 @@ public class GamblingChip {
         {
             Matcher finalMatcher = new Matcher.MethodCallMatcher(GameActionManager.class, "incrementDiscard");
             return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
-        }
-    }
-    private static class EndLocator extends SpireInsertLocator
-    {
-        @Override
-        public int[] Locate(CtBehavior ctMethodToPatch) throws Exception
-        {
-            Matcher finalMatcher = new Matcher.FieldAccessMatcher(HandCardSelectScreen.class, "wereCardsRetrieved");
-            return new int[] { LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher)[1] };
         }
     }
 }

@@ -100,7 +100,7 @@ public class PotionUse {
             AbstractPotion toUse = PotionHelper.getPotion(args[0]);
             if (MultiplayerHelper.otherPlayerPotions.contains(toUse.ID))
             {
-                int index = Integer.valueOf(args[1]);
+                int index = Integer.parseInt(args[1]);
 
                 AbstractDungeon.actionManager.addToBottom(new UseSpecificEnergyAction(true));
                 AbstractDungeon.actionManager.addToBottom(new SetEnergyGainAction(false));
@@ -141,7 +141,7 @@ public class PotionUse {
             //can use is checked before this is called
             AbstractPotion toUse = PotionHelper.getPotion(args[0]);
 
-            int index = Integer.valueOf(args[2]);
+            int index = Integer.parseInt(args[2]);
 
             AbstractDungeon.actionManager.addToBottom(new UseSpecificEnergyAction(true));
             AbstractDungeon.actionManager.addToBottom(new SetEnergyGainAction(false));
@@ -176,13 +176,13 @@ public class PotionUse {
         String[] args = info.split("!!!");
         if (args.length == 3)
         {
-            if (!(AbstractDungeon.player.potions.get(Integer.valueOf(args[1])) instanceof PotionSlot)) //it has mysteriously vanished.
+            if (!(AbstractDungeon.player.potions.get(Integer.parseInt(args[1])) instanceof PotionSlot)) //it has mysteriously vanished.
             {
-                int targetIndex = Integer.valueOf(args[2]);
+                int targetIndex = Integer.parseInt(args[2]);
                 if (targetIndex >= 0)
                 {
                     if (targetIndex < AbstractDungeon.getMonsters().monsters.size()) {
-                        queuedPotionUse.addLast(new PotionQueueItem(Integer.valueOf(args[1]), AbstractDungeon.getMonsters().monsters.get(targetIndex)));
+                        queuedPotionUse.addLast(new PotionQueueItem(Integer.parseInt(args[1]), AbstractDungeon.getMonsters().monsters.get(targetIndex)));
                     }
                     else {
                         logger.error("Attempted to use potion on a target index that doesn't exist.");
@@ -190,7 +190,7 @@ public class PotionUse {
                 }
                 else
                 {
-                    queuedPotionUse.addLast(new PotionQueueItem(Integer.valueOf(args[1]), null));
+                    queuedPotionUse.addLast(new PotionQueueItem(Integer.parseInt(args[1]), null));
                 }
             }
         }

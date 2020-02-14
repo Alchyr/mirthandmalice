@@ -69,7 +69,8 @@ fairy in a bottle code - fix
 Improve chatbox - allow multiline, increase message length limit
 
 
-Shuffle Malice's card pools at start of run then reset rng to prevent similarity in rewards due to shared cards
++Shuffle Malice's card pools at start of run then reset rng to prevent similarity in rewards due to shared cards
+
 Instead of unlock all, send relic pool to non-host player to ensure match
 If any relic is found to be disabled, send list of not found/disabled relics back to host
 These relics will be removed from host pool
@@ -597,7 +598,7 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
                 for (KeywordWithProper keyword : keywords) {
                     if (keyword.ID.equals("Manifest")) //for the sake of localization
                     {
-                        ManifestTip.manifestKeyword = keyword.NAMES[0];
+                        ManifestTip.manifestKeyword = prefix + ":" + keyword.NAMES[0];
                     }
                     BaseMod.addKeyword(prefix, keyword.PROPER_NAME, keyword.NAMES, keyword.DESCRIPTION);
                 }

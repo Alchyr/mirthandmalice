@@ -5,8 +5,10 @@ import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.utility.WaitAction;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.AbstractPower;
 import mirthandmalice.actions.general.UpdateHandAction;
 import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.interfaces.OnManifestPower;
 import mirthandmalice.patch.manifestation.ManifestField;
 
 import static mirthandmalice.MirthAndMaliceMod.FULL_DEBUG;
@@ -50,6 +52,14 @@ public class ManifestAction extends AbstractGameAction {
             ManifestField.mirthManifested.set(AbstractDungeon.player, toMirth);
 
             CardCrawlGame.sound.playAV("ORB_DARK_CHANNEL", toMirth ? MathUtils.random(0.3f, 0.4f) : MathUtils.random(-0.3f, -0.2f),0.8f);
+
+            for (AbstractPower p : AbstractDungeon.player.powers)
+            {
+                if (p instanceof OnManifestPower)
+                {
+                    ((OnManifestPower) p).onManifest();
+                }
+            }
 
             AbstractDungeon.actionManager.addToTop(new UpdateHandAction());
             AbstractDungeon.actionManager.addToTop(new WaitAction(0.3f));
