@@ -31,14 +31,14 @@
     "NAME": "Masked",
     "DESCRIPTION": "Gain !B! Block. NL mirthandmalice:Relinquish."
   },
-  "mirthandmalice:ImitatedInnocence": {
-    "NAME": "Imitated Innocence",
-    "DESCRIPTION": "mirthandmalice:Aria. NL Gain !B! Block."
+  "mirthandmalice:Innocence": {
+    "NAME": "Innocence",
+    "DESCRIPTION": "mirthandmalice:Wild. NL Gain !B! Block."
   },
   "mirthandmalice:Futility": {
     "NAME": "Futility",
-    "DESCRIPTION": "mirthandmalice:Aria. NL Gain !M! Weak.",
-    "UPGRADE_DESCRIPTION": "mirthandmalice:Aria. NL Gain !M! Weak. NL Draw a card."
+    "DESCRIPTION": "mirthandmalice:Wild. NL Gain !M! Weak.",
+    "UPGRADE_DESCRIPTION": "mirthandmalice:Wild. NL Gain !M! Weak. NL Draw a card."
   },
   "mirthandmalice:Lull": {
     "NAME": "Lull",
@@ -49,8 +49,8 @@
     "DESCRIPTION": "Gain !B! Block. NL Mark this card with mirthandmalice:Fortune.",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Mark this card and a random card in your hand with mirthandmalice:Fortune."
   },
-  "mirthandmalice:Intrigue": {
-    "NAME": "Intrigue",
+  "mirthandmalice:IllOmen": {
+    "NAME": "Ill Omen",
     "DESCRIPTION": "Deal !D! damage. NL Mark a random card in your draw pile with mirthandmalice:Misfortune.",
     "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Mark a random card in each draw pile with mirthandmalice:Misfortune."
   },
@@ -96,9 +96,13 @@
     "DESCRIPTION": "ALL enemies gain !M! Block. NL Mark all Attacks in your partner's hand with mirthandmalice:Misfortune.",
     "UPGRADE_DESCRIPTION": "ALL enemies gain !M! Block. NL Mark all cards in your partner's hand with mirthandmalice:Misfortune."
   },
-  "mirthandmalice:Repose": {
-    "NAME": "Repose",
-    "DESCRIPTION": "Draw !M! cards. NL Gain !M! mirthandmalice:Seals. NL Exhaust."
+  "mirthandmalice:Invigorate": {
+    "NAME": "Invigorate",
+    "DESCRIPTION": "Draw 2 cards. NL Gain !M! Vigor. NL Exhaust."
+  },
+  "mirthandmalice:JoyousFate": {
+    "NAME": "Joyous Fate",
+    "DESCRIPTION": "Mark !M! random cards in either draw pile with mirthandmalice:Fortune."
   },
   "mirthandmalice:TestingFate": {
     "NAME": "Testing Fate",
@@ -116,17 +120,17 @@
       " NL (Deals !D! damage.)"
     ]
   },
-  "mirthandmalice:AntiquityBurden": {
-      "NAME": "Antiquity's Burden",
+  "mirthandmalice:Trauma": {
+      "NAME": "Trauma",
       "DESCRIPTION": "Enemy's Vulnerable stacks additively until the end of the turn. NL Exhaust."
   },
-  "mirthandmalice:Restraint": {
-    "NAME": "Restraint",
-    "DESCRIPTION": "Gain !B! Block. NL Gain 1 mirthandmalice:Seal."
+  "mirthandmalice:Palpitation": {
+    "NAME": "Palpitation",
+    "DESCRIPTION": "Gain !B! Block. NL Gain !M! Vigor."
   },
-  "mirthandmalice:Forget": {
-    "NAME": "Forget",
-    "DESCRIPTION": "Apply 1 Weak to the enemy whenever it loses HP this turn."
+  "mirthandmalice:Hemophilia": {
+    "NAME": "Hemophilia",
+    "DESCRIPTION": "Apply !M! Weak to the enemy whenever it loses HP this turn."
   },
   "mirthandmalice:Erase": {
     "NAME": "Erase",
@@ -139,10 +143,10 @@
   },
   "mirthandmalice:Bide": {
     "NAME": "Bide",
-    "DESCRIPTION": "Gain !B! Block. NL Add a copy of this card into your draw pile. NL Exhaust."
+    "DESCRIPTION": "Gain !B! Block. NL Add a copy of this card into your draw pile and mark it with mirthandmalice:Misfortune. NL Exhaust."
   },
-  "mirthandmalice:Purify": {
-    "NAME": "Purify",
+  "mirthandmalice:Sever": {
+    "NAME": "Sever",
     "DESCRIPTION": "Remove all of the enemy's debuffs and deal !D! damage for each debuff removed.",
     "EXTENDED_DESCRIPTION": [
       " NL (Hits !M! times.)"
@@ -176,8 +180,8 @@
     "NAME": "Counterfeit",
     "DESCRIPTION": "Exhaust a card in your hand. NL Add !M! new copies of it to your hand. NL Exhaust."
   },
-  "mirthandmalice:Revision": {
-    "NAME": "Revision",
+  "mirthandmalice:SharedFortune": {
+    "NAME": "SharedFortune",
     "DESCRIPTION": "Gain !B! Block. NL Move any number of cards from your hand to your partner's hand."
   },
   "mirthandmalice:Divergence": {
@@ -199,8 +203,8 @@
     "NAME": "Hardcover",
     "DESCRIPTION": "Deal !D! damage. NL mirthandmalice:Echo Power: Gain !M! Artifact."
   },
-  "mirthandmalice:Shatter": {
-    "NAME": "Disparity",
+  "mirthandmalice:Ridicule": {
+    "NAME": "Ridicule",
     "DESCRIPTION": "Apply !M! Vulnerable for each enemy in combat."
   },
   "mirthandmalice:Inhibition": {
@@ -215,8 +219,8 @@
     "NAME": "Release",
     "DESCRIPTION": "Lose all mirthandmalice:Seals. NL Summon a mirthandmalice:Flame for each mirthandmalice:Seal lost. NL Exhaust."
   },
-  "mirthandmalice:Reflection": {
-    "NAME": "Reflection",
+  "mirthandmalice:Return": {
+    "NAME": "Return",
     "DESCRIPTION": "Discard your hand. NL Your partner gains [E] for each card discarded. NL Exhaust."
   },
   "mirthandmalice:InnerConnection": {
@@ -251,24 +255,24 @@
     "NAME": "Smokescreen",
     "DESCRIPTION": "Gain !B! Block. NL Summon a mirthandmalice:Flame."
   },
-  "mirthandmalice:Refute": {
-    "NAME": "Refute",
+  "mirthandmalice:ChangeOfFate": {
+    "NAME": "Change of Fate",
     "DESCRIPTION": "Deal !D! damage. NL Exhaust a card in a discard pile."
   },
   "mirthandmalice:Tragedy": {
     "NAME": "Tragedy",
-    "DESCRIPTION": "Deal !M! damage for each stack of Weak and Vulnerable the enemy has.",
+    "DESCRIPTION": "Deal !D! damage a number of times equal to the enemy's mirthandmalice:Atrophy.",
     "EXTENDED_DESCRIPTION": [
-      " NL (Deals !D! damage.)"
+      " NL (Hits !M! times.)"
     ]
   },
   "mirthandmalice:Warmup": {
     "NAME": "Warmup",
     "DESCRIPTION": "Deal !D! damage. NL Summon a mirthandmalice:Flame."
   },
-  "mirthandmalice:Indomitable": {
-    "NAME": "Determination",
-    "DESCRIPTION": "Gain !B! Block. NL Apply !M! Weak to ALL enemies."
+  "mirthandmalice:Fearless": {
+    "NAME": "Fearless",
+    "DESCRIPTION": "Gain !B! Block. NL If you are not mirthandmalice:Manifested, gain !M! times as much Block. NL mirthandmalice:Manifest."
   },
   "mirthandmalice:Stabilize": {
     "NAME": "Stabilize",
@@ -292,8 +296,8 @@
     "DESCRIPTION": "Whenever an enemy dies, gain !M! Strength.",
     "UPGRADE_DESCRIPTION": "Innate. NL Whenever an enemy dies, gain !M! Strength."
   },
-  "mirthandmalice:Kindle": {
-    "NAME": "Kindle",
+  "mirthandmalice:Cheer": {
+    "NAME": "Cheer!",
     "DESCRIPTION": "Your partner gains NL [E] [E]. NL Exhaust."
   },
   "mirthandmalice:Familiarity": {
@@ -308,12 +312,21 @@
     "NAME": "Phoenix's Call",
     "DESCRIPTION": "Exhaust a card. NL Apply !M! Vulnerable."
   },
-  "mirthandmalice:SoaringKick": {
-    "NAME": "Soaring Kick",
+  "mirthandmalice:Serendipity": {
+    "NAME": "Serendipity",
+    "DESCRIPTION": "At the end of your turn, mark a random card in your draw pile with mirthandmalice:Fortune.",
+    "UPGRADE_DESCRIPTION": "At the end of your turn, mark !M! random cards in your draw pile with mirthandmalice:Fortune."
+  },
+  "mirthandmalice:Tag": {
+    "NAME": "Tag",
+    "DESCRIPTION": "mirthandmalice:You're_it."
+  },
+  "mirthandmalice:Beatdown": {
+    "NAME": "Beatdown",
     "DESCRIPTION": "Deal !D! damage twice. NL This card is played twice."
   },
-  "mirthandmalice:Expiation": {
-    "NAME": "Expiation",
+  "mirthandmalice:Applaud": {
+    "NAME": "Applaud",
     "DESCRIPTION": "Gain !B! Block for each Attack played this turn.",
     "EXTENDED_DESCRIPTION": [
       " NL (",
@@ -353,8 +366,8 @@
     "NAME": "Hakutaku Form",
     "DESCRIPTION": "Add a copy of your deck to your draw pile. NL The copies cost 1 less."
   },
-  "mirthandmalice:Tampering": {
-    "NAME": "Tampering",
+  "mirthandmalice:Plotting": {
+    "NAME": "Plotting",
     "DESCRIPTION": "Upgrade !M! random cards in each hand. NL Exhaust."
   },
   "mirthandmalice:Memento": {
@@ -365,10 +378,10 @@
     "NAME": "Desiccate",
     "DESCRIPTION": "Deal !D! damage. NL Burst: Enemy loses !M! Strength."
   },
-  "mirthandmalice:Anamnesis": {
-    "NAME": "Anamnesis",
-    "DESCRIPTION": "Deal 1 damage to ALL enemies. NL Draw a card. NL Exhaust.",
-    "UPGRADE_DESCRIPTION": "Deal 1 damage to ALL enemies twice. NL Draw a card. NL Exhaust."
+  "mirthandmalice:Blight": {
+    "NAME": "Blight",
+    "DESCRIPTION": "Apply !M! mirthandmalice:Atrophy to ALL enemies. NL Draw a card. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "Apply !M! mirthandmalice:Atrophy to ALL enemies twice. NL Draw a card. NL Exhaust."
   },
   "mirthandmalice:a": {
     "NAME": "",

@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MaliceCard;
 import mirthandmalice.actions.character.MakeTempCardInOtherDrawAction;
+import mirthandmalice.actions.general.MarkCardAction;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
 import mirthandmalice.util.CardInfo;
@@ -39,13 +40,16 @@ public class Bide extends MaliceCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         AbstractDungeon.actionManager.addToBottom(new GainBlockAction(p, p, this.block));
+        AbstractCard copy = this.makeStatEquivalentCopy();
+
+        addToBot(new MarkCardAction(copy, false));
         if (TrackCardSource.useOtherEnergy && AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE)
         {
-            AbstractDungeon.actionManager.addToBottom(new MakeTempCardInOtherDrawAction(this.makeStatEquivalentCopy(), 1, true, true));
+            AbstractDungeon.actionManager.addToBottom(new MakeTempCardInOtherDrawAction(copy, 1, true, true));
         }
         else
         {
-            AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDrawPileAction(this.makeStatEquivalentCopy(), 1, true, true));
+            AbstractDungeon.actionManager.addToBottom(new MakeTempCardInDrawPileAction(copy, 1, true, true));
         }
     }
 

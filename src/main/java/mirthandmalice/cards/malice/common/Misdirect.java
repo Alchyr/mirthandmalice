@@ -13,9 +13,11 @@ import com.megacrit.cardcrawl.vfx.combat.CardPoofEffect;
 import mirthandmalice.abstracts.MaliceCard;
 import mirthandmalice.actions.general.DamageRandomConditionalEnemyAction;
 import mirthandmalice.util.CardInfo;
+import mirthandmalice.util.annotations.Disabled;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
+@Disabled
 public class Misdirect extends MaliceCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Misdirect",

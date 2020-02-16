@@ -1,5 +1,6 @@
 package mirthandmalice.patch.actions;
 
+import basemod.ReflectionHacks;
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
@@ -13,7 +14,9 @@ import com.megacrit.cardcrawl.screens.select.HandCardSelectScreen;
 import javassist.CtBehavior;
 import mirthandmalice.abstracts.ReceiveSignalCardsAction;
 import mirthandmalice.actions.cards.ReceiveGamblingChipCardsAction;
+import mirthandmalice.actions.character.DontUseSpecificEnergyAction;
 import mirthandmalice.actions.character.ReceiveDiscardCardsAction;
+import mirthandmalice.actions.character.UseSpecificEnergyAction;
 import mirthandmalice.actions.character.WaitForSignalAction;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.combat.HandCardSelectReordering;
@@ -56,11 +59,34 @@ public class GamblingChip {
                     __instance.isDone = true;
                     return SpireReturn.Return(null);
                 }
-                else
+                else if (TrackCardSource.useMyEnergy)
                 {
                     //Track card indexes in hand for later use
                     HandCardSelectReordering.saveHandPreOpenScreen();
                     mustSignal = true;
+                }
+                else //This is the initial gambling chip action.
+                {
+                    boolean notChip = (boolean) ReflectionHacks.getPrivate(__instance, GamblingChipAction.class, "notchip");
+                    if (((MirthAndMalice) AbstractDungeon.player).isMirth)
+                    {
+                        TrackCardSource.useMyEnergy = true;
+                        __instance.isDone = true;
+                        AbstractDungeon.actionManager.addToTop(new DontUseSpecificEnergyAction()); //reset
+                        AbstractDungeon.actionManager.addToTop(new GamblingChipAction(__instance.source, notChip)); //other gambling chip action, will happen second.
+                        AbstractDungeon.actionManager.addToTop(new UseSpecificEnergyAction(true)); //switch to other
+                        AbstractDungeon.actionManager.addToTop(new GamblingChipAction(__instance.source, notChip)); //my gambling chip action, will happen first.
+                    }
+                    else
+                    {
+                        TrackCardSource.useOtherEnergy = true;
+                        __instance.isDone = true;
+                        AbstractDungeon.actionManager.addToTop(new DontUseSpecificEnergyAction()); //reset
+                        AbstractDungeon.actionManager.addToTop(new GamblingChipAction(__instance.source, notChip)); //my gambling chip action, will happen second.
+                        AbstractDungeon.actionManager.addToTop(new UseSpecificEnergyAction(false)); //switch to self
+                        AbstractDungeon.actionManager.addToTop(new GamblingChipAction(__instance.source, notChip)); //other gambling chip action, will happen first.
+                    }
+                    return SpireReturn.Return(null);
                 }
             }
         }
@@ -89,13 +115,6 @@ public class GamblingChip {
         {
             if (handIndex < 0)
             {
-                if (!TrackCardSource.useMyEnergy) //this came from a neutral source. Both players have this action. Have to wait after choosing.
-                {
-                    AbstractDungeon.actionManager.addToTop(new ReceiveGamblingChipCardsAction());
-                    AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(uiStrings.TEXT[0] + partnerName + uiStrings.TEXT[1]));
-                    //Don't cancel this action, though.
-                }
-
                 handIndex = AbstractDungeon.player.hand.size();
             }
 

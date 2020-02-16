@@ -45,20 +45,18 @@ import mirthandmalice.cards.malice.basic.Caution;
 import mirthandmalice.cards.malice.basic.MaliceDefend;
 import mirthandmalice.cards.malice.basic.MaliceStrike;
 import mirthandmalice.cards.malice.basic.Wilt;
-import mirthandmalice.cards.malice.uncommon.Originate;
-import mirthandmalice.cards.malice.uncommon.Forget;
-import mirthandmalice.cards.mirth.basic.ImitatedInnocence;
+import mirthandmalice.cards.malice.uncommon.Hemophilia;
+import mirthandmalice.cards.mirth.basic.Innocence;
 import mirthandmalice.cards.mirth.basic.Indulgence;
 import mirthandmalice.cards.mirth.basic.MirthDefend;
 import mirthandmalice.cards.mirth.basic.MirthStrike;
-import mirthandmalice.cards.mirth.common.Scorch;
+import mirthandmalice.cards.mirth.deprecated.Scorch;
 import mirthandmalice.effects.MaliceParticleEffect;
 import mirthandmalice.effects.MirthMaliceAuraEffect;
 import mirthandmalice.effects.MirthParticleEffect;
 import mirthandmalice.patch.energy_division.SetEnergyGain;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
-import mirthandmalice.patch.fortune_misfortune.FortuneMisfortune;
 import mirthandmalice.patch.game_initialize.EnergyFontGen;
 import mirthandmalice.patch.manifestation.ManifestField;
 import mirthandmalice.ui.AstrologerOrb;
@@ -1211,7 +1209,7 @@ public class MirthAndMalice extends CustomPlayer {
             startDeck.add(MirthDefend.ID);
             startDeck.add(MirthDefend.ID);
             startDeck.add(Indulgence.ID);
-            startDeck.add(ImitatedInnocence.ID);
+            startDeck.add(Innocence.ID);
 
             otherPlayerMasterDeck.group.add(new MaliceStrike());
             otherPlayerMasterDeck.group.add(new MaliceStrike());
@@ -1240,7 +1238,7 @@ public class MirthAndMalice extends CustomPlayer {
             otherPlayerMasterDeck.group.add(new MirthDefend());
             otherPlayerMasterDeck.group.add(new MirthDefend());
             otherPlayerMasterDeck.group.add(new Indulgence());
-            otherPlayerMasterDeck.group.add(new ImitatedInnocence());
+            otherPlayerMasterDeck.group.add(new Innocence());
         }
 
         return startDeck;
@@ -1292,7 +1290,7 @@ public class MirthAndMalice extends CustomPlayer {
 
     @Override
     public AbstractCard getStartCardForEvent() {
-        return isMirth ? new Scorch() : new Forget();
+        return isMirth ? new Scorch() : new Hemophilia();
     }
     @Override
     public String getLocalizedCharacterName() {

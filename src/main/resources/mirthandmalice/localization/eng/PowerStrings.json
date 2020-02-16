@@ -6,6 +6,18 @@
       " #yWeak."
     ]
   },
+  "mirthandmalice:Serendipity": {
+    "NAME": "Serendipity",
+    "DESCRIPTIONS": [
+      "At the end of your turn, mark a random card in #y",
+      "At the end of your turn, mark #b",
+      " random cards in #y",
+      "'s draw pile with #yFortune.",
+      "At the end of your turn, mark a random card in your draw pile with #yFortune.",
+      "At the end of your turn, mark #b",
+      " random cards in your draw pile with #yFortune."
+    ]
+  },
   "Patience": {
     "NAME": "Patience",
     "DESCRIPTIONS": [
@@ -29,8 +41,8 @@
       "At the start of its turn, loses #b"
     ]
   },
-  "mirthandmalice:Weight": {
-    "NAME": "Weight",
+  "mirthandmalice:Trauma": {
+    "NAME": "Trauma",
     "DESCRIPTIONS": [
       "This enemy's #yVulnerable stacks additively until the end of the turn.",
       "This enemy's #yVulnerable stacks additively for #b",

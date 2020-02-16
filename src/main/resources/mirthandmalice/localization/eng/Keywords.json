@@ -9,9 +9,9 @@
     "DESCRIPTION": "Only one of you can be #yManifested at the same time. If you are not #yManifested, gain #b50% less #yBlock and deal #b50% less damage. Playing an #yAttack will cause you to #yManifest."
   },
   {
-    "PROPER_NAME": "Aria",
+    "PROPER_NAME": "Wild",
     "NAMES": [
-      "aria"
+      "wild"
     ],
     "DESCRIPTION": "If you are #yManifested, this card also affects ALL enemies."
   },
@@ -35,6 +35,14 @@
       "relinquish"
     ],
     "DESCRIPTION": "If you are #yManifested, your partner #yManifests."
+  },
+  {
+    "PROPER_NAME": "It",
+    "NAMES": [
+      "you're it",
+      "you're_it"
+    ],
+    "DESCRIPTION": "ALL Block from #yFortune will be applied to whoever is #yIt. Attacking while #yIt will make the target #yIt."
   },
   {
     "PROPER_NAME": "Atrophy",

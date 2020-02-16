@@ -30,7 +30,7 @@
     "NAME": "Mummified Hand",
     "FLAVOR": "Frequently twitches, especially when your pulse is high.",
     "DESCRIPTIONS": [
-      "Whenever a #yPower card is played, a random card in the player's hand costs #b0 that turn."
+      "Whenever a #yPower card is played, a random card in the player's hand costs #b0 this turn."
     ]
   },
   "mirthandmalice:Bloody Idol": {

@@ -14,6 +14,14 @@ public class OtherPlayerCardQueueItem extends CardQueueItem {
         super(card, monster, setEnergyOnUse);
     }
 
+    public OtherPlayerCardQueueItem(AbstractCard card, AbstractMonster monster, int setEnergyOnUse, boolean ignoreEnergyTotal) {
+        super(card, monster, setEnergyOnUse, ignoreEnergyTotal, false);
+    }
+
+    public OtherPlayerCardQueueItem(AbstractCard card, AbstractMonster monster, int setEnergyOnUse, boolean ignoreEnergyTotal, boolean autoplayCard) {
+        super(card, monster, setEnergyOnUse, ignoreEnergyTotal, autoplayCard);
+    }
+
     public OtherPlayerCardQueueItem(AbstractCard card, boolean isEndTurnAutoPlay) {
         this(card, null);
         this.isEndTurnAutoPlay = isEndTurnAutoPlay;

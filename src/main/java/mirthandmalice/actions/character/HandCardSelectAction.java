@@ -61,5 +61,17 @@ public class HandCardSelectAction extends AbstractGameAction {
             }
             this.isDone = true;
         }
+        else
+        {
+            for (AbstractGameAction a : AbstractDungeon.actionManager.actions)
+            {
+                if (a instanceof WaitForSignalAction) //this should go after a signal action
+                {
+                    AbstractDungeon.actionManager.actions.add(AbstractDungeon.actionManager.actions.indexOf(a) + 1, new HandCardSelectAction());
+                    this.isDone = true;
+                    return;
+                }
+            }
+        }
     }
 }

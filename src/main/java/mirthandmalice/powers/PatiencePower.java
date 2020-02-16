@@ -43,9 +43,9 @@ public class PatiencePower extends BasePower implements NonStackablePower {
 
     public void updateDescription() {
         if (this.amount == 1) {
-            this.description = DESCRIPTIONS[0];
+            this.description = descriptions()[0];
         } else {
-            this.description = DESCRIPTIONS[1] + this.amount + DESCRIPTIONS[2];
+            this.description = descriptions()[1] + this.amount + descriptions()[2];
         }
     }
 }

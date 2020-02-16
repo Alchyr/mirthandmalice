@@ -82,6 +82,12 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         communication = new SteamNetworking(callback, SteamNetworking.API.Client);
     }
 
+    public static String getName(boolean other)
+    {
+        if (other)
+            return partnerName;
+        return AbstractDungeon.player.name;
+    }
 
     public static void dispose()
     {

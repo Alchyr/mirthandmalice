@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import com.megacrit.cardcrawl.powers.WeakPower;
 import mirthandmalice.abstracts.MaliceCard;
+import mirthandmalice.powers.AtrophyPower;
 import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
@@ -26,13 +27,13 @@ public class Tragedy extends MaliceCard {
     public final static String ID = makeID(cardInfo.cardName);
 
     private static final int DAMAGE = 4;
-    private static final int UPG_DAMAGE = 1;
+    private static final int UPG_DAMAGE = 2;
 
     public Tragedy()
     {
         super(cardInfo, false);
 
-        setMagic(DAMAGE, UPG_DAMAGE);
+        setDamage(DAMAGE, UPG_DAMAGE);
     }
 
     @Override
@@ -44,29 +45,24 @@ public class Tragedy extends MaliceCard {
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {
-        this.baseDamage = 0;
+        super.calculateCardDamage(mo);
 
         if (mo != null)
         {
-            if (mo.hasPower(WeakPower.POWER_ID))
+            if (mo.hasPower(AtrophyPower.POWER_ID))
             {
-                this.baseDamage += mo.getPower(WeakPower.POWER_ID).amount * this.magicNumber;
-            }
-            if (mo.hasPower(VulnerablePower.POWER_ID))
-            {
-                this.baseDamage += mo.getPower(VulnerablePower.POWER_ID).amount * this.magicNumber;
+                this.baseMagicNumber = this.magicNumber = mo.getPower(AtrophyPower.POWER_ID).amount;
             }
 
             this.rawDescription = cardStrings.DESCRIPTION + cardStrings.EXTENDED_DESCRIPTION[0];
             this.initializeDescription();
         }
-
-        super.calculateCardDamage(mo);
     }
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.POISON));
+        for (int i = 0; i < this.magicNumber; ++i)
+            AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.POISON));
     }
 
     @Override

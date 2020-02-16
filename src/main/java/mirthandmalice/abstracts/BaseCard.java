@@ -1,10 +1,13 @@
 package mirthandmalice.abstracts;
 
 import basemod.abstracts.CustomCard;
+import basemod.interfaces.CloneablePowerInterface;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.*;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
+import com.megacrit.cardcrawl.cards.red.Shockwave;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -264,6 +267,23 @@ public abstract class BaseCard extends CustomCard {
     protected void applySelf(AbstractPower power)
     {
         addToBot(new ApplyPowerAction(AbstractDungeon.player, AbstractDungeon.player, power, power.amount));
+    }
+
+    protected<T extends AbstractPower & CloneablePowerInterface> void applyAll(T power, AbstractGameAction.AttackEffect effect)
+    {
+        applyAll(power, false, effect);
+    }
+    protected<T extends AbstractPower & CloneablePowerInterface> void applyAll(T power, boolean isFast, AbstractGameAction.AttackEffect effect)
+    {
+        for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
+        {
+            AbstractPower toApply = power.makeCopy();
+
+            toApply.owner = m;
+            toApply.updateDescription();
+
+            addToBot(new ApplyPowerAction(m, AbstractDungeon.player, toApply, toApply.amount, isFast, effect));
+        }
     }
 
     protected WeakPower getWeak(AbstractMonster m, int amount)

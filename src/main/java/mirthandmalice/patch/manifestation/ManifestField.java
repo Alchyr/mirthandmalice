@@ -2,6 +2,7 @@ package mirthandmalice.patch.manifestation;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mirthandmalice.character.MirthAndMalice;
@@ -29,5 +30,16 @@ public class ManifestField {
             return mirthManifested.get(AbstractDungeon.player) ^ ((MirthAndMalice) AbstractDungeon.player).isMirth;
         }
         return false;
+    }
+    public static boolean inHandManifested(AbstractCard c)
+    {
+        if (AbstractDungeon.player instanceof MirthAndMalice)
+        {
+            if (AbstractDungeon.player.hand.contains(c))
+                return isManifested();
+            else if (((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.contains(c))
+                return otherManifested();
+        }
+        return true;
     }
 }

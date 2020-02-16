@@ -8,6 +8,7 @@ import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
 import com.evacipated.cardcrawl.modthespire.lib.SpireField;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
+import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.common.GainBlockAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
@@ -141,6 +142,23 @@ public class FortuneMisfortune {
             }
 
             sb.setColor(oldColor);
+        }
+    }
+
+
+    @SpirePatch(
+            clz = AbstractCard.class,
+            method = "makeStatEquivalentCopy"
+    )
+    public static class CopyMarks
+    {
+        @SpirePostfixPatch
+        public static AbstractCard transfer(AbstractCard __result, AbstractCard __instance)
+        {
+            Fields.fortune.set(__result, Fields.fortune.get(__instance));
+            Fields.misfortune.set(__result, Fields.misfortune.get(__instance));
+
+            return __result;
         }
     }
 

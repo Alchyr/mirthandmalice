@@ -7,7 +7,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
-import mirthandmalice.powers.WeightPower;
+import mirthandmalice.powers.TraumaPower;
 
 public class Vulnerable {
     @SpirePatch(
@@ -19,7 +19,7 @@ public class Vulnerable {
         @SpirePostfixPatch
         public static float weightyStacking(float out, VulnerablePower __instance, float base, DamageInfo.DamageType t)
         {
-            if (out != base && __instance.owner.hasPower(WeightPower.POWER_ID))
+            if (out != base && __instance.owner.hasPower(TraumaPower.POWER_ID))
             {
                 float mult = out / base; //ex, 1.5, 1.75, idk
                 mult -= 1; //now it's .5, .75, something like that
@@ -40,7 +40,7 @@ public class Vulnerable {
         @SpirePrefixPatch
         public static SpireReturn altDescription(VulnerablePower __instance)
         {
-            if (__instance.owner.hasPower(WeightPower.POWER_ID))
+            if (__instance.owner.hasPower(TraumaPower.POWER_ID))
             {
                 float mult = __instance.atDamageReceive(1.0f, DamageInfo.DamageType.NORMAL); //will use altered calculation
                 mult -= 1;

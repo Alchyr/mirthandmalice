@@ -175,6 +175,7 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
 
         if (this.isDone && mustSignal)
             MultiplayerHelper.sendP2PString("signal");
+
     }
 
     static {
