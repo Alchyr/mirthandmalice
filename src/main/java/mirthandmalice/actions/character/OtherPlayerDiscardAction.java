@@ -1,11 +1,13 @@
 package mirthandmalice.actions.character;
 
 import basemod.BaseMod;
+import com.evacipated.cardcrawl.modthespire.lib.SpireReturn;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.actions.GameActionManager;
 import com.megacrit.cardcrawl.actions.common.DiscardAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
@@ -31,32 +33,22 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
     private static final UIStrings otherStrings;
     public static final String[] otherText;
 
-    private MirthAndMalice p;
+    private AbstractPlayer p;
     private boolean endTurn;
-    private AbstractCard toDiscard = null;
     private static final float DURATION;
     private boolean isRandom;
-    private boolean mustSignal = false;
 
-    public OtherPlayerDiscardAction(MirthAndMalice target, AbstractCreature source, int amount, boolean endTurn) {
-        this(target, source, amount, true, endTurn);
+    public OtherPlayerDiscardAction(AbstractPlayer p, AbstractCreature source, int amount, boolean endTurn) {
+        this(p, source, amount, true, endTurn);
     }
 
-    public OtherPlayerDiscardAction(MirthAndMalice target, AbstractCreature source, int amount, boolean isRandom, boolean endTurn) {
-        this.p = target;
+    public OtherPlayerDiscardAction(AbstractPlayer p, AbstractCreature source, int amount, boolean isRandom, boolean endTurn) {
+        this.p = p;
         this.setValues(target, source, amount);
         this.actionType = ActionType.DISCARD;
         this.endTurn = endTurn;
         this.isRandom = isRandom;
         this.duration = DURATION;
-    }
-
-    public OtherPlayerDiscardAction(MirthAndMalice target, AbstractCard toDiscard) {
-        this.p = target;
-        this.actionType = ActionType.DISCARD;
-        this.endTurn = false;
-        this.duration = DURATION;
-        this.toDiscard = toDiscard;
     }
 
     public static void moveToAltDiscard(CardGroup source, CardGroup discardPile, AbstractCard c)
@@ -79,6 +71,14 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
 
     public void update() {
         if (this.duration == DURATION) {
+            if (TrackCardSource.useMyEnergy && AbstractDungeon.player instanceof MirthAndMalice) //triggered by self.
+            {
+                AbstractDungeon.actionManager.addToTop(new ReceiveDiscardCardsAction());
+                AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(otherText[0] + partnerName + otherText[1]));
+                this.isDone = true;
+                return;
+            }
+
             AbstractCard c;
 
             if (AbstractDungeon.getMonsters().areMonstersBasicallyDead()) {
@@ -86,27 +86,15 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
                 return;
             }
 
-            if (this.toDiscard != null)
-            {
-                moveToAltDiscard(p.otherPlayerHand, p.otherPlayerDiscard, toDiscard);
-                toDiscard.triggerOnManualDiscard();
-                GameActionManager.incrementDiscard(false);
-
-                p.otherPlayerHand.applyPowers();
-                p.hand.applyPowers();
-
-                this.tickDuration();
-                return;
-            }
 
             int i;
-            if (this.p.otherPlayerHand.size() <= this.amount) {
-                this.amount = this.p.otherPlayerHand.size();
-                i = this.p.otherPlayerHand.size();
+            if (this.p.hand.size() <= this.amount) {
+                this.amount = this.p.hand.size();
+                i = this.p.hand.size();
 
                 for(int n = 0; n < i; ++n) {
-                    c = p.otherPlayerHand.getTopCard();
-                    moveToAltDiscard(p.otherPlayerHand, p.otherPlayerDiscard, c);
+                    c = p.hand.getTopCard();
+                    p.hand.moveToDiscardPile(c);
                     if (!this.endTurn) {
                         c.triggerOnManualDiscard();
                     }
@@ -114,7 +102,7 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
                     GameActionManager.incrementDiscard(this.endTurn);
                 }
 
-                p.otherPlayerHand.applyPowers();
+                p.hand.applyPowers();
                 p.hand.applyPowers();
                 this.tickDuration();
                 return;
@@ -123,22 +111,14 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
             if (this.isRandom)
             {
                 for(i = 0; i < this.amount; ++i) {
-                    c = p.otherPlayerHand.getRandomCard(true);
-                    moveToAltDiscard(p.otherPlayerHand, p.otherPlayerDiscard, c);
+                    c = p.hand.getRandomCard(true);
+                    p.hand.moveToDiscardPile(c);
                     c.triggerOnManualDiscard();
                     GameActionManager.incrementDiscard(this.endTurn);
                 }
             }
             else
             {
-                if (TrackCardSource.useOtherEnergy && AbstractDungeon.player instanceof MirthAndMalice) //played by other player.
-                {
-                    AbstractDungeon.actionManager.addToTop(new ReceiveDiscardCardsAction());
-                    AbstractDungeon.actionManager.addToTop(new WaitForSignalAction(otherText[0] + partnerName + otherText[1]));
-                    this.isDone = true;
-                    return;
-                }
-
                 if (AbstractDungeon.player.hand.isEmpty()) {
                     this.isDone = true;
                     MultiplayerHelper.sendP2PString("signal");
@@ -147,8 +127,6 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
 
                 HandCardSelectReordering.saveHandPreOpenScreen();
                 AbstractDungeon.handCardSelectScreen.open(TEXT[0], this.amount, false);
-
-                mustSignal = true;
 
                 AbstractDungeon.player.hand.applyPowers();
                 this.tickDuration();
@@ -161,7 +139,7 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
 
             for (AbstractCard c : AbstractDungeon.handCardSelectScreen.selectedCards.group)
             {
-                moveToAltDiscard(p.otherPlayerHand, p.otherPlayerDiscard, c);
+                p.hand.moveToDiscardPile(c);
                 c.triggerOnManualDiscard();
                 GameActionManager.incrementDiscard(this.endTurn);
 
@@ -173,7 +151,7 @@ public class OtherPlayerDiscardAction extends AbstractGameAction {
 
         this.tickDuration();
 
-        if (this.isDone && mustSignal)
+        if (this.isDone)
             MultiplayerHelper.sendP2PString("signal");
 
     }

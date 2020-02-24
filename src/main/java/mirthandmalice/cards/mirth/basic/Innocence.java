@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MirthCard;
+import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.manifestation.ManifestField;
 import mirthandmalice.util.CardInfo;
 
@@ -34,7 +35,7 @@ public class Innocence extends MirthCard {
 
     @Override
     public void applyPowers() {
-        if (ManifestField.isManifested())
+        if (ManifestField.inHandManifested(this))
         {
             this.target = CardTarget.ALL;
         }
@@ -48,7 +49,8 @@ public class Innocence extends MirthCard {
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
         block();
-        if (ManifestField.isManifested())
+        if (TrackCardSource.useMyEnergy && ManifestField.isManifested() ||
+                TrackCardSource.useOtherEnergy && ManifestField.otherManifested())
         {
             this.superFlash();
             for (AbstractMonster mo : AbstractDungeon.getMonsters().monsters)

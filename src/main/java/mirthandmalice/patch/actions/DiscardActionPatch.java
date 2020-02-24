@@ -33,7 +33,6 @@ public class DiscardActionPatch {
 
     private static DiscardAction currentAction = null;
     private static int handIndex = -1;
-    private static boolean mustSignal = false;
 
     @SpirePrefixPatch
     public static void trackInstance(DiscardAction __instance)
@@ -41,7 +40,6 @@ public class DiscardActionPatch {
         if (currentAction != __instance) {
             currentAction = __instance;
             handIndex = -1;
-            mustSignal = false;
         }
     }
 
@@ -90,7 +88,7 @@ public class DiscardActionPatch {
     @SpirePostfixPatch
     public static void finish(DiscardAction __instance)
     {
-        if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active && mustSignal && __instance.isDone)
+        if (AbstractDungeon.player.chosenClass == CharacterEnums.MIRTHMALICE && MultiplayerHelper.active && __instance.isDone)
         {
             MultiplayerHelper.sendP2PString("signal");
         }

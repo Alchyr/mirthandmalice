@@ -44,7 +44,7 @@ public class Mercurial extends NeutralCard {
         AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), MathUtils.randomBoolean() ? AbstractGameAction.AttackEffect.SLASH_VERTICAL : AbstractGameAction.AttackEffect.SLASH_HORIZONTAL));
 
         AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(TrackCardSource.useOtherEnergy, 1));
-        AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(!TrackCardSource.useOtherEnergy, 1));
+        AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(TrackCardSource.useMyEnergy, 1));
 
         if (TrackCardSource.useMyEnergy)
         {

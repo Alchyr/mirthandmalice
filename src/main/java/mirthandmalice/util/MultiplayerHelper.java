@@ -18,10 +18,7 @@ import com.megacrit.cardcrawl.relics.AbstractRelic;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepEffect;
 import com.megacrit.cardcrawl.vfx.campfire.CampfireSleepScreenCoverEffect;
 import mirthandmalice.abstracts.ReceiveSignalCardsAction;
-import mirthandmalice.actions.character.HandCardSelectAction;
-import mirthandmalice.actions.character.MakeTempCardInOtherHandAction;
-import mirthandmalice.actions.character.OtherPlayerDiscardAction;
-import mirthandmalice.actions.character.WaitForSignalAction;
+import mirthandmalice.actions.character.*;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.card_use.PlayCardCheck;
 import mirthandmalice.patch.combat.RequireDoubleEndTurn;
@@ -370,8 +367,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                 int index = Integer.parseInt(msg.substring(13));
                 if (index >= 0 && index < ((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.group.size())
                 {
-                    AbstractCard toDiscard = ((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.group.get(index);
-                    AbstractDungeon.actionManager.addToTop(new OtherPlayerDiscardAction((MirthAndMalice)AbstractDungeon.player, toDiscard));
+                    AbstractDungeon.actionManager.addToTop(new DiscardSpecificOtherPlayerCardAction(((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.group.get(index)));
                 }
             }
         }

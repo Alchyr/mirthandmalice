@@ -42,7 +42,7 @@ public class Smack extends NeutralCard {
 
     @Override
     public void triggerOnGlowCheck() {
-        if (ManifestField.isManifested())
+        if (ManifestField.inHandManifested(this))
             this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
         else
             this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();

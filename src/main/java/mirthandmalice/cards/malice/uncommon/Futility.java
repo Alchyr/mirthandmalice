@@ -37,7 +37,7 @@ public class Futility extends MirthCard {
     public void applyPowers() {
         super.applyPowers();
 
-        if (ManifestField.isManifested())
+        if (ManifestField.inHandManifested(this))
         {
             this.target = CardTarget.ALL_ENEMY;
         }

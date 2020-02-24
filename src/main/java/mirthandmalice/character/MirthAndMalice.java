@@ -308,11 +308,6 @@ public class MirthAndMalice extends CustomPlayer {
         }
         else
         {
-            if (!forceDrawPileValid(force) || forceIsHandFull(force))
-            {
-                return false;
-            }
-
             CardCrawlGame.sound.playAV("CARD_DRAW_8", -0.12F, 0.25F);
             this.forceDraw(force,1);
             this.onCardDrawOrDiscard();
@@ -371,28 +366,44 @@ public class MirthAndMalice extends CustomPlayer {
         }
         else if (force < 0)
         {
+            logger.info("Forced other player draw validity. Other player's draw pile is " + (otherPlayerDraw.isEmpty() ? "empty." : "not empty."));
             return !otherPlayerDraw.isEmpty();
         }
         else
         {
+            logger.info("Forced self draw validity. Your draw pile is " + (drawPile.isEmpty() ? "empty." : "not empty."));
             return drawPile.isEmpty();
         }
     }
     public boolean drawPileValid()
     {
+        String log = "Is draw pile valid? ";
+
         if (TrackCardSource.useOtherEnergy) {
+            log += " Played by other player; Other player's draw pile is ";
+            if (FULL_DEBUG)
+                logger.info(log + (otherPlayerDraw.isEmpty() ? "empty." : "not empty."));
             return !otherPlayerDraw.isEmpty();
         }
         else if (TrackCardSource.useMyEnergy) {
+            log += " Played by you. Your draw pile is ";
+            if (FULL_DEBUG)
+                logger.info(log + (drawPile.isEmpty() ? "empty." : "not empty."));
             return !drawPile.isEmpty();
         }
 
         if (mirthDraw ^ isMirth)
         {
+            log += " Other player is drawing. Other player's draw pile is ";
+            if (FULL_DEBUG)
+                logger.info(log + (otherPlayerDraw.isEmpty() ? "empty." : "not empty."));
             return !otherPlayerDraw.isEmpty();
         }
         else
         {
+            log += " You are drawing. Your draw pile is ";
+            if (FULL_DEBUG)
+                logger.info(log + (drawPile.isEmpty() ? "empty." : "not empty."));
             return !drawPile.isEmpty();
         }
     }
@@ -423,10 +434,14 @@ public class MirthAndMalice extends CustomPlayer {
         }
         else if (force < 0)
         {
+            if (FULL_DEBUG)
+                logger.info("Is hand full? Forced other player draw. Other player's hand is " + (otherPlayerHand.size() >= BaseMod.MAX_HAND_SIZE ? "full." : "not full."));
             return otherPlayerHand.size() >= BaseMod.MAX_HAND_SIZE;
         }
         else
         {
+            if (FULL_DEBUG)
+                logger.info("Is hand full? Forced self draw. Your hand is " + (hand.size() >= BaseMod.MAX_HAND_SIZE ? "full." : "not full."));
             return hand.size() >= BaseMod.MAX_HAND_SIZE;
         }
     }
@@ -560,6 +575,9 @@ public class MirthAndMalice extends CustomPlayer {
 
     public void forceDraw(int force, int numCards)
     {
+        if (FULL_DEBUG)
+            logger.info("Performing forced draw.");
+
         for(int i = 0; i < numCards; ++i) {
             if (forceIsHandFull(force) || !forceDrawPileValid(force))
             {
