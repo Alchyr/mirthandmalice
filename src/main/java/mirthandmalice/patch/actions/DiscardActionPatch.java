@@ -46,16 +46,11 @@ public class DiscardActionPatch {
     @SpirePrefixPatch
     public static void trackInstance(DiscardAction __instance)
     {
-        if (currentAction != __instance && AbstractDungeon.player instanceof MirthAndMalice) {
-            enabled = true;
+        if (currentAction != __instance) {
+            enabled = AbstractDungeon.player instanceof MirthAndMalice;
             currentAction = __instance;
             waiting = false;
             handIndex = -1;
-        }
-        else
-        {
-            currentAction = null;
-            enabled = false;
         }
     }
 
