@@ -15,7 +15,7 @@ import mirthandmalice.character.MirthAndMalice;
 import static mirthandmalice.MirthAndMaliceMod.FULL_DEBUG;
 import static mirthandmalice.MirthAndMaliceMod.logger;
 
-public class DrawCardActionModifications {
+public class DrawCardActionReplacement {
     @SpirePatch(
             clz = DrawCardAction.class,
             method = SpirePatch.CLASS

@@ -324,12 +324,12 @@ public class MirthAndMalice extends CustomPlayer {
         }
         else
         {
-            if (!drawPileValid() || isHandFull())
+            /*if (!drawPileValid() || isHandFull())
             {
                 if (!TrackCardSource.useOtherEnergy && !TrackCardSource.useMyEnergy)
                     mirthDraw = !mirthDraw;
                 return false;
-            }
+            }*/
             CardCrawlGame.sound.playAV("CARD_DRAW_8", -0.12F, 0.25F);
             this.draw(1);
             this.onCardDrawOrDiscard();

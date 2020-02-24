@@ -131,12 +131,8 @@ public class DiscardActionPatch {
     {
         if (enabled)
         {
-            if (TrackCardSource.useMyEnergy) //triggered by self, not neutral
-            {
-                //Track card indexes in hand for later use
-                waiting = true;
-                HandCardSelectReordering.saveHandPreOpenScreen();
-            }
+            waiting = true;
+            HandCardSelectReordering.saveHandPreOpenScreen();
         }
         return SpireReturn.Continue();
     }
@@ -165,6 +161,11 @@ public class DiscardActionPatch {
         if (enabled && __instance.isDone && waiting)
         {
             MultiplayerHelper.sendP2PString("signal");
+        }
+        if (waiting)
+        {
+            if (__instance.isDone)
+                waiting = false;
         }
     }
 
