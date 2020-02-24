@@ -7,7 +7,6 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MaliceCard;
-import mirthandmalice.actions.character.OtherPlayerDiscardAction;
 import mirthandmalice.actions.character.ResetEnergyGainAction;
 import mirthandmalice.actions.character.SetEnergyGainAction;
 import mirthandmalice.character.MirthAndMalice;
@@ -45,18 +44,17 @@ public class Return extends MaliceCard {
             if (TrackCardSource.useOtherEnergy)
             {
                 amt = ((MirthAndMalice) p).otherPlayerHand.size();
-                AbstractDungeon.actionManager.addToBottom(new OtherPlayerDiscardAction((MirthAndMalice)p, p, amt, false));
             }
-            else
-            {
-                AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, amt, false));
-            }
+
+            AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, amt, false));
+
             AbstractDungeon.actionManager.addToBottom(new SetEnergyGainAction(true));
             AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(amt));
             AbstractDungeon.actionManager.addToBottom(new ResetEnergyGainAction());
         }
         else
         {
+            AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, amt, false));
             AbstractDungeon.actionManager.addToBottom(new GainEnergyAction(amt));
         }
     }

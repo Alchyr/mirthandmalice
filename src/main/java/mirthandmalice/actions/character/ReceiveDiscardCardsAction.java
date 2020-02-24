@@ -13,7 +13,7 @@ public class ReceiveDiscardCardsAction extends ReceiveSignalCardsAction {
     public ReceiveDiscardCardsAction()
     {
         this.actionType = AbstractGameAction.ActionType.CARD_MANIPULATION;
-        this.duration = 10.0f;
+        this.duration = 10.0f; //shouldn't take that long, as this action only starts updating once the signal that discard is complete is received.
     }
 
     @Override
@@ -43,7 +43,6 @@ public class ReceiveDiscardCardsAction extends ReceiveSignalCardsAction {
                 c.triggerOnManualDiscard();
                 GameActionManager.incrementDiscard(false);
 
-                p.otherPlayerHand.applyPowers();
                 p.hand.applyPowers();
             }
             this.isDone = true;

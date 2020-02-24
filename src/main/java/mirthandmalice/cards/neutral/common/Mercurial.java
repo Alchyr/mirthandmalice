@@ -46,21 +46,11 @@ public class Mercurial extends NeutralCard {
         AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(TrackCardSource.useOtherEnergy, 1));
         AbstractDungeon.actionManager.addToBottom(new ForceDrawAction(TrackCardSource.useMyEnergy, 1));
 
-        if (TrackCardSource.useMyEnergy)
+        //The one who plays it discards, then the one who does not play it discards.
+        AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, 1, false, false));
+        if (p instanceof MirthAndMalice)
         {
-            AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, 1, false, false));
-            if (p instanceof MirthAndMalice)
-            {
-                AbstractDungeon.actionManager.addToBottom(new OtherPlayerDiscardAction((MirthAndMalice)p, p, 1, false, false));
-            }
-        }
-        else
-        {
-            if (p instanceof MirthAndMalice)
-            {
-                AbstractDungeon.actionManager.addToBottom(new OtherPlayerDiscardAction((MirthAndMalice)p, p, 1, false, false));
-            }
-            AbstractDungeon.actionManager.addToBottom(new DiscardAction(p, p, 1, false, false));
+            AbstractDungeon.actionManager.addToBottom(new OtherPlayerDiscardAction((MirthAndMalice)p, p, 1, false, false));
         }
     }
 
