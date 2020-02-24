@@ -22,14 +22,27 @@ public class Innocence extends MirthCard {
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int BLOCK = 5;
-    private static final int UPG_BLOCK = 3;
+    private static final int BLOCK = 6;
+    private static final int UPG_BLOCK = 2;
 
 
     public Innocence() {
         super(cardInfo, false);
 
         setBlock(BLOCK, UPG_BLOCK);
+    }
+
+    @Override
+    public void applyPowers() {
+        if (ManifestField.isManifested())
+        {
+            this.target = CardTarget.ALL;
+        }
+        else
+        {
+            this.target = CardTarget.SELF;
+        }
+        super.applyPowers();
     }
 
     @Override

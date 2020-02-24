@@ -15,7 +15,7 @@ public class Gift extends MirthCard {
             "Gift",
             1,
             CardType.SKILL,
-            CardTarget.NONE,
+            CardTarget.SELF,
             CardRarity.COMMON);
     // skill
 

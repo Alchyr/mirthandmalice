@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.NeutralCard;
+import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.manifestation.ManifestField;
 import mirthandmalice.util.CardInfo;
 
@@ -51,8 +52,20 @@ public class Smack extends NeutralCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         AbstractDungeon.actionManager.addToBottom(new DamageAction(m, new DamageInfo(p, this.damage, this.damageTypeForTurn), AbstractGameAction.AttackEffect.BLUNT_HEAVY));
 
-        if (ManifestField.isManifested())
-            applySingle(m, getVuln(m, this.magicNumber));
+        if (TrackCardSource.useMyEnergy)
+        {
+            if (ManifestField.isManifested())
+            {
+                applySingle(m, getVuln(m, this.magicNumber));
+            }
+        }
+        else
+        {
+            if (ManifestField.otherManifested())
+            {
+                applySingle(m, getVuln(m, this.magicNumber));
+            }
+        }
     }
 
     @Override

@@ -27,18 +27,61 @@
     "NAME": "Indulgence",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthandmalice:Relinquish."
   },
+  "mirthandmalice:Carve": {
+    "NAME": "Carve",
+    "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Atrophy."
+  },
+  "mirthandmalice:Trust": {
+    "NAME": "Trust",
+    "DESCRIPTION": "Your partner gains X [E] and draws X cards. NL Can be upgraded any number of times.",
+    "UPGRADE_DESCRIPTION": "Your partner gains X+? [E] and draws X+? cards. NL Can be upgraded any number of times."
+  },
+  "mirthandmalice:Agoraphobia": {
+    "NAME": "Agoraphobia",
+    "DESCRIPTION": "The next time you mirthandmalice:Manifest, mirthandmalice:Relinquish and gain !M! Block."
+  },
   "mirthandmalice:Masked": {
     "NAME": "Masked",
     "DESCRIPTION": "Gain !B! Block. NL mirthandmalice:Relinquish."
+  },
+  "mirthandmalice:Tag": {
+    "NAME": "Tag",
+    "DESCRIPTION": "You're mirthandmalice:It.",
+    "UPGRADE_DESCRIPTION": "Innate. NL You're mirthandmalice:It."
   },
   "mirthandmalice:Innocence": {
     "NAME": "Innocence",
     "DESCRIPTION": "mirthandmalice:Wild. NL Gain !B! Block."
   },
+  "mirthandmalice:Blink": {
+    "NAME": "Blink",
+    "DESCRIPTION": "If you're mirthandmalice:Manifested, mirthandmalice:Relinquish. NL Otherwise, mirthandmalice:Manifest.",
+    "UPGRADE_DESCRIPTION": "If you're mirthandmalice:Manifested, mirthandmalice:Relinquish. NL Otherwise, mirthandmalice:Manifest. NL Draw a card."
+  },
+  "mirthandmalice:NoHoldsBarred": {
+    "NAME": "No Holds Barred",
+    "DESCRIPTION": "Lose 1 Dexterity. NL At the start of your turn, gain !M! Vigor."
+  },
+  "mirthandmalice:Pressure": {
+    "NAME": "Pressure",
+    "DESCRIPTION": "Whenever you mirthandmalice:Manifest, ALL enemies lose !M! HP."
+  },
+  "mirthandmalice:Lament": {
+    "NAME": "Lament",
+    "DESCRIPTION": "ALL enemies lose !M! HP."
+  },
+  "mirthandmalice:Joy": {
+    "NAME": "Joy",
+    "DESCRIPTION": "Whenever you mirthandmalice:Manifest, you and ALL enemies gain !M! Block."
+  },
+  "mirthandmalice:Crush": {
+    "NAME": "Crush",
+    "DESCRIPTION": "Deal !D! damage. NL Deals additional damage equal to the enemy's Block.",
+    "UPGRADE_DESCRIPTION": "Deal !D! damage. NL Deals additional damage equal to double the enemy's Block."
+  },
   "mirthandmalice:Futility": {
     "NAME": "Futility",
-    "DESCRIPTION": "mirthandmalice:Wild. NL Gain !M! Weak.",
-    "UPGRADE_DESCRIPTION": "mirthandmalice:Wild. NL Gain !M! Weak. NL Draw a card."
+    "DESCRIPTION": "mirthandmalice:Wild. NL Gain !M! Weak."
   },
   "mirthandmalice:Lull": {
     "NAME": "Lull",
@@ -66,6 +109,10 @@
     "NAME": "Smack",
     "DESCRIPTION": "Deal !D! damage. NL If you're mirthandmalice:Manifested, apply !M! Vulnerable."
   },
+  "mirthandmalice:Caprice": {
+    "NAME": "Caprice",
+    "DESCRIPTION": "Deal !D! damage. NL The enemy gains !M! Block."
+  },
   "mirthandmalice:Flicker": {
     "NAME": "Flicker",
     "DESCRIPTION": "Deal !D! damage to ALL enemies. NL mirthandmalice:Relinquish."
@@ -91,8 +138,8 @@
     "NAME": "Constrain",
     "DESCRIPTION": "Deal !D! damage. NL Gain 1 mirthandmalice:Seal."
   },
-  "mirthandmalice:ColdComfort": {
-    "NAME": "Cold Comfort",
+  "mirthandmalice:Attrition": {
+    "NAME": "Attrition",
     "DESCRIPTION": "ALL enemies gain !M! Block. NL Mark all Attacks in your partner's hand with mirthandmalice:Misfortune.",
     "UPGRADE_DESCRIPTION": "ALL enemies gain !M! Block. NL Mark all cards in your partner's hand with mirthandmalice:Misfortune."
   },
@@ -100,8 +147,16 @@
     "NAME": "Invigorate",
     "DESCRIPTION": "Draw 2 cards. NL Gain !M! Vigor. NL Exhaust."
   },
-  "mirthandmalice:JoyousFate": {
-    "NAME": "Joyous Fate",
+  "mirthandmalice:Tease": {
+    "NAME": "Tease",
+    "DESCRIPTION": "Enemy loses 4 HP. NL Apply !M! Vulnerable."
+  },
+  "mirthandmalice:Patience": {
+    "NAME": "Patience",
+    "DESCRIPTION": "Retain both hands this turn. NL Block is not removed at the start of your next turn."
+  },
+  "mirthandmalice:BrightFuture": {
+    "NAME": "Bright Future",
     "DESCRIPTION": "Mark !M! random cards in either draw pile with mirthandmalice:Fortune."
   },
   "mirthandmalice:TestingFate": {
@@ -124,9 +179,13 @@
       "NAME": "Trauma",
       "DESCRIPTION": "Enemy's Vulnerable stacks additively until the end of the turn. NL Exhaust."
   },
+  "mirthandmalice:Spite": {
+    "NAME": "Spite",
+    "DESCRIPTION": "If the enemy has Block, it loses !M! HP."
+  },
   "mirthandmalice:Palpitation": {
     "NAME": "Palpitation",
-    "DESCRIPTION": "Gain !B! Block. NL Gain !M! Vigor."
+    "DESCRIPTION": "Deal !D! damage. NL Gain !M! Vigor."
   },
   "mirthandmalice:Hemophilia": {
     "NAME": "Hemophilia",
@@ -180,8 +239,8 @@
     "NAME": "Counterfeit",
     "DESCRIPTION": "Exhaust a card in your hand. NL Add !M! new copies of it to your hand. NL Exhaust."
   },
-  "mirthandmalice:SharedFortune": {
-    "NAME": "SharedFortune",
+  "mirthandmalice:Generosity": {
+    "NAME": "Generosity",
     "DESCRIPTION": "Gain !B! Block. NL Move any number of cards from your hand to your partner's hand."
   },
   "mirthandmalice:Divergence": {
@@ -190,6 +249,14 @@
     "EXTENDED_DESCRIPTION": [
       "NL (Gain !B! Block.)"
     ]
+  },
+  "mirthandmalice:ComboKick": {
+    "NAME": "Combo Kick",
+    "DESCRIPTION": "Deal !D! damage twice. NL If this card consumes Vigor, gain [E] and draw 1 card."
+  },
+  "mirthandmalice:RisingFrenzy": {
+    "NAME": "Rising Frenzy",
+    "DESCRIPTION": "mirthandmalice:Wild. NL Gain !M! Vigor. NL If you are not mirthandmalice:Manifested, gain half as much."
   },
   "mirthandmalice:Unearth": {
     "NAME": "Unearth",
@@ -255,8 +322,8 @@
     "NAME": "Smokescreen",
     "DESCRIPTION": "Gain !B! Block. NL Summon a mirthandmalice:Flame."
   },
-  "mirthandmalice:ChangeOfFate": {
-    "NAME": "Change of Fate",
+  "mirthandmalice:Abandon": {
+    "NAME": "Abandon",
     "DESCRIPTION": "Deal !D! damage. NL Exhaust a card in a discard pile."
   },
   "mirthandmalice:Tragedy": {
@@ -270,9 +337,17 @@
     "NAME": "Warmup",
     "DESCRIPTION": "Deal !D! damage. NL Summon a mirthandmalice:Flame."
   },
+  "mirthandmalice:Corrosion": {
+    "NAME": "Corrosion",
+    "DESCRIPTION": "Whenever an enemy gains Block, apply !M! mirthandmalice:Atrophy to it."
+  },
   "mirthandmalice:Fearless": {
     "NAME": "Fearless",
     "DESCRIPTION": "Gain !B! Block. NL If you are not mirthandmalice:Manifested, gain !M! times as much Block. NL mirthandmalice:Manifest."
+  },
+  "mirthandmalice:DeceptiveStrike": {
+    "NAME": "Deceptive Strike",
+    "DESCRIPTION": "Deal !D! damage. NL If you are not mirthandmalice:Manifested, deal !D! damage !M! additional times."
   },
   "mirthandmalice:Stabilize": {
     "NAME": "Stabilize",
@@ -316,10 +391,6 @@
     "NAME": "Serendipity",
     "DESCRIPTION": "At the end of your turn, mark a random card in your draw pile with mirthandmalice:Fortune.",
     "UPGRADE_DESCRIPTION": "At the end of your turn, mark !M! random cards in your draw pile with mirthandmalice:Fortune."
-  },
-  "mirthandmalice:Tag": {
-    "NAME": "Tag",
-    "DESCRIPTION": "mirthandmalice:You're_it."
   },
   "mirthandmalice:Beatdown": {
     "NAME": "Beatdown",
@@ -376,7 +447,7 @@
   },
   "mirthandmalice:Desiccate": {
     "NAME": "Desiccate",
-    "DESCRIPTION": "Deal !D! damage. NL Burst: Enemy loses !M! Strength."
+    "DESCRIPTION": "Deal !D! damage. NL If the enemy already lost HP this turn, the enemy loses !M! HP."
   },
   "mirthandmalice:Blight": {
     "NAME": "Blight",

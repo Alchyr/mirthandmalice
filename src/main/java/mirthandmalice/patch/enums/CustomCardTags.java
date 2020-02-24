@@ -11,7 +11,7 @@ public class CustomCardTags {
     @SpireEnum
     public static AbstractCard.CardTags MK_ECHO_POWER;
     @SpireEnum
-    public static AbstractCard.CardTags MK_BURST;
+    public static AbstractCard.CardTags MM_BURST; //if enemy lost hp this turn
     @SpireEnum
     public static AbstractCard.CardTags MK_FRAGMENT;
 

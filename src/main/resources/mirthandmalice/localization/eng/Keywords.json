@@ -39,10 +39,9 @@
   {
     "PROPER_NAME": "It",
     "NAMES": [
-      "you're it",
-      "you're_it"
+      "it"
     ],
-    "DESCRIPTION": "ALL Block from #yFortune will be applied to whoever is #yIt. Attacking while #yIt will make the target #yIt."
+    "DESCRIPTION": "ALL Block from #yFortune will be applied to whoever is #yIt. Dealing unblocked attack damage while #yIt will make the target with the most HP #yIt. Only one can be #yIt."
   },
   {
     "PROPER_NAME": "Atrophy",

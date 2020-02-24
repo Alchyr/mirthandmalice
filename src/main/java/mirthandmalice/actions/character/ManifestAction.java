@@ -10,12 +10,14 @@ import mirthandmalice.actions.general.UpdateHandAction;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.interfaces.OnManifestPower;
 import mirthandmalice.patch.manifestation.ManifestField;
+import mirthandmalice.util.MultiplayerHelper;
 
 import static mirthandmalice.MirthAndMaliceMod.FULL_DEBUG;
 import static mirthandmalice.MirthAndMaliceMod.logger;
 
 public class ManifestAction extends AbstractGameAction {
     private boolean toMirth;
+    private boolean toOther;
 
     /*public ManifestAction(boolean toMirth)
     {
@@ -23,21 +25,9 @@ public class ManifestAction extends AbstractGameAction {
     }*/
     public ManifestAction(boolean toOther)
     {
-        if (AbstractDungeon.player instanceof MirthAndMalice)
-        {
-            if (((MirthAndMalice) AbstractDungeon.player).isMirth)
-            {
-                this.toMirth = !toOther;
-            }
-            else
-            {
-                this.toMirth = toOther;
-            }
-        }
-        else
-        {
-            this.toMirth = true;
-        }
+        this.toOther = toOther;
+
+        this.toMirth = MultiplayerHelper.getIsMirthFromOther(toOther);
 
         if (FULL_DEBUG)
         {
@@ -57,7 +47,7 @@ public class ManifestAction extends AbstractGameAction {
             {
                 if (p instanceof OnManifestPower)
                 {
-                    ((OnManifestPower) p).onManifest();
+                    ((OnManifestPower) p).onManifest(toOther);
                 }
             }
 

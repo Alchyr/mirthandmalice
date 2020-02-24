@@ -1,29 +1,31 @@
-package mirthandmalice.cards.mirth.rare;
+package mirthandmalice.cards.mirth.uncommon;
 
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import mirthandmalice.abstracts.MirthCard;
-import mirthandmalice.actions.general.MarkRandomCardInDrawAction;
+import mirthandmalice.patch.energy_division.TrackCardSource;
+import mirthandmalice.powers.JoyPower;
 import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
-public class JoyousFate extends MirthCard {
+public class Joy extends MirthCard {
     private final static CardInfo cardInfo = new CardInfo(
-            "JoyousFate",
+            "Joy",
             1,
-            CardType.SKILL,
-            CardTarget.NONE,
-            CardRarity.RARE);
+            CardType.POWER,
+            CardTarget.SELF,
+            CardRarity.UNCOMMON);
+    // power
 
     public static final String ID = makeID(cardInfo.cardName);
 
 
-    private static final int MAGIC = 4;
+    private static final int MAGIC = 3;
     private static final int UPG_MAGIC = 2;
 
-    public JoyousFate() {
+    public Joy() {
         super(cardInfo, false);
 
         setMagic(MAGIC, UPG_MAGIC);
@@ -31,11 +33,11 @@ public class JoyousFate extends MirthCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        addToBot(new MarkRandomCardInDrawAction(this.magicNumber, true));
+        applySelf(new JoyPower(p, TrackCardSource.useOtherEnergy, this.magicNumber));
     }
 
     @Override
     public AbstractCard makeCopy() {
-        return new JoyousFate();
+        return new Joy();
     }
 }

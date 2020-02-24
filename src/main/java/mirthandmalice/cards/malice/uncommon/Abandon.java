@@ -13,9 +13,9 @@ import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
-public class ChangeOfFate extends MaliceCard {
+public class Abandon extends MaliceCard {
     private final static CardInfo cardInfo = new CardInfo(
-            "ChangeOfFate",
+            "Abandon",
             1,
             AbstractCard.CardType.ATTACK,
             AbstractCard.CardTarget.ENEMY,
@@ -24,10 +24,10 @@ public class ChangeOfFate extends MaliceCard {
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int DAMAGE = 9;
+    private static final int DAMAGE = 8;
     private static final int UPG_DAMAGE = 3;
 
-    public ChangeOfFate()
+    public Abandon()
     {
         super(cardInfo, false);
 
@@ -42,6 +42,6 @@ public class ChangeOfFate extends MaliceCard {
 
     @Override
     public AbstractCard makeCopy() {
-        return new ChangeOfFate();
+        return new Abandon();
     }
 }

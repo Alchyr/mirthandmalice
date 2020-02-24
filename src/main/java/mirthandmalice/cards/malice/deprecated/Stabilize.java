@@ -9,9 +9,11 @@ import mirthandmalice.abstracts.MaliceCard;
 import mirthandmalice.patch.card_use.LastCardType;
 import mirthandmalice.patch.enums.CustomCardTags;
 import mirthandmalice.util.CardInfo;
+import mirthandmalice.util.annotations.Disabled;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
+@Disabled
 public class Stabilize extends MaliceCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Stabilize",

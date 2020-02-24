@@ -8,6 +8,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.DamageInfo;
 import com.megacrit.cardcrawl.cards.red.Shockwave;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
+import com.megacrit.cardcrawl.core.AbstractCreature;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -184,7 +185,7 @@ public abstract class BaseCard extends CustomCard {
             this.upgradeName();
 
             if (this.upgradesDescription)
-                this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+                this.upgradeDescription();
 
             if (upgradeCost)
             {
@@ -220,6 +221,11 @@ public abstract class BaseCard extends CustomCard {
         }
     }
 
+    public void upgradeDescription()
+    {
+        this.rawDescription = cardStrings.UPGRADE_DESCRIPTION;
+    }
+
     public void InitializeCard()
     {
         FontHelper.cardDescFont_N.getData().setScale(1.0f);
@@ -240,11 +246,17 @@ public abstract class BaseCard extends CustomCard {
     protected void relinquish() {
         addToBot(new ManifestAction(TrackCardSource.useMyEnergy));
     }
+    protected void gainEnergy(int amount) {
+        addToBot(new GainEnergyAction(amount));
+    }
     protected void drawCards(int amount) {
         addToBot(new DrawCardAction(amount));
     }
     protected void block() {
         addToBot(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, this.block));
+    }
+    protected void giveBlock(AbstractCreature target, int amount) {
+        addToBot(new GainBlockAction(target, AbstractDungeon.player, amount));
     }
     protected void damageSingle(AbstractMonster m, AbstractGameAction.AttackEffect effect)
     {

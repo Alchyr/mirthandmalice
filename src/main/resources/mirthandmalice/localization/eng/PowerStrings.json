@@ -2,8 +2,22 @@
   "mirthandmalice:Forget": {
     "NAME": "Forget",
     "DESCRIPTIONS": [
-      "Upon losing HP, apply #b",
-      " #yWeak."
+      "When this enemy loses HP, apply #b",
+      " #yWeak to it."
+    ]
+  },
+  "mirthandmalice:NoHoldsBarred": {
+    "NAME": "No Holds Barred",
+    "DESCRIPTIONS": [
+      "At the start of your turn, gain #b",
+      " #yVigor."
+    ]
+  },
+  "mirthandmalice:It": {
+    "NAME": "It",
+    "DESCRIPTIONS": [
+      "ALL #yBlock given by #yFortune will be applied to you. When you deal unblocked attack damage, lose #yIt and apply it to the target with the most HP.",
+      "ALL #yBlock given by #yFortune will be applied to this enemy. When you receive unblocked attack damage from this enemy, it will lose #yIt and apply it to you."
     ]
   },
   "mirthandmalice:Serendipity": {
@@ -18,7 +32,49 @@
       " random cards in your draw pile with #yFortune."
     ]
   },
-  "Patience": {
+  "mirthandmalice:Agoraphobia": {
+    "NAME": "Agoraphobia",
+    "DESCRIPTIONS": [
+      "When #y",
+      " #yManifests, gain #b",
+      " Block and #y",
+      " #yRelinquishes.",
+      "When you #yManifest, gain #b",
+      " Block. Unfortunately, this is impossible for you."
+    ]
+  },
+  "mirthandmalice:Pressure": {
+    "NAME": "Pressure",
+    "DESCRIPTIONS": [
+      "When #y",
+      " #yManifests, ALL enemies lose #b",
+      " HP.",
+      "When you #yManifest, ALL enemies lose #b",
+      " HP. Unfortunately, this is impossible for you."
+    ]
+  },
+  "mirthandmalice:Joy": {
+    "NAME": "Joy",
+    "DESCRIPTIONS": [
+      "When #y",
+      " #yManifests, ALL enemies gain #b",
+      " Block.",
+      "When you #yManifest, ALL enemies gain #b",
+      " Block. Unfortunately, this is impossible for you."
+    ]
+  },
+  "mirthandmalice:Lull": {
+    "NAME": "Lull",
+    "DESCRIPTIONS": [
+      "#y",
+      " will skip their next turn.",
+      " will skip their next #b",
+      "Skip your next turn.",
+      "Skip your next #b",
+      " turns."
+    ]
+  },
+  "mirthandmalice:Patience": {
     "NAME": "Patience",
     "DESCRIPTIONS": [
       "#yRetain your hand this turn.",

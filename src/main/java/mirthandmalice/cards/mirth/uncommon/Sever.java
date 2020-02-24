@@ -15,7 +15,7 @@ import static mirthandmalice.MirthAndMaliceMod.makeID;
 public class Sever extends MirthCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Sever",
-            1,
+            2,
             AbstractCard.CardType.ATTACK,
             AbstractCard.CardTarget.ENEMY,
             AbstractCard.CardRarity.UNCOMMON
@@ -23,8 +23,8 @@ public class Sever extends MirthCard {
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int DAMAGE = 9;
-    private static final int UPG_DAMAGE = 3;
+    private static final int DAMAGE = 13;
+    private static final int UPG_DAMAGE = 4;
 
     public Sever()
     {

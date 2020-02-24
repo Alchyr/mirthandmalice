@@ -21,6 +21,8 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import javassist.*;
 import javassist.expr.ExprEditor;
 import javassist.expr.MethodCall;
+import mirthandmalice.actions.character.FortuneAction;
+import mirthandmalice.actions.character.MisfortuneAction;
 import mirthandmalice.actions.general.AllEnemyLoseHPAction;
 import mirthandmalice.actions.general.ImageAboveCreatureAction;
 import mirthandmalice.interfaces.OnFortunePower;
@@ -38,8 +40,8 @@ import static mirthandmalice.MirthAndMaliceMod.assetPath;
 import static mirthandmalice.MirthAndMaliceMod.logger;
 
 public class FortuneMisfortune {
-    private static Texture FORTUNE_TEXTURE = TextureLoader.getTexture(assetPath("img/ui/fortune.png"));
-    private static Texture MISFORTUNE_TEXTURE = TextureLoader.getTexture(assetPath("img/ui/misfortune.png"));
+    public static Texture FORTUNE_TEXTURE = TextureLoader.getTexture(assetPath("img/ui/fortune.png"));
+    public static Texture MISFORTUNE_TEXTURE = TextureLoader.getTexture(assetPath("img/ui/misfortune.png"));
 
     @SpirePatch(
             clz = AbstractCard.class,
@@ -233,63 +235,19 @@ public class FortuneMisfortune {
         }
     }
 
-    private static final int FORTUNE_BLOCK = 3;
-    private static final int MISFORTUNE_LOSS = 5;
-
     public static void onDraw(AbstractCard c)
     {
         int val = Fields.fortune.get(c);
 
         if (val > 0)
         {
-            int fortuneAmount = FORTUNE_BLOCK;
-
-            for (AbstractPower p : AbstractDungeon.player.powers)
-            {
-                if (p instanceof OnFortunePower)
-                {
-                    fortuneAmount = ((OnFortunePower) p).onFortune(c);
-                }
-            }
-
-            for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
-            {
-                if (!m.isDeadOrEscaped())
-                {
-                    AbstractDungeon.actionManager.addToTop(new GainBlockAction(m, AbstractDungeon.player, fortuneAmount * val, true));
-                    AbstractDungeon.actionManager.addToTop(new ImageAboveCreatureAction(m, FORTUNE_TEXTURE));
-                }
-            }
-            AbstractDungeon.actionManager.addToTop(new GainBlockAction(AbstractDungeon.player, AbstractDungeon.player, fortuneAmount, true));
-            AbstractDungeon.actionManager.addToTop(new ImageAboveCreatureAction(AbstractDungeon.player, FORTUNE_TEXTURE));
-
-
-            Fields.fortune.set(c, 0);
+            AbstractDungeon.actionManager.addToBottom(new FortuneAction(c, val));
         }
 
         val = Fields.misfortune.get(c);
         if (val > 0)
         {
-            int misfortuneAmount = MISFORTUNE_LOSS;
-
-            for (AbstractPower p : AbstractDungeon.player.powers)
-            {
-                if (p instanceof OnMisfortunePower)
-                {
-                    misfortuneAmount = ((OnMisfortunePower) p).onMisfortune(c);
-                }
-            }
-
-            AbstractDungeon.actionManager.addToTop(new AllEnemyLoseHPAction(AbstractDungeon.player, misfortuneAmount * val, AbstractGameAction.AttackEffect.FIRE));
-            for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
-            {
-                if (!m.isDeadOrEscaped() && !m.halfDead)
-                {
-                    AbstractDungeon.actionManager.addToTop(new ImageAboveCreatureAction(m, MISFORTUNE_TEXTURE));
-                }
-            }
-
-            Fields.misfortune.set(c, 0);
+            AbstractDungeon.actionManager.addToBottom(new MisfortuneAction(c, val));
         }
     }
 }

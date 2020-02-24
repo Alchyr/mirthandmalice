@@ -1,6 +1,5 @@
 package mirthandmalice.patch.ui;
 
-import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.Color;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
@@ -57,7 +56,7 @@ public class CardGlow {
 
             if ((c.target == AbstractCard.CardTarget.ENEMY || c.target == AbstractCard.CardTarget.SELF_AND_ENEMY) &&
                     c.equals(AbstractDungeon.player.hoveredCard) && //avoid possibility of null hovered card error
-                    c.hasTag(CustomCardTags.MK_BURST))
+                    c.hasTag(CustomCardTags.MM_BURST))
             {
                 try {
                     AbstractMonster target = (AbstractMonster) hoveredMonsterField.get(AbstractDungeon.player);

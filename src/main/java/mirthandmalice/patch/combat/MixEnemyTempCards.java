@@ -40,7 +40,7 @@ public class MixEnemyTempCards {
 
                     if (toMirth ^ ((MirthAndMalice) AbstractDungeon.player).isMirth) //targeting other player
                     {
-                        AbstractCard c = (AbstractCard)ReflectionHacks.getPrivate(action[0], MakeTempCardInDiscardAction.class, "cardToMake");
+                        AbstractCard c = (AbstractCard)ReflectionHacks.getPrivate(action[0], MakeTempCardInDiscardAction.class, "c");
                         int amount = (int)ReflectionHacks.getPrivate(action[0], MakeTempCardInDiscardAction.class, "numCards");
 
                         action[0] = new MakeTempCardInOtherDiscardAction(c, amount);

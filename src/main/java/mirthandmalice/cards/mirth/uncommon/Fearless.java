@@ -22,15 +22,15 @@ public class Fearless extends MaliceCard {
             2,
             AbstractCard.CardType.SKILL,
             AbstractCard.CardTarget.SELF,
-            AbstractCard.CardRarity.UNCOMMON
+            AbstractCard.CardRarity.COMMON
     );
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int BLOCK = 10;
-    private static final int UPG_BLOCK = 2;
+    private static final int BLOCK = 8;
 
     private static final int MULTIPLIER = 3;
+    private static final int UPG_MULTIPLIER = 1;
 
     private boolean isMultiplied;
 
@@ -38,10 +38,18 @@ public class Fearless extends MaliceCard {
     {
         super(cardInfo, false);
 
-        setBlock(BLOCK, UPG_BLOCK);
-        setMagic(MULTIPLIER);
+        setBlock(BLOCK);
+        setMagic(MULTIPLIER, UPG_MULTIPLIER);
 
         isMultiplied = false;
+    }
+
+    @Override
+    public void triggerOnGlowCheck() { //cards in other hand do not glow, so no need for any fancy checks
+        if (ManifestField.isManifested())
+            this.glowColor = AbstractCard.BLUE_BORDER_GLOW_COLOR.cpy();
+        else
+            this.glowColor = AbstractCard.GOLD_BORDER_GLOW_COLOR.cpy();
     }
 
     @Override

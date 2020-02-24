@@ -12,9 +12,9 @@ import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
-public class ColdComfort extends MirthCard {
+public class Attrition extends MirthCard {
     private final static CardInfo cardInfo = new CardInfo(
-            "ColdComfort",
+            "Attrition",
             2,
             CardType.SKILL,
             CardTarget.ALL_ENEMY,
@@ -24,7 +24,7 @@ public class ColdComfort extends MirthCard {
 
     private static final int MAGIC = 10;
 
-    public ColdComfort() {
+    public Attrition() {
         super(cardInfo, true);
 
         setMagic(MAGIC);
@@ -45,6 +45,6 @@ public class ColdComfort extends MirthCard {
 
     @Override
     public AbstractCard makeCopy() {
-        return new ColdComfort();
+        return new Attrition();
     }
 }

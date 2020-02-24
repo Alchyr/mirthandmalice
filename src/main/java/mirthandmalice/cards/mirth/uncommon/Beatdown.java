@@ -80,7 +80,7 @@ public class Beatdown extends MirthCard {
                 }
                 else
                 {
-                    AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(copy, m, this.energyOnUse, true, true));
+                    AbstractDungeon.actionManager.addCardQueueItem(new CardQueueItem(copy, m, this.energyOnUse, true, true), true);
                 }
             }
         }

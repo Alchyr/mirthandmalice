@@ -82,6 +82,51 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         communication = new SteamNetworking(callback, SteamNetworking.API.Client);
     }
 
+    public static boolean getIsMirthFromOther(boolean other)
+    {
+        if (AbstractDungeon.player instanceof MirthAndMalice)
+        {
+            if (((MirthAndMalice) AbstractDungeon.player).isMirth)
+            {
+                if (FULL_DEBUG)
+                    logger.info("getIsMirthFromOther: I am Mirth. Looking for self: " + !other + ". Result: " + !other);
+                return !other;
+            }
+            else
+            {
+                if (FULL_DEBUG)
+                    logger.info("getIsMirthFromOther: I am not Mirth. Looking for self: " + !other + ". Result: " + other);
+                return other;
+            }
+        }
+        else
+        {
+            return true;
+        }
+    }
+    public static boolean getIsOtherFromMirth(boolean isMirth)
+    {
+        if (AbstractDungeon.player instanceof MirthAndMalice)
+        {
+            if (isMirth)
+            {
+                if (FULL_DEBUG)
+                    logger.info("getIsOtherFromMirth: Looking for Mirth. I am Mirth: " + ((MirthAndMalice) AbstractDungeon.player).isMirth + ". Is Other Result: " + !((MirthAndMalice) AbstractDungeon.player).isMirth);
+                return !((MirthAndMalice) AbstractDungeon.player).isMirth;
+            }
+            else
+            {
+                if (FULL_DEBUG)
+                    logger.info("getIsOtherFromMirth: Looking for Malice. I am Mirth: " + ((MirthAndMalice) AbstractDungeon.player).isMirth + ". Is Other Result: " + ((MirthAndMalice) AbstractDungeon.player).isMirth);
+                return ((MirthAndMalice) AbstractDungeon.player).isMirth;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public static String getName(boolean other)
     {
         if (other)

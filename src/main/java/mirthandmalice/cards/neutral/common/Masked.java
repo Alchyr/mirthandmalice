@@ -20,7 +20,7 @@ public class Masked extends NeutralCard {
 
     private static final int UPG_COST = 0;
 
-    private static final int BLOCK = 5;
+    private static final int BLOCK = 6;
 
     public Masked() {
         super(cardInfo, false);

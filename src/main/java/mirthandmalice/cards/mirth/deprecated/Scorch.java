@@ -42,7 +42,7 @@ public class Scorch extends MirthCard {
 
         setCostUpgrade(COST_UPG);
 
-        tags.add(CustomCardTags.MK_BURST);
+        tags.add(CustomCardTags.MM_BURST);
     }
 
     @Override

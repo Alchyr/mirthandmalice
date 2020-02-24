@@ -3,7 +3,13 @@ package mirthandmalice.actions.general;
 import com.badlogic.gdx.graphics.Color;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.powers.AbstractPower;
+import mirthandmalice.interfaces.OnMarkPower;
 import mirthandmalice.patch.fortune_misfortune.FortuneMisfortune;
+
+//ALL Marking should end up using this action.
+
 
 public class MarkCardAction extends AbstractGameAction {
     private AbstractCard c;
@@ -33,6 +39,12 @@ public class MarkCardAction extends AbstractGameAction {
             {
                 c.superFlash(MISFORTUNE_COLOR.cpy());
                 FortuneMisfortune.Fields.misfortune.set(c, FortuneMisfortune.Fields.misfortune.get(c) + 1);
+            }
+
+            for (AbstractPower p : AbstractDungeon.player.powers)
+            {
+                if (p instanceof OnMarkPower)
+                    ((OnMarkPower) p).onMark(c, fortune);
             }
         }
 

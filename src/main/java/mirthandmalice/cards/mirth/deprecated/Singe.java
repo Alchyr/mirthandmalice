@@ -38,7 +38,7 @@ public class Singe extends MirthCard {
 
         setDamage(DAMAGE, UPG_DAMAGE);
 
-        tags.add(CustomCardTags.MK_BURST);
+        tags.add(CustomCardTags.MM_BURST);
     }
 
     @Override

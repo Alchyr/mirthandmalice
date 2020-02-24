@@ -39,6 +39,7 @@ public class Indulgence extends MirthCard {
     public void use(AbstractPlayer p, AbstractMonster m) {
         damageSingle(m, AbstractGameAction.AttackEffect.POISON);
         applySingle(m, new ExcessPower(p, m, this.magicNumber));
+        relinquish();
     }
 
     @Override

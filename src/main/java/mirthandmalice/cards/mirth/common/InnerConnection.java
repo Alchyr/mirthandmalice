@@ -21,7 +21,7 @@ public class InnerConnection extends MirthCard {
             "InnerConnection",
             1,
             AbstractCard.CardType.SKILL,
-            AbstractCard.CardTarget.NONE,
+            CardTarget.SELF,
             AbstractCard.CardRarity.COMMON
     );
 

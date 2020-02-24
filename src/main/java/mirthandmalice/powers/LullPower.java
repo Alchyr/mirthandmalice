@@ -8,6 +8,8 @@ import com.megacrit.cardcrawl.powers.AbstractPower;
 import com.megacrit.cardcrawl.powers.VulnerablePower;
 import mirthandmalice.abstracts.BasePower;
 import mirthandmalice.actions.cards.SkipTurnAction;
+import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.util.MultiplayerHelper;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
@@ -43,13 +45,26 @@ public class LullPower extends BasePower implements NonStackablePower {
     }
 
     public void updateDescription() {
-        if (this.amount == 1)
-        {
-            this.description = descriptions()[0];
-        }
-        else
-        {
-            this.description = descriptions()[1] + amount + descriptions()[2];
+        if (AbstractDungeon.player instanceof MirthAndMalice) {
+            if (MultiplayerHelper.getIsOtherFromMirth(forMirth)) {
+                if (this.amount == 1) {
+                    this.description = descriptions()[0] + ((MirthAndMalice) AbstractDungeon.player).getOtherPlayerName() + descriptions()[1];
+                } else {
+                    this.description = descriptions()[0] + ((MirthAndMalice) AbstractDungeon.player).getOtherPlayerName() + descriptions()[2] + this.amount + descriptions()[5];
+                }
+            } else {
+                if (this.amount == 1) {
+                    this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[1];
+                } else {
+                    this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[2] + this.amount + descriptions()[5];
+                }
+            }
+        } else {
+            if (this.amount == 1) {
+                this.description = descriptions()[3];
+            } else {
+                this.description = descriptions()[4] + this.amount + descriptions()[5];
+            }
         }
     }
 }

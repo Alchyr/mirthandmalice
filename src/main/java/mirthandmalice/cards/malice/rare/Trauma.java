@@ -13,7 +13,7 @@ import static mirthandmalice.MirthAndMaliceMod.makeID;
 
 public class Trauma extends MaliceCard {
     private final static CardInfo cardInfo = new CardInfo(
-            "AntiquityBurden",
+            "Trauma",
             3,
             AbstractCard.CardType.SKILL,
             AbstractCard.CardTarget.ENEMY,

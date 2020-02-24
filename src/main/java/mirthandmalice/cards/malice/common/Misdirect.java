@@ -29,7 +29,7 @@ public class Misdirect extends MaliceCard {
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int DAMAGE = 8;
+    private static final int DAMAGE = 7;
     private static final int UPG_DAMAGE = 2;
 
     private static final int DEBUFF = 1;

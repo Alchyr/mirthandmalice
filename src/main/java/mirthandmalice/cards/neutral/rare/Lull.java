@@ -13,7 +13,7 @@ import static mirthandmalice.MirthAndMaliceMod.makeID;
 public class Lull extends NeutralCard {
     private final static CardInfo cardInfo = new CardInfo(
             "Lull",
-            3,
+            2,
             CardType.SKILL,
             CardTarget.SELF,
             CardRarity.RARE);

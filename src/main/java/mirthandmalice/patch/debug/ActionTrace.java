@@ -26,10 +26,10 @@ public class ActionTrace {
             {
                 logger.debug("Action Queue:");
                 int position = 0;
-                StringBuilder queueString = new StringBuilder("Queue:\n");
+                StringBuilder queueString = new StringBuilder("Queue:");
                 for (AbstractGameAction gameAction : __instance.actions)
                 {
-                    queueString.append(position++).append(": ").append(gameAction.getClass().getName());
+                    queueString.append("\n\t").append(position++).append(": ").append(gameAction.getClass().getName());
                 }
 
                 logger.info(queueString.toString());

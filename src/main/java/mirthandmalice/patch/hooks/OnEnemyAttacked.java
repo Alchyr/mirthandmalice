@@ -10,11 +10,11 @@ import mirthandmalice.patch.combat.BurstActive;
         clz = AbstractMonster.class,
         method = "damage"
 )
-public class OnEnemyAttacked {
+public class OnEnemyAttacked { //This is more like "onDamaged"
     @SpirePrefixPatch
     public static void triggerWhenAttacked(AbstractMonster __instance, DamageInfo info)
     {
-        if (info.output > 0 && info.type == DamageInfo.DamageType.NORMAL)
+        if (info.output > 0) // && info.type == DamageInfo.DamageType.NORMAL)
         {
             BurstActive.active.set(__instance, true);
         }

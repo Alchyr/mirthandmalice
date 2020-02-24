@@ -210,7 +210,7 @@ public class ModifyCalculations {
             @Override
             public int[] Locate(CtBehavior ctMethodToPatch) throws Exception
             {
-                Matcher finalMatcher = new Matcher.MethodCallMatcher(AbstractStance.class, "atDamageGive");
+                Matcher finalMatcher = new Matcher.MethodCallMatcher(MathUtils.class, "atDamageGive");
                 return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
             }
         }

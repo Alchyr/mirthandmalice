@@ -25,11 +25,12 @@ public class Futility extends MirthCard {
     public final static String ID = makeID(cardInfo.cardName);
 
     private static final int MAGIC = 1;
+    private static final int UPG_MAGIC = 1;
 
     public Futility() {
         super(cardInfo, true);
 
-        setMagic(MAGIC);
+        setMagic(MAGIC, UPG_MAGIC);
     }
 
     @Override
@@ -58,11 +59,6 @@ public class Futility extends MirthCard {
         }
 
         applySelf(new WeakPower(p, this.magicNumber, false));
-
-        if (upgraded)
-        {
-            drawCards(1);
-        }
     }
 
     @Override

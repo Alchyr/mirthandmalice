@@ -12,6 +12,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mirthandmalice.character.MirthAndMalice;
 
+import static mirthandmalice.MirthAndMaliceMod.FULL_DEBUG;
 import static mirthandmalice.MirthAndMaliceMod.logger;
 
 public class DrawCardActionModifications {
@@ -39,7 +40,7 @@ public class DrawCardActionModifications {
             int forceDraw = DrawFields.forceDraw.get(__instance);
             if (!__instance.equals(lastAction))
             {
-                logger.info("New draw action. Amount: " + __instance.amount + " Draw target: " + (forceDraw == 0 ? "Neutral" : (forceDraw > 0 ? "Self" : "Other")));
+                logger.info("Starting draw action. Amount: " + __instance.amount + " Draw target: " + (forceDraw == 0 ? "Neutral" : (forceDraw > 0 ? "Self" : "Other")));
                 lastAction = __instance;
                 failure = false;
                 if (Settings.FAST_MODE) {
@@ -84,6 +85,8 @@ public class DrawCardActionModifications {
                                     --__instance.amount;
                                     AbstractDungeon.player.hand.refreshHandLayout(); //is patched to refresh both hands.
                                     failure = false;
+                                    if (FULL_DEBUG)
+                                        logger.info("Drew 1 card.");
 
                                     if (__instance.amount == 0) {
                                         __instance.isDone = true;
@@ -91,10 +94,14 @@ public class DrawCardActionModifications {
                                 } //These failures should never occur, but just in case.
                                 else if (failure) //Draw failed. Since drawPileValid passed, that means their hands are full. This shouldn't occur, since this is checked for earlier, but safety.
                                 {
+                                    if (FULL_DEBUG)
+                                        logger.info("Failed to draw due to full hand somehow.");
                                     __instance.isDone = true;
                                 }
                                 else //tried to draw, but failed. Will attempt draw from other player next, if not using force draw.
                                 {
+                                    if (FULL_DEBUG)
+                                        logger.info("Failed to draw.");
                                     failure = true;
                                 }
                             }
@@ -102,6 +109,10 @@ public class DrawCardActionModifications {
                                 __instance.isDone = true;
                                 DrawCardAction remainder = new DrawCardAction(__instance.source, __instance.amount);
                                 DrawFields.forceDraw.set(remainder, forceDraw);
+
+                                if (FULL_DEBUG)
+                                    logger.info("Reshuffling draw pile. " + __instance.amount + " cards remain.");
+
                                 AbstractDungeon.actionManager.addToTop(remainder);
                                 AbstractDungeon.actionManager.addToTop(player.forceGetShuffleAction(forceDraw));
                             }
@@ -114,27 +125,39 @@ public class DrawCardActionModifications {
                                     AbstractDungeon.player.hand.refreshHandLayout();
                                     failure = false;
 
+                                    if (FULL_DEBUG)
+                                        logger.info("Drew 1 card from alternate pile due to draw failure.");
+
                                     if (__instance.amount == 0) {
                                         __instance.isDone = true;
                                     }
                                 } //These failures should never occur, but just in case.
                                 else if (failure) //neither player can draw. Since drawPileValid passed, that means their hands are full. This shouldn't occur, since this is checked for earlier, but safety.
                                 {
+                                    if (FULL_DEBUG)
+                                        logger.info("Completely failed to draw from either pile.");
                                     __instance.isDone = true;
                                 }
                                 else //tried to draw, but failed. Will attempt draw from other player next.
                                 {
+                                    if (FULL_DEBUG)
+                                        logger.info("Failed to draw from alternate pile.");
                                     failure = true;
                                 }
                             }
                             else if (forceDraw == 0 && !player.otherDiscardPileEmpty())
                             {
+                                if (FULL_DEBUG)
+                                    logger.info("Reshuffling alternate pile.");
+
                                 __instance.isDone = true;
                                 AbstractDungeon.actionManager.addToTop(new com.megacrit.cardcrawl.actions.common.DrawCardAction(__instance.source, __instance.amount));
                                 AbstractDungeon.actionManager.addToTop(player.getOtherShuffleAction());
                             }
                             else //complete failure
                             {
+                                if (FULL_DEBUG)
+                                    logger.info("COMPLETE DRAW FAILURE");
                                 __instance.isDone = true;
                             }
                         }

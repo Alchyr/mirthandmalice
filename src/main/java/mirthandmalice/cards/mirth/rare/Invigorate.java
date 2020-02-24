@@ -24,8 +24,8 @@ public class Invigorate extends MirthCard {
 
     public final static String ID = makeID(cardInfo.cardName);
 
-    private static final int EFFECT = 6;
-    private static final int UPG_EFFECT = 4;
+    private static final int EFFECT = 5;
+    private static final int UPG_EFFECT = 3;
 
     public Invigorate()
     {

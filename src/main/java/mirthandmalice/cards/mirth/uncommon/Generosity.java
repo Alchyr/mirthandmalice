@@ -11,9 +11,9 @@ import mirthandmalice.util.CardInfo;
 
 import static mirthandmalice.MirthAndMaliceMod.makeID;
 
-public class SharedFortune extends MaliceCard {
+public class Generosity extends MaliceCard {
     private final static CardInfo cardInfo = new CardInfo(
-            "SharedFortune",
+            "Generosity",
             1,
             AbstractCard.CardType.SKILL,
             AbstractCard.CardTarget.NONE,
@@ -26,7 +26,7 @@ public class SharedFortune extends MaliceCard {
 
     private static final int BLOCK = 5;
 
-    public SharedFortune()
+    public Generosity()
     {
         super(cardInfo, false);
 
@@ -42,6 +42,6 @@ public class SharedFortune extends MaliceCard {
 
     @Override
     public AbstractCard makeCopy() {
-        return new SharedFortune();
+        return new Generosity();
     }
 }
