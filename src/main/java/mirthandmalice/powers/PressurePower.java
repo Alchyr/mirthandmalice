@@ -58,7 +58,7 @@ public class PressurePower extends BasePower implements OnManifestPower, NonStac
                 this.description = descriptions()[0] + ((MirthAndMalice) AbstractDungeon.player).getOtherPlayerName() + descriptions()[1] + this.amount + descriptions()[2];
             }
             else {
-                this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[1] + this.amount + descriptions()[2];
+                this.description = descriptions()[0] + AbstractDungeon.player.getTitle(AbstractDungeon.player.chosenClass) + descriptions()[1] + this.amount + descriptions()[2];
             }
         }
         else {

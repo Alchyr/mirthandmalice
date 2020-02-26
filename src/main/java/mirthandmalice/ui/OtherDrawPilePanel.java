@@ -134,7 +134,7 @@ public class OtherDrawPilePanel extends AbstractPanel {
         if (AbstractDungeon.player instanceof MirthAndMalice)
         {
             MirthAndMalice p = (MirthAndMalice)AbstractDungeon.player;
-            if (!p.drawPile.isEmpty()) {
+            if (!p.otherPlayerDraw.isEmpty()) {
                 AltGameDeckView.altGroup = p.otherPlayerDraw;
                 AbstractDungeon.gameDeckViewScreen.open();
             } else {

@@ -58,7 +58,7 @@ public class JoyPower extends BasePower implements OnManifestPower, NonStackable
                 this.description = descriptions()[0] + ((MirthAndMalice) AbstractDungeon.player).getOtherPlayerName() + descriptions()[1] + this.amount + descriptions()[2];
             }
             else {
-                this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[1] + this.amount + descriptions()[2];
+                this.description = descriptions()[0] + AbstractDungeon.player.getTitle(AbstractDungeon.player.chosenClass) + descriptions()[1] + this.amount + descriptions()[2];
             }
         }
         else {

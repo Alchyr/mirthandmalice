@@ -39,11 +39,22 @@ public class MarkRandomCardInDrawAction extends AbstractGameAction
         {
             CardGroup cards = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
 
-            if (AbstractDungeon.player instanceof MirthAndMalice)
-            {
-                cards.group.addAll(((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.group);
+            if (AbstractDungeon.player instanceof MirthAndMalice) {
+                if (((MirthAndMalice) AbstractDungeon.player).isMirth)
+                {
+                    cards.group.addAll(AbstractDungeon.player.drawPile.group);
+                    cards.group.addAll(((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.group);
+                }
+                else
+                {
+                    cards.group.addAll(((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.group);
+                    cards.group.addAll(AbstractDungeon.player.drawPile.group);
+                }
             }
-            cards.group.addAll(AbstractDungeon.player.drawPile.group);
+            else
+            {
+                cards.group.addAll(AbstractDungeon.player.drawPile.group);
+            }
 
             if (cards.size() >= amount)
             {

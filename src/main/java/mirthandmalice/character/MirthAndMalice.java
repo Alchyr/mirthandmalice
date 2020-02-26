@@ -54,6 +54,7 @@ import mirthandmalice.cards.mirth.deprecated.Scorch;
 import mirthandmalice.effects.MaliceParticleEffect;
 import mirthandmalice.effects.MirthMaliceAuraEffect;
 import mirthandmalice.effects.MirthParticleEffect;
+import mirthandmalice.patch.combat.ShowHover;
 import mirthandmalice.patch.energy_division.SetEnergyGain;
 import mirthandmalice.patch.energy_division.TrackCardSource;
 import mirthandmalice.patch.enums.CharacterEnums;
@@ -1056,8 +1057,8 @@ public class MirthAndMalice extends CustomPlayer {
         if (Settings.SHOW_CARD_HOTKEYS) {
             int index = 0;
 
-            for(Iterator var3 = this.hand.group.iterator(); var3.hasNext(); ++index) {
-                AbstractCard card = (AbstractCard)var3.next();
+            for (Iterator<AbstractCard> cardIterator = this.hand.group.iterator(); cardIterator.hasNext(); ++index) {
+                AbstractCard card = cardIterator.next();
                 if (index < InputActionSet.selectCardActions.length) {
                     float width = AbstractCard.IMG_WIDTH * card.drawScale / 2.0F;
                     float height = AbstractCard.IMG_HEIGHT * card.drawScale / 2.0F;
@@ -1079,13 +1080,12 @@ public class MirthAndMalice extends CustomPlayer {
             int aliveMonsters = 0;
             this.hand.renderHand(sb, this.hoveredCard);
             this.hoveredCard.renderHoverShadow(sb);
+
             if ((this.isDraggingCard || this.inSingleTargetMode) && this.isHoveringDropZone) {
                 if (this.isDraggingCard && !this.inSingleTargetMode) {
                     AbstractMonster theMonster = null;
-                    Iterator var4 = AbstractDungeon.getMonsters().monsters.iterator();
 
-                    while(var4.hasNext()) {
-                        AbstractMonster m = (AbstractMonster)var4.next();
+                    for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
                         if (!m.isDying && m.currentHealth > 0) {
                             ++aliveMonsters;
                             theMonster = m;
@@ -1119,11 +1119,46 @@ public class MirthAndMalice extends CustomPlayer {
             } else if (aliveMonsters != 1) {
                 this.hoveredCard.render(sb);
             }
-            this.otherPlayerHand.renderHand(sb, this.cardInUse);
         } else if (AbstractDungeon.screen == AbstractDungeon.CurrentScreen.HAND_SELECT) {
             this.hand.render(sb);
         } else {
             this.hand.renderHand(sb, this.cardInUse);
+        }
+
+        if (ShowHover.otherHoveredCard != null)
+        {
+            this.otherPlayerHand.renderHand(sb, ShowHover.otherHoveredCard);
+
+            ShowHover.otherHoveredCard.renderHoverShadow(sb);
+
+            if (ShowHover.isDragging) {
+                int aliveMonsters = 0;
+
+                AbstractMonster theMonster = null;
+
+                for (AbstractMonster m : AbstractDungeon.getMonsters().monsters) {
+                    if (!m.isDying && m.currentHealth > 0) {
+                        ++aliveMonsters;
+                        theMonster = m;
+                    }
+                }
+
+                if (aliveMonsters == 1) {
+                    this.hoveredCard.calculateCardDamage(theMonster);
+                    this.hoveredCard.render(sb);
+                    this.hoveredCard.applyPowers();
+                } else {
+                    this.hoveredCard.render(sb);
+                }
+            }
+            else
+            {
+                this.hoveredCard.render(sb);
+                this.hoveredCard.applyPowers();
+            }
+        }
+        else
+        {
             this.otherPlayerHand.renderHand(sb, this.cardInUse);
         }
 
@@ -1136,6 +1171,7 @@ public class MirthAndMalice extends CustomPlayer {
         }
 
         this.limbo.render(sb);
+        this.fakeLimbo.render(sb);
 
         if (this.inSingleTargetMode && AbstractDungeon.getCurrRoom().phase == AbstractRoom.RoomPhase.COMBAT && !AbstractDungeon.getCurrRoom().isBattleEnding()) {
             float arrowX = (float) ReflectionHacks.getPrivate(this, AbstractPlayer.class, "arrowX");
@@ -1294,7 +1330,7 @@ public class MirthAndMalice extends CustomPlayer {
 
     @Override
     public AbstractCard getStartCardForEvent() {
-        return isMirth ? new Scorch() : new Hemophilia();
+        return isMirth ? new Indulgence() : new Wilt();
     }
     @Override
     public String getLocalizedCharacterName() {

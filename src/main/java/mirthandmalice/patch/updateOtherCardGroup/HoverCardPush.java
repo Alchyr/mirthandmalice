@@ -1,4 +1,4 @@
-package mirthandmalice.patch.updateOtherCardGroup;
+/*package mirthandmalice.patch.updateOtherCardGroup;
 
 import com.evacipated.cardcrawl.modthespire.lib.SpirePatch;
 import com.evacipated.cardcrawl.modthespire.lib.SpirePrefixPatch;
@@ -28,3 +28,4 @@ public class HoverCardPush {
         return SpireReturn.Continue();
     }
 }
+*/

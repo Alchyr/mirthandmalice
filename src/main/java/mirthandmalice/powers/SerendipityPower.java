@@ -50,9 +50,9 @@ public class SerendipityPower extends BasePower implements NonStackablePower {
             }
             else {
                 if (this.amount == 1) {
-                    this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[3];
+                    this.description = descriptions()[0] + AbstractDungeon.player.getTitle(AbstractDungeon.player.chosenClass) + descriptions()[3];
                 } else {
-                    this.description = descriptions()[1] + this.amount + descriptions()[2] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[3];
+                    this.description = descriptions()[1] + this.amount + descriptions()[2] + AbstractDungeon.player.getTitle(AbstractDungeon.player.chosenClass) + descriptions()[3];
                 }
             }
         }

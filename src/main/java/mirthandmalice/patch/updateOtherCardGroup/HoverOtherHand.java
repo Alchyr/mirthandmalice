@@ -1,10 +1,11 @@
-package mirthandmalice.patch.updateOtherCardGroup;
+/*package mirthandmalice.patch.updateOtherCardGroup;
 
 import com.evacipated.cardcrawl.modthespire.lib.*;
 import com.megacrit.cardcrawl.cards.CardGroup;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import javassist.CtBehavior;
 import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.patch.combat.ShowHover;
 import mirthandmalice.patch.enums.CharacterEnums;
 
 import java.util.ArrayList;
@@ -72,3 +73,4 @@ public class HoverOtherHand {
         }
     }
 }
+*/

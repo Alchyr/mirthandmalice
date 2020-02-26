@@ -54,9 +54,9 @@ public class LullPower extends BasePower implements NonStackablePower {
                 }
             } else {
                 if (this.amount == 1) {
-                    this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[1];
+                    this.description = descriptions()[0] + AbstractDungeon.player.getTitle(AbstractDungeon.player.chosenClass) + descriptions()[1];
                 } else {
-                    this.description = descriptions()[0] + AbstractDungeon.player.getLocalizedCharacterName() + descriptions()[2] + this.amount + descriptions()[5];
+                    this.description = descriptions()[0] + AbstractDungeon.player.getTitle(AbstractDungeon.player.chosenClass) + descriptions()[2] + this.amount + descriptions()[5];
                 }
             }
         } else {

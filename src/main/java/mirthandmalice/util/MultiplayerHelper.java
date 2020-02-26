@@ -22,6 +22,7 @@ import mirthandmalice.actions.character.*;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.card_use.PlayCardCheck;
 import mirthandmalice.patch.combat.RequireDoubleEndTurn;
+import mirthandmalice.patch.combat.ShowHover;
 import mirthandmalice.patch.deck_changes.ReportObtainCard;
 import mirthandmalice.patch.deck_changes.ReportRemoveCard;
 import mirthandmalice.patch.deck_changes.ReportUpgradeCard;
@@ -50,6 +51,8 @@ import static mirthandmalice.MirthAndMaliceMod.*;
 //Handles all multiplayer post-game start. For setting up multiplayer, see HandleMatchmaking.java as well as UseMultiplayerQueue.java
 public class MultiplayerHelper implements SteamNetworkingCallback {
     public static final Charset CHARSET = StandardCharsets.UTF_8;
+
+    private static final float EXTRA_DRAG_PUSH = 100.0f * Settings.scale;
 
     private static final int defaultChannel = 1;
 
@@ -226,6 +229,8 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
     private static void processMessage(SteamID sender, String msg)
     {
         //Note to future self: Use 3 character code as first three characters of message so that you can just use a switch.
+        //Every time I add something to this I die inside a little, but I'm too lazy to fix all of the messages.
+
         if (msg.equals("ping"))
         {
             lastPing = MathUtils.floor(500 * (lastPing / 1000.0f + ping)); //convert to milliseconds average
@@ -262,6 +267,18 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         else if (msg.startsWith("confirm_play_card"))
         {
             tryPlayCard(msg.substring(17));
+        }
+        else if (msg.startsWith("hover"))
+        {
+            hover(msg.substring(5));
+        }
+        else if (msg.startsWith("drag"))
+        {
+            drag(msg.substring(4));
+        }
+        else if (msg.equals("stophover"))
+        {
+            stopHover();
         }
         else if (msg.startsWith("use_potion")) //Host used a potion.
         {
@@ -383,6 +400,16 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         else if (msg.equals("hand_select")) //other player has opened a hand select screen
         {
             logger.info("Other played opened hand select.");
+            logger.info("Clearing card queue.");
+
+            if (AbstractDungeon.player instanceof MirthAndMalice)
+            {
+                AbstractDungeon.actionManager.cardQueue.removeIf((i)->((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.contains(i.card) || AbstractDungeon.player.hand.contains(i.card));
+            }
+            else
+            {
+                AbstractDungeon.actionManager.cardQueue.removeIf((i)->AbstractDungeon.player.hand.contains(i.card)); //this doesn't really make sense but I'm gonna put it here anyways.
+            }
             AbstractDungeon.actionManager.addToTop(new HandCardSelectAction());
         }
         else if (msg.startsWith("hand_select_indexes"))
@@ -662,6 +689,15 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         }
     }
 
+    public static void reset()
+    {
+        active = false;
+        communication.closeP2PSessionWithUser(currentPartner);
+        currentPartner = null;
+        partnerName = "";
+        logger.info("Disconnected.");
+    }
+
 
     @Override
     public void onP2PSessionConnectFail(SteamID steamID, SteamNetworking.P2PSessionError p2pSessionError) {
@@ -682,6 +718,61 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         }
     }
 
+
+    private static void hover(String args)
+    {
+        if (active)
+        {
+            if (ShowHover.otherHoveredCard != null)
+            {
+                stopHover();
+            }
+
+            int index = Integer.parseInt(args);
+
+            if (index >= 0 && index < ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.size())
+            {
+                ShowHover.otherHoveredCard = ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.group.get(index);
+                ShowHover.otherHoveredCard.hover();
+            }
+        }
+    }
+    private static void drag(String args)
+    {
+        if (active)
+        {
+            if (!args.isEmpty())
+            {
+                if (ShowHover.otherHoveredCard != null)
+                {
+                    stopHover();
+                }
+
+                int index = Integer.parseInt(args);
+
+                if (index >= 0 && index < ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.size())
+                {
+                    ShowHover.otherHoveredCard = ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.group.get(index);
+                    ShowHover.otherHoveredCard.hover();
+                }
+            }
+
+            ShowHover.otherHoveredCard.target_y += EXTRA_DRAG_PUSH;
+            ShowHover.isDragging = true;
+        }
+    }
+    private static void stopHover()
+    {
+        if (ShowHover.otherHoveredCard != null) {
+            ShowHover.otherHoveredCard.unhover();
+            //if (ShowHover.isDragging)
+                //((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.refreshHandLayout();
+
+            ShowHover.otherHoveredCard = null;
+            ShowHover.isDragging = false;
+
+        }
+    }
 
 
     public static boolean tryOtherPlayCard(String args)
