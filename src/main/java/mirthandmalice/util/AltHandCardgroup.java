@@ -13,6 +13,7 @@ import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import com.megacrit.cardcrawl.unlock.UnlockTracker;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.MirthAndMaliceMod;
+import mirthandmalice.patch.combat.ShowHover;
 
 public class AltHandCardgroup extends CardGroup {
     private boolean onLeft;
@@ -267,9 +268,12 @@ public class AltHandCardgroup extends CardGroup {
                     }
                     break;
                 default:
-                    MirthAndMaliceMod.logger.info("WTF MATE, why so many cards");
+                    MirthAndMaliceMod.logger.info("WTF MATE, why so many cards... I don't have code to handle this uwu");
             }
+        }
 
+        if (this.equals(AbstractDungeon.player.hand) && AbstractDungeon.player instanceof MirthAndMalice)
+        {
             AbstractCard card = AbstractDungeon.player.hoveredCard;
             if (card != null) {
                 card.setAngle(0.0F);
@@ -284,11 +288,17 @@ public class AltHandCardgroup extends CardGroup {
                     q.card.target_y = q.card.current_y;
                 }
             }
-        }
 
-        if (this.equals(AbstractDungeon.player.hand) && AbstractDungeon.player instanceof MirthAndMalice)
-        {
             ((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.refreshHandLayout();
+        }
+        else
+        {
+            if (ShowHover.otherHoveredCard != null)
+            {
+                ShowHover.otherHoveredCard.setAngle(0.0F);
+                ShowHover.otherHoveredCard.target_x = (ShowHover.otherHoveredCard.current_x + ShowHover.otherHoveredCard.target_x) / 2.0F;
+                ShowHover.otherHoveredCard.target_y = ShowHover.otherHoveredCard.current_y;
+            }
         }
     }
 

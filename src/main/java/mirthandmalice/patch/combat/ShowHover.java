@@ -5,7 +5,6 @@ import com.evacipated.cardcrawl.modthespire.lib.SpirePostfixPatch;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.util.MultiplayerHelper;
 
 @SpirePatch(
@@ -65,19 +64,6 @@ public class ShowHover {
 
             wasHoveringCard = ___isHoveringCard;
             wasDraggingCard = __instance.isDraggingCard;
-
-
-            if (otherHoveredCard != null)
-            {
-                if (isDragging)
-                {
-
-                }
-                else
-                {
-                    ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.hoverCardPush(otherHoveredCard);
-                }
-            }
         }
     }
 }

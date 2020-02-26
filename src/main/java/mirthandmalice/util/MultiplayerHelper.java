@@ -44,7 +44,9 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
+import static com.megacrit.cardcrawl.characters.AbstractPlayer.HOVER_CARD_Y_POSITION;
 import static mirthandmalice.patch.combat.PotionUse.*;
+import static mirthandmalice.patch.combat.ShowHover.otherHoveredCard;
 import static mirthandmalice.patch.rewards.ObtainPotions.*;
 import static mirthandmalice.MirthAndMaliceMod.*;
 
@@ -155,7 +157,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
 
             packetSendBuffer.flip();
 
-            if (!msg.equals("ping"))
+            if (!msg.equals("ping") && !msg.contains("hover") && !msg.startsWith("drag")) //these messages spam too much and are unhelpful
                 logger.info("Sending P2P message: " + msg);
 
             communication.sendP2PPacket(dest, packetSendBuffer, SteamNetworking.P2PSend.Reliable, defaultChannel);
@@ -723,7 +725,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
     {
         if (active)
         {
-            if (ShowHover.otherHoveredCard != null)
+            if (otherHoveredCard != null)
             {
                 stopHover();
             }
@@ -732,8 +734,12 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
 
             if (index >= 0 && index < ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.size())
             {
-                ShowHover.otherHoveredCard = ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.group.get(index);
-                ShowHover.otherHoveredCard.hover();
+                otherHoveredCard = ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.group.get(index);
+                otherHoveredCard.hover();
+                otherHoveredCard.current_y = HOVER_CARD_Y_POSITION;
+                otherHoveredCard.target_y = HOVER_CARD_Y_POSITION;
+                otherHoveredCard.setAngle(0.0F, true);
+                ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.hoverCardPush(otherHoveredCard);
             }
         }
     }
@@ -743,7 +749,7 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
         {
             if (!args.isEmpty())
             {
-                if (ShowHover.otherHoveredCard != null)
+                if (otherHoveredCard != null)
                 {
                     stopHover();
                 }
@@ -752,25 +758,28 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
 
                 if (index >= 0 && index < ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.size())
                 {
-                    ShowHover.otherHoveredCard = ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.group.get(index);
-                    ShowHover.otherHoveredCard.hover();
+                    otherHoveredCard = ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.group.get(index);
+                    otherHoveredCard.hover();
+                    otherHoveredCard.current_y = HOVER_CARD_Y_POSITION;
+                    otherHoveredCard.target_y = HOVER_CARD_Y_POSITION;
+                    otherHoveredCard.setAngle(0.0F, true);
+                    ((MirthAndMalice)AbstractDungeon.player).otherPlayerHand.hoverCardPush(otherHoveredCard);
                 }
             }
 
-            ShowHover.otherHoveredCard.target_y += EXTRA_DRAG_PUSH;
+            otherHoveredCard.target_y += EXTRA_DRAG_PUSH;
             ShowHover.isDragging = true;
         }
     }
     private static void stopHover()
     {
-        if (ShowHover.otherHoveredCard != null) {
-            ShowHover.otherHoveredCard.unhover();
-            //if (ShowHover.isDragging)
-                //((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.refreshHandLayout();
+        if (otherHoveredCard != null) {
+            otherHoveredCard.unhover();
 
-            ShowHover.otherHoveredCard = null;
+            otherHoveredCard = null;
             ShowHover.isDragging = false;
 
+            ((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.refreshHandLayout();
         }
     }
 
