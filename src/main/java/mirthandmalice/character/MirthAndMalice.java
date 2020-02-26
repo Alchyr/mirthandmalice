@@ -1144,17 +1144,17 @@ public class MirthAndMalice extends CustomPlayer {
                 }
 
                 if (aliveMonsters == 1) {
-                    this.hoveredCard.calculateCardDamage(theMonster);
-                    this.hoveredCard.render(sb);
-                    this.hoveredCard.applyPowers();
+                    ShowHover.otherHoveredCard.calculateCardDamage(theMonster);
+                    ShowHover.otherHoveredCard.render(sb);
+                    ShowHover.otherHoveredCard.applyPowers();
                 } else {
-                    this.hoveredCard.render(sb);
+                    ShowHover.otherHoveredCard.render(sb);
                 }
             }
             else
             {
-                this.hoveredCard.render(sb);
-                this.hoveredCard.applyPowers();
+                ShowHover.otherHoveredCard.render(sb);
+                ShowHover.otherHoveredCard.applyPowers();
             }
         }
         else
