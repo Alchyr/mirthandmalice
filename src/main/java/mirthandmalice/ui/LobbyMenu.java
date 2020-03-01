@@ -174,8 +174,8 @@ public class LobbyMenu {
         maliceToggle.toggle();
 
         FontHelper.cardTitleFont.getData().setScale(1.0F);
-        this.ASC_LEFT_W = FontHelper.getSmartWidth(FontHelper.cardTitleFont, TEXT[6], 9999.0F, 0.0F);
-        this.ASC_RIGHT_W = FontHelper.getSmartWidth(FontHelper.cardTitleFont, TEXT[7] + "22", 9999.0F, 0.0F);
+        this.ASC_LEFT_W = FontHelper.getSmartWidth(FontHelper.cardTitleFont, TEXT[17], 9999.0F, 0.0F);
+        this.ASC_RIGHT_W = FontHelper.getSmartWidth(FontHelper.cardTitleFont, TEXT[18] + "22", 9999.0F, 0.0F);
 
         this.ascensionModeHb = new Hitbox(ASC_LEFT_W + 100.0F * Settings.scale, 50.0F * Settings.scale);
         this.ascLeftHb = new Hitbox(70.0F * Settings.scale, 70.0F * Settings.scale);
@@ -595,8 +595,10 @@ public class LobbyMenu {
                             for (CharacterOption o : CardCrawlGame.mainMenuScreen.charSelectScreen.options)
                             {
                                 if (o.selected) {
-                                    o.decrementAscensionLevel(--this.ascensionLevel);
-                                    this.ascensionLevel = Math.max(0, this.ascensionLevel);
+                                    if (this.ascensionLevel > 0)
+                                    {
+                                        o.decrementAscensionLevel(--this.ascensionLevel);
+                                    }
                                     break;
                                 }
                             }
@@ -608,8 +610,10 @@ public class LobbyMenu {
                             for (CharacterOption o : CardCrawlGame.mainMenuScreen.charSelectScreen.options)
                             {
                                 if (o.selected) {
-                                    o.incrementAscensionLevel(++this.ascensionLevel);
-                                    this.ascensionLevel = Math.min(this.ascensionLevel, (int)ReflectionHacks.getPrivate(o, CharacterOption.class, "maxAscensionLevel"));
+                                    if (this.ascensionLevel < (int)ReflectionHacks.getPrivate(o, CharacterOption.class, "maxAscensionLevel"))
+                                    {
+                                        o.incrementAscensionLevel(++this.ascensionLevel);
+                                    }
                                     break;
                                 }
                             }
