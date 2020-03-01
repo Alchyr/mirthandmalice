@@ -21,10 +21,7 @@ import com.megacrit.cardcrawl.screens.charSelect.CharacterOption;
 import com.megacrit.cardcrawl.screens.options.ToggleButton;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.enums.ToggleType;
-import mirthandmalice.util.ActiveLobbyData;
-import mirthandmalice.util.HandleMatchmaking;
-import mirthandmalice.util.LobbyData;
-import mirthandmalice.util.TextureLoader;
+import mirthandmalice.util.*;
 
 import java.util.ArrayList;
 
@@ -709,11 +706,14 @@ public class LobbyMenu {
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[1] : characterStrings.NAMES[2], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.GOLD);
         y -= LINE_HEIGHT;
 
-        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.otherName, x, y + OTHER_RENDER_OFFSET, Color.WHITE);
-        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[2] : characterStrings.NAMES[1], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.WHITE);
+        if (inLobby.otherName != null)
+        {
+            FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.otherName, x, y + OTHER_RENDER_OFFSET, Color.WHITE);
+            FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[2] : characterStrings.NAMES[1], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.WHITE);
 
-        if (isHost)
-            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[21], PANEL_CENTER_X, CREATE_TEXT_Y, lobbyCreateHitbox.hovered ? Color.GOLD : Color.WHITE);
+            if (isHost && MultiplayerHelper.active)
+                FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[21], PANEL_CENTER_X, CREATE_TEXT_Y, lobbyCreateHitbox.hovered ? Color.GOLD : Color.WHITE);
+        }
     }
 
     private void renderLobbySelect(SpriteBatch sb)
