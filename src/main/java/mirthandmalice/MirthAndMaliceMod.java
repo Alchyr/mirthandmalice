@@ -487,6 +487,7 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
     }
     public static void startSetupGame() //start game where settings have already been set
     {
+        lobbyMenu.hide();
         TipTracker.neverShowAgain("NEOW_SKIP");
 
         UseMultiplayerQueue.inQueue = false;

@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import static mirthandmalice.character.MirthAndMalice.characterStrings;
 import static mirthandmalice.MirthAndMaliceMod.*;
 import static mirthandmalice.util.HandleMatchmaking.*;
+import static mirthandmalice.util.MultiplayerHelper.sendP2PString;
 
 public class LobbyMenu {
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("LobbyPanel"));
@@ -65,7 +66,7 @@ public class LobbyMenu {
     //for lobby list
     private static final float NAME_LABEL_X = PANEL_X + 75.0f * Settings.scale;
     private static final float PUBLIC_LABEL_X = PANEL_X + 450.0f * Settings.scale;
-    private static final float ASCENSION_SYMBOL_X = PANEL_X + 350.0f * Settings.scale;
+    private static final float ASCENSION_SYMBOL_X = PANEL_X + 340.0f * Settings.scale;
     private static final float CHARACTER_LABEL_X = PANEL_X + 660.0f * Settings.scale;
 
     private static final float ICON_W = 64.0F * Settings.scale;
@@ -663,6 +664,8 @@ public class LobbyMenu {
                         if (lobbyCreateHitbox.hovered && InputHelper.justClickedLeft)
                         {
                             this.hide();
+                            HandleMatchmaking.leave();
+                            sendP2PString("leave");
                             beginGameStartTimer();
                         }
                     }
@@ -762,7 +765,7 @@ public class LobbyMenu {
 
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y - ICON_W, ICON_W, ICON_W);
+        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y - 2.0F * Settings.scale, ICON_W, ICON_W);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
 
         int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));

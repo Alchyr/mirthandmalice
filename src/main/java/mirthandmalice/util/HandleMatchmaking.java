@@ -129,7 +129,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
         activeMultiplayer = false;
         if (currentLobbyID != null)
         {
-            chat.receiveMessage(TEXT[0]); //Left Lobby.
+            //chat.receiveMessage(TEXT[0]); //Left Lobby.
             logger.info("Left lobby " + currentLobbyID + ".");
             matchmaking.leaveLobby(currentLobbyID);
             currentLobbyID = null;

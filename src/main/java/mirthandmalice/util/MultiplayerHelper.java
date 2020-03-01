@@ -674,8 +674,6 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
 
                 //chat.receiveMessage(HandleMatchmaking.TEXT[4]);
                 logger.info("Connection established.");
-                HandleMatchmaking.leave();
-                sendP2PString("leave");
                 sendP2PString("ping");
                 ping = 0;
                 lastPing = 0;
