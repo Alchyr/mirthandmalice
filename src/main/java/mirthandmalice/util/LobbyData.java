@@ -7,8 +7,9 @@ import java.util.Comparator;
 public class LobbyData {
     public SteamID id;
     public String name;
+    public int ascension;
     public boolean isPublic;
-    public boolean hostIsMokou;
+    public boolean hostIsMirth;
     public boolean isValid = true;
 
     public void invalidate(String newName)
@@ -17,6 +18,7 @@ public class LobbyData {
         this.name = newName;
         isPublic = false;
         isValid = false;
+        ascension = 0;
     }
 
     public static class LobbyDataComparer implements Comparator<LobbyData>

@@ -1,5 +1,6 @@
 package mirthandmalice.ui;
 
+import basemod.ReflectionHacks;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,13 +9,19 @@ import com.codedisaster.steamworks.SteamID;
 import com.codedisaster.steamworks.SteamMatchmaking;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
+import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.TipHelper;
+import com.megacrit.cardcrawl.helpers.controller.CInputActionSet;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
+import com.megacrit.cardcrawl.screens.charSelect.CharacterOption;
 import com.megacrit.cardcrawl.screens.options.ToggleButton;
 import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.enums.ToggleType;
+import mirthandmalice.util.ActiveLobbyData;
 import mirthandmalice.util.HandleMatchmaking;
 import mirthandmalice.util.LobbyData;
 import mirthandmalice.util.TextureLoader;
@@ -22,9 +29,8 @@ import mirthandmalice.util.TextureLoader;
 import java.util.ArrayList;
 
 import static mirthandmalice.character.MirthAndMalice.characterStrings;
-import static mirthandmalice.util.HandleMatchmaking.matchmaking;
-import static mirthandmalice.util.HandleMatchmaking.metadataTrue;
 import static mirthandmalice.MirthAndMaliceMod.*;
+import static mirthandmalice.util.HandleMatchmaking.*;
 
 public class LobbyMenu {
     private static final UIStrings uiStrings = CardCrawlGame.languagePack.getUIString(makeID("LobbyPanel"));
@@ -65,7 +71,10 @@ public class LobbyMenu {
     //for lobby list
     private static final float NAME_LABEL_X = PANEL_X + 75.0f * Settings.scale;
     private static final float PUBLIC_LABEL_X = PANEL_X + 450.0f * Settings.scale;
+    private static final float ASCENSION_SYMBOL_X = PANEL_X + 580.0f * Settings.scale;
     private static final float CHARACTER_LABEL_X = PANEL_X + 660.0f * Settings.scale;
+
+    private static final float ICON_W = 64.0F * Settings.scale;
 
     private static final float CHARACTER_LABEL_Y = PANEL_Y + 312.0f * Settings.scale; //for lobby creation
     private static final float MOKOU_LABEL_X = NAME_LABEL_X + 80.0f * Settings.scale;
@@ -78,9 +87,9 @@ public class LobbyMenu {
     private static final float PUBLIC_TOGGLE_X = PANEL_X + 130.0f * Settings.scale;
     private static final float PUBLIC_TOGGLE_Y = PANEL_Y + 450.0f * Settings.scale;
 
-    private static final float MOKOU_TOGGLE_X = PUBLIC_TOGGLE_X;
-    private static final float KEINE_TOGGLE_X = MOKOU_TOGGLE_X + 200.0f * Settings.scale;
-    private static final float RANDOM_TOGGLE_X = KEINE_TOGGLE_X + 200.0f * Settings.scale;
+    private static final float MIRTH_TOGGLE_X = PUBLIC_TOGGLE_X;
+    private static final float MALICE_TOGGLE_X = MIRTH_TOGGLE_X + 200.0f * Settings.scale;
+    private static final float RANDOM_TOGGLE_X = MALICE_TOGGLE_X + 200.0f * Settings.scale;
     private static final float CHARACTER_TOGGLE_Y = PANEL_Y + 300.0f * Settings.scale;
 
     private static final float PUBLIC_INPUT_TEXT_Y = PANEL_Y + 462.0f * Settings.scale;
@@ -127,17 +136,29 @@ public class LobbyMenu {
 
     private ArrayList<Hitbox> lobbyHitboxes = new ArrayList<>();
 
+    //Lobby Creation UI
+    private float ASC_LEFT_W;
+    private float ASC_RIGHT_W;
+
     public LobbyTextInput nameInput = new LobbyTextInput(INPUT_X, LOBBY_START_Y);
     public ToggleButton publicRoom = new ToggleButton(PUBLIC_TOGGLE_X, 0, PUBLIC_TOGGLE_Y, ToggleType.PUBLIC_LOBBY, false);
     public LobbyTextInput passwordInput = new LobbyTextInput(INPUT_X, PASSWORD_INPUT_Y);
 
-    private ToggleButton mokouToggle = new ToggleButton(MOKOU_TOGGLE_X, 0, CHARACTER_TOGGLE_Y, ToggleType.PUBLIC_LOBBY, false);
-    private ToggleButton keineToggle = new ToggleButton(KEINE_TOGGLE_X, 0, CHARACTER_TOGGLE_Y, ToggleType.PUBLIC_LOBBY, false);
+    private ToggleButton mirthToggle = new ToggleButton(MIRTH_TOGGLE_X, 0, CHARACTER_TOGGLE_Y, ToggleType.PUBLIC_LOBBY, false);
+    private ToggleButton maliceToggle = new ToggleButton(MALICE_TOGGLE_X, 0, CHARACTER_TOGGLE_Y, ToggleType.PUBLIC_LOBBY, false);
     private ToggleButton randomToggle = new ToggleButton(RANDOM_TOGGLE_X, 0, CHARACTER_TOGGLE_Y, ToggleType.PUBLIC_LOBBY, false);
+
+    private Hitbox ascensionModeHb;
+    private Hitbox ascLeftHb;
+    private Hitbox ascRightHb;
+
+    private boolean isAscensionMode;
+    private int ascensionLevel;
 
     public boolean searching = false;
     public boolean receivePassword = false;
     private LobbyData waitingLobby = null;
+    private ActiveLobbyData inLobby = null;
 
     public LobbyMenu()
     {
@@ -149,13 +170,26 @@ public class LobbyMenu {
             y -= LINE_HEIGHT;
         }
 
-        mokouToggle.toggle();
-        keineToggle.toggle();
+        mirthToggle.toggle();
+        maliceToggle.toggle();
+
+        FontHelper.cardTitleFont.getData().setScale(1.0F);
+        this.ASC_LEFT_W = FontHelper.getSmartWidth(FontHelper.cardTitleFont, TEXT[6], 9999.0F, 0.0F);
+        this.ASC_RIGHT_W = FontHelper.getSmartWidth(FontHelper.cardTitleFont, TEXT[7] + "22", 9999.0F, 0.0F);
+
+        this.ascensionModeHb = new Hitbox(ASC_LEFT_W + 100.0F * Settings.scale, 50.0F * Settings.scale);
+        this.ascLeftHb = new Hitbox(70.0F * Settings.scale, 70.0F * Settings.scale);
+        this.ascRightHb = new Hitbox(70.0F * Settings.scale, 70.0F * Settings.scale);
+
+        this.ascensionModeHb.move(PANEL_CENTER_X - ASC_LEFT_W / 2.0F - 50.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale);
+        this.ascLeftHb.move(PANEL_CENTER_X + 200.0F * Settings.scale - ASC_RIGHT_W * 0.5F, PANEL_Y + 200.0F * Settings.scale);
+        this.ascRightHb.move(PANEL_CENTER_X + 200.0F * Settings.scale + ASC_RIGHT_W * 1.5F, PANEL_Y + 200.0F * Settings.scale);
     }
 
     public void show(boolean searching)
     {
         this.lobbies.clear();
+        inLobby = null;
         this.mode = 0;
         this.searching = searching;
         receivePassword = false;
@@ -173,6 +207,7 @@ public class LobbyMenu {
     public void setLobbies(ArrayList<SteamID> lobbies)
     {
         this.lobbies.clear();
+        inLobby = null;
         searching = false;
         receivePassword = false;
 
@@ -182,8 +217,9 @@ public class LobbyMenu {
 
                 data.id = lobby;
                 data.name = matchmaking.getLobbyData(lobby, HandleMatchmaking.lobbyNameKey);
-                data.hostIsMokou = matchmaking.getLobbyData(lobby, HandleMatchmaking.hostIsMirthKey).equals(metadataTrue);
+                data.hostIsMirth = matchmaking.getLobbyData(lobby, HandleMatchmaking.hostIsMirthKey).equals(metadataTrue);
                 data.isPublic = matchmaking.getLobbyData(lobby, HandleMatchmaking.lobbyPublicKey).equals(metadataTrue);
+                data.ascension = Integer.parseInt(matchmaking.getLobbyData(lobby, HandleMatchmaking.lobbyAscensionKey));
 
                 this.lobbies.add(data);
             }
@@ -211,8 +247,13 @@ public class LobbyMenu {
 
     public void receivePassword(String pword)
     {
-        if (receivePassword && waitingLobby != null && waitingLobby.id.isValid())
+        if (receivePassword && waitingLobby != null && waitingLobby.id.isValid()) //Of note: This is unsecure.
         {
+            //To make it more secure, the password wouldn't be in lobby data, it would be stored locally.
+            //Attempted password attempts would send it to the host, who would send back whether or not it was correct.
+            //But, I'm too lazy to do that uwu
+            //And it's not that important, I think, for a mod like this.
+
             receivePassword = false;
 
             if (matchmaking.getLobbyData(waitingLobby.id, HandleMatchmaking.lobbyPasswordKey).equals(pword))
@@ -235,17 +276,24 @@ public class LobbyMenu {
         mode = 0;
     }
 
+    public void displayLobbyInfo(ActiveLobbyData data)
+    {
+        mode = 4;
+
+        inLobby = data;
+    }
+
     public void update()
     {
         if (visible)
         {
-            refreshButtonHitbox.update();
-            createButtonHitbox.update();
-            lobbyAreaHitbox.update();
-
             switch (mode)
             {
                 case 0:
+                    refreshButtonHitbox.update();
+                    createButtonHitbox.update();
+                    lobbyAreaHitbox.update();
+
                     if (refreshButtonHitbox.hovered) {
                         refreshButtonScale = 1.15f;
                         refreshButtonColor.r = 1.0f;
@@ -307,6 +355,8 @@ public class LobbyMenu {
                             chat.active = false;
                             mirthandmalice.patch.input.InputHelper.reset();
                         }
+
+                        this.isAscensionMode = Settings.gamePref.getBoolean("Ascension Mode Default", false);
 
                         this.mode = 2;
                         /*
@@ -377,6 +427,10 @@ public class LobbyMenu {
                     }
                     break;
                 case 2: //creating
+                    refreshButtonHitbox.update();
+                    createButtonHitbox.update();
+                    lobbyAreaHitbox.update();
+
                     if (refreshButtonHitbox.hovered) {
                         refreshButtonScale = 1.15f;
                         refreshButtonColor.r = 1.0f;
@@ -420,15 +474,17 @@ public class LobbyMenu {
                         publicRoom.update();
                         lobbyCreateHitbox.update();
 
+
+
                         if (lobbyCreateHitbox.hovered && InputHelper.justClickedLeft)
                         {
                             mode = 3;
 
-                            if (mokouToggle.enabled)
+                            if (mirthToggle.enabled)
                             {
                                 HandleMatchmaking.isMirth = true;
                             }
-                            else if (keineToggle.enabled)
+                            else if (maliceToggle.enabled)
                             {
                                 HandleMatchmaking.isMirth = false;
                             }
@@ -453,7 +509,6 @@ public class LobbyMenu {
                             logger.info("Attempting to create a new lobby.");
                             chat.receiveMessage("Creating new lobby.");
                             matchmaking.createLobby(SteamMatchmaking.LobbyType.Public, 2);
-                            this.hide();
                             break;
                         }
 
@@ -462,36 +517,36 @@ public class LobbyMenu {
                             passwordInput.update();
                         }
 
-                        if (!mokouToggle.enabled)
+                        if (!mirthToggle.enabled)
                         {
-                            mokouToggle.update();
-                            if (mokouToggle.enabled)
+                            mirthToggle.update();
+                            if (mirthToggle.enabled)
                             {
-                                if (keineToggle.enabled)
-                                    keineToggle.toggle();
+                                if (maliceToggle.enabled)
+                                    maliceToggle.toggle();
                                 if (randomToggle.enabled)
                                     randomToggle.toggle();
                             }
                         }
                         else
                         {
-                            mokouToggle.hb.hovered = false;
+                            mirthToggle.hb.hovered = false;
                         }
 
-                        if (!keineToggle.enabled)
+                        if (!maliceToggle.enabled)
                         {
-                            keineToggle.update();
-                            if (keineToggle.enabled)
+                            maliceToggle.update();
+                            if (maliceToggle.enabled)
                             {
-                                if (mokouToggle.enabled)
-                                    mokouToggle.toggle();
+                                if (mirthToggle.enabled)
+                                    mirthToggle.toggle();
                                 if (randomToggle.enabled)
                                     randomToggle.toggle();
                             }
                         }
                         else
                         {
-                            keineToggle.hb.hovered = false;
+                            maliceToggle.hb.hovered = false;
                         }
 
                         if (!randomToggle.enabled)
@@ -499,18 +554,88 @@ public class LobbyMenu {
                             randomToggle.update();
                             if (randomToggle.enabled)
                             {
-                                if (mokouToggle.enabled)
-                                    mokouToggle.toggle();
-                                if (keineToggle.enabled)
-                                    keineToggle.toggle();
+                                if (mirthToggle.enabled)
+                                    mirthToggle.toggle();
+                                if (maliceToggle.enabled)
+                                    maliceToggle.toggle();
                             }
                         }
                         else
                         {
                             randomToggle.hb.hovered = false;
                         }
+
+                        this.ascensionModeHb.update();
+                        this.ascRightHb.update();
+                        this.ascLeftHb.update();
+
+                        if (InputHelper.justClickedLeft) {
+                            if (this.ascensionModeHb.hovered) {
+                                this.ascensionModeHb.clickStarted = true;
+                            }
+                            else if (isAscensionMode) {
+                                if (this.ascRightHb.hovered) {
+                                    this.ascRightHb.clickStarted = true;
+                                } else if (this.ascLeftHb.hovered) {
+                                    this.ascLeftHb.clickStarted = true;
+                                }
+                            }
+                        }
+
+                        if (this.ascensionModeHb.clicked || CInputActionSet.proceed.isJustPressed()) {
+                            this.ascensionModeHb.clicked = false;
+                            this.isAscensionMode = !this.isAscensionMode;
+                            Settings.gamePref.putBoolean("Ascension Mode Default", this.isAscensionMode);
+                            Settings.gamePref.flush();
+                        }
+
+                        if (this.ascLeftHb.clicked || CInputActionSet.pageLeftViewDeck.isJustPressed()) {
+                            this.ascLeftHb.clicked = false;// 240
+
+                            for (CharacterOption o : CardCrawlGame.mainMenuScreen.charSelectScreen.options)
+                            {
+                                if (o.selected) {
+                                    o.decrementAscensionLevel(--this.ascensionLevel);
+                                    this.ascensionLevel = Math.max(0, this.ascensionLevel);
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (this.ascRightHb.clicked || CInputActionSet.pageRightViewExhaust.isJustPressed()) {
+                            this.ascRightHb.clicked = false;
+
+                            for (CharacterOption o : CardCrawlGame.mainMenuScreen.charSelectScreen.options)
+                            {
+                                if (o.selected) {
+                                    o.incrementAscensionLevel(++this.ascensionLevel);
+                                    this.ascensionLevel = Math.min(this.ascensionLevel, (int)ReflectionHacks.getPrivate(o, CharacterOption.class, "maxAscensionLevel"));
+                                    break;
+                                }
+                            }
+
+                        }
+
+                        AbstractDungeon.isAscensionMode = this.isAscensionMode;
+                        if (this.isAscensionMode) {
+                            AbstractDungeon.ascensionLevel = this.ascensionLevel;
+                        } else {
+                            AbstractDungeon.ascensionLevel = 0;
+                        }
                     }
 
+                    break;
+                case 4: //Lobby view.
+                    if (isHost)
+                    {
+                        lobbyCreateHitbox.update();
+
+                        if (lobbyCreateHitbox.hovered && InputHelper.justClickedLeft)
+                        {
+                            this.hide();
+                            beginGameStartTimer();
+                        }
+                    }
                     break;
             }
         }
@@ -546,30 +671,7 @@ public class LobbyMenu {
             }
             else if (mode == 2) //creating
             {
-                //name
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, LABEL_Y, Color.WHITE);
-                nameInput.render(sb);
-
-                //public
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[11], MOKOU_LABEL_X, PUBLIC_INPUT_TEXT_Y, Color.WHITE);
-                publicRoom.render(sb);
-
-                if (!publicRoom.enabled)
-                {
-                    //password
-                    FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[9], NAME_LABEL_X, PASSWORD_LABEL_Y, Color.WHITE);
-                    passwordInput.render(sb);
-                }
-
-                //character
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, characterStrings.NAMES[1], MOKOU_LABEL_X, CHARACTER_LABEL_Y, Color.WHITE);
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, characterStrings.NAMES[2], KEINE_LABEL_X, CHARACTER_LABEL_Y, Color.WHITE);
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[12], RANDOM_LABEL_X, CHARACTER_LABEL_Y, Color.WHITE);
-                mokouToggle.render(sb);
-                keineToggle.render(sb);
-                randomToggle.render(sb);
-
-                FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[13], PANEL_CENTER_X, CREATE_TEXT_Y, lobbyCreateHitbox.hovered ? Color.GOLD : Color.WHITE);
+                renderCreationUI(sb);
             }
             else if (lobbies.isEmpty())
             {
@@ -577,41 +679,151 @@ public class LobbyMenu {
             }
             else if (mode == 0)
             {
-                if (page < maxPage)
-                {
-                    sb.draw(arrow, ARROW_X, NEXT_ARROW_Y, ARROW_OFFSET_X, ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, Settings.scale * (nextArrowHitbox.hovered ? 1.1f: 1.0f), Settings.scale * (nextArrowHitbox.hovered ? 1.1f: 1.0f), 0, 0, 0, ARROW_WIDTH, ARROW_HEIGHT, false, false);
-                }
-                if (page > 0)
-                {
-                    sb.draw(arrow, ARROW_X, PREV_ARROW_Y, ARROW_OFFSET_X, ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, Settings.scale * (prevArrowHitbox.hovered ? 1.1f: 1.0f), Settings.scale * (prevArrowHitbox.hovered ? 1.1f: 1.0f), 0, 0, 0, ARROW_WIDTH, ARROW_HEIGHT, false, true);
-                }
-
-                FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
-                FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-                FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
-
-                int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));
-                float y = LOBBY_START_Y;
-                Color textColor;
-                for (int i = page * LOBBIES_PER_PAGE; i < max; ++i)
-                {
-                    if (hoveredIndex == i && lobbies.get(i).isValid)
-                    {
-                        textColor = Color.GOLD;
-                    }
-                    else
-                    {
-                        textColor = Color.WHITE;
-                    }
-                    FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, lobbies.get(i).name, NAME_LABEL_X, y + OTHER_RENDER_OFFSET, textColor);
-                    if (lobbies.get(i).isValid)
-                    {
-                        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, lobbies.get(i).isPublic ? TEXT[4] : TEXT[5], PUBLIC_LABEL_X, y, textColor);
-                        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, lobbies.get(i).hostIsMokou ? characterStrings.NAMES[1] : characterStrings.NAMES[2], CHARACTER_LABEL_X, y, textColor);
-                    }
-                    y -= LINE_HEIGHT;
-                }
+                renderLobbySelect(sb);
+            }
+            else if (mode == 3)
+            {
+                FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[22], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
+            }
+            else if (mode == 4) //in lobby.
+            {
+                renderLobbyInfo(sb);
             }
         }
+    }
+
+    private void renderLobbyInfo(SpriteBatch sb)
+    {
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.name, NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.WHITE);
+        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, "|", PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
+        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, "Ascension " + (inLobby.ascension != 0 ? inLobby.ascension : "Off"), PUBLIC_LABEL_X + 50.0f * Settings.scale, LABEL_Y, Color.GOLD);
+
+
+        float y = LOBBY_START_Y;
+        float x = NAME_LABEL_X + ICON_W;
+
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostName, x, y + OTHER_RENDER_OFFSET, Color.GOLD);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[1] : characterStrings.NAMES[2], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.GOLD);
+        y -= LINE_HEIGHT;
+
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.otherName, x, y + OTHER_RENDER_OFFSET, Color.WHITE);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[2] : characterStrings.NAMES[1], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.WHITE);
+
+        if (isHost)
+            FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[21], PANEL_CENTER_X, CREATE_TEXT_Y, lobbyCreateHitbox.hovered ? Color.GOLD : Color.WHITE);
+    }
+
+    private void renderLobbySelect(SpriteBatch sb)
+    {
+        if (page < maxPage)
+        {
+            sb.draw(arrow, ARROW_X, NEXT_ARROW_Y, ARROW_OFFSET_X, ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, Settings.scale * (nextArrowHitbox.hovered ? 1.1f: 1.0f), Settings.scale * (nextArrowHitbox.hovered ? 1.1f: 1.0f), 0, 0, 0, ARROW_WIDTH, ARROW_HEIGHT, false, false);
+        }
+        if (page > 0)
+        {
+            sb.draw(arrow, ARROW_X, PREV_ARROW_Y, ARROW_OFFSET_X, ARROW_OFFSET_Y, ARROW_WIDTH, ARROW_HEIGHT, Settings.scale * (prevArrowHitbox.hovered ? 1.1f: 1.0f), Settings.scale * (prevArrowHitbox.hovered ? 1.1f: 1.0f), 0, 0, 0, ARROW_WIDTH, ARROW_HEIGHT, false, true);
+        }
+
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
+        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
+        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y - ICON_W / 2.0f, ICON_W / 2.0f, ICON_W / 2.0f, ICON_W, ICON_W, Settings.scale, Settings.scale, 0, 0, 0, (int) ICON_W, (int) ICON_W, false, false);
+        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
+
+        int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));
+        float y = LOBBY_START_Y;
+        Color textColor;
+        for (int i = page * LOBBIES_PER_PAGE; i < max; ++i)
+        {
+            if (hoveredIndex == i && lobbies.get(i).isValid)
+            {
+                textColor = Color.GOLD;
+            }
+            else
+            {
+                textColor = Color.WHITE;
+            }
+            FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, lobbies.get(i).name, NAME_LABEL_X, y + OTHER_RENDER_OFFSET, textColor);
+            if (lobbies.get(i).isValid)
+            {
+                FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, lobbies.get(i).isPublic ? TEXT[4] : TEXT[5], PUBLIC_LABEL_X, y, textColor);
+                FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, String.valueOf(lobbies.get(i).ascension), ASCENSION_SYMBOL_X, y, textColor);
+                FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, lobbies.get(i).hostIsMirth ? characterStrings.NAMES[1] : characterStrings.NAMES[2], CHARACTER_LABEL_X, y, textColor);
+            }
+            y -= LINE_HEIGHT;
+        }
+    }
+
+    private void renderCreationUI(SpriteBatch sb)
+    {
+        //name
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, LABEL_Y, Color.WHITE);
+        nameInput.render(sb);
+
+        //public
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[11], MOKOU_LABEL_X, PUBLIC_INPUT_TEXT_Y, Color.WHITE);
+        publicRoom.render(sb);
+
+        if (!publicRoom.enabled)
+        {
+            //password
+            FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[9], NAME_LABEL_X, PASSWORD_LABEL_Y, Color.WHITE);
+            passwordInput.render(sb);
+        }
+
+        //character
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, characterStrings.NAMES[1], MOKOU_LABEL_X, CHARACTER_LABEL_Y, Color.WHITE);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, characterStrings.NAMES[2], KEINE_LABEL_X, CHARACTER_LABEL_Y, Color.WHITE);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[12], RANDOM_LABEL_X, CHARACTER_LABEL_Y, Color.WHITE);
+        mirthToggle.render(sb);
+        maliceToggle.render(sb);
+        randomToggle.render(sb);
+
+        //ascension
+        renderAscensionOptions(sb);
+
+        FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[13], PANEL_CENTER_X, CREATE_TEXT_Y, lobbyCreateHitbox.hovered ? Color.GOLD : Color.WHITE);
+    }
+
+    private void renderAscensionOptions(SpriteBatch sb)
+    {
+        sb.setColor(Color.WHITE);
+        sb.draw(ImageMaster.OPTION_TOGGLE, PANEL_CENTER_X - ASC_LEFT_W - 16.0F - 30.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale - 16.0F, 16.0F, 16.0F, 32.0F, 32.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 32, 32, false, false);// 533
+        if (this.ascensionModeHb.hovered) {
+            FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GREEN_TEXT_COLOR);
+            TipHelper.renderGenericTip((float)InputHelper.mX - 140.0F * Settings.scale, (float)InputHelper.mY + 340.0F * Settings.scale, TEXT[19], TEXT[20]);
+        } else {
+            FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GOLD_COLOR);
+        }
+
+        FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[18] + this.ascensionLevel, PANEL_CENTER_X + ASC_RIGHT_W / 2.0F + 200.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale, Settings.BLUE_TEXT_COLOR);
+        if (this.isAscensionMode) {
+            sb.setColor(Color.WHITE);
+            sb.draw(ImageMaster.OPTION_TOGGLE_ON, PANEL_CENTER_X - ASC_LEFT_W - 16.0F - 30.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale - 16.0F, 16.0F, 16.0F, 32.0F, 32.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 32, 32, false, false);
+
+
+            if (!this.ascLeftHb.hovered && !Settings.isControllerMode) {
+                sb.setColor(Color.LIGHT_GRAY);
+            } else {
+                sb.setColor(Color.WHITE);
+            }
+
+            sb.draw(ImageMaster.CF_LEFT_ARROW, this.ascLeftHb.cX - 24.0F, this.ascLeftHb.cY - 24.0F, 24.0F, 24.0F, 48.0F, 48.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 48, 48, false, false);
+            if (!this.ascRightHb.hovered && !Settings.isControllerMode) {
+                sb.setColor(Color.LIGHT_GRAY);
+            } else {
+                sb.setColor(Color.WHITE);
+            }
+
+            sb.draw(ImageMaster.CF_RIGHT_ARROW, this.ascRightHb.cX - 24.0F, this.ascRightHb.cY - 24.0F, 24.0F, 24.0F, 48.0F, 48.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 48, 48, false, false);
+            if (Settings.isControllerMode) {
+                sb.draw(CInputActionSet.proceed.getKeyImg(), this.ascensionModeHb.cX - 100.0F * Settings.scale - 32.0F, this.ascensionModeHb.cY - 32.0F, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);
+                sb.draw(CInputActionSet.pageLeftViewDeck.getKeyImg(), this.ascLeftHb.cX - 60.0F * Settings.scale - 32.0F, this.ascLeftHb.cY - 32.0F, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);
+                sb.draw(CInputActionSet.pageRightViewExhaust.getKeyImg(), this.ascRightHb.cX + 60.0F * Settings.scale - 32.0F, this.ascRightHb.cY - 32.0F, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 64, 64, false, false);
+            }
+        }
+
+        this.ascensionModeHb.render(sb);
+        this.ascLeftHb.render(sb);
+        this.ascRightHb.render(sb);
     }
 }

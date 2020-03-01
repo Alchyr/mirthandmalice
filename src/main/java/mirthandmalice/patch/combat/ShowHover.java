@@ -60,6 +60,7 @@ public class ShowHover {
                 {
                     MultiplayerHelper.sendP2PString("stophover");
                 }
+                lastHoveredCard = null;
             }
 
             wasHoveringCard = ___isHoveringCard;

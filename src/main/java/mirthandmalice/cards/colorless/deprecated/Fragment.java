@@ -36,6 +36,8 @@ public class Fragment extends BaseCard {
         setMagic(DAMAGE, UPG_DAMAGE);
 
         this.tags.add(CustomCardTags.MK_FRAGMENT);
+
+        setDisplayRarity(CardRarity.RARE);
     }
 
 

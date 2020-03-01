@@ -3,11 +3,12 @@
     "TEXT": [
       "Left lobby.",
       "Entered game.",
-      "Playing as the Immortal and Guardian - In Lobby (",
-      "Playing as the Immortal and Guardian - Starting game...",
+      "Playing as Mirth and Malice - In Lobby (",
+      "Playing as Mirth and Malice - Starting game...",
       "Another player has joined the lobby.",
       "Other player left.",
-      " bought "
+      " bought ",
+      "The host left."
     ]
   },
   "mirthandmalice:LobbyPanel": {
@@ -28,7 +29,13 @@
       "Create",
       "Enter the password.",
       "Waiting for password...",
-      "Incorrect password."
+      "Incorrect password.",
+      "Ascension",
+      "Level ",
+      "Ascension Mode",
+      "Runs get harder as you win... (Winstreaks are unaffected)",
+      "Embark",
+      "Creating..."
     ]
   },
   "mirthandmalice:LobbySearch": {

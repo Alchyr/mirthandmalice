@@ -45,7 +45,7 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
 
     public static boolean activeMultiplayer;
     private static boolean triedFar;
-    private static SteamID currentLobbyID;
+    public static SteamID currentLobbyID;
 
     public static boolean isMirth;
 
@@ -198,18 +198,28 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
     public void onLobbyEnter(SteamID steamIDLobby, int chatPermissions, boolean blocked, SteamMatchmaking.ChatRoomEnterResponse response) {
         if (joinorcreate)
         {
-            chat.receiveMessage(TEXT[1]); //Entered game.
-
             logger.info("Lobby entered: " + steamIDLobby);
             logger.info("  - response: " + response);
-
-            lobbyMenu.hide();
 
             int numMembers = matchmaking.getNumLobbyMembers(steamIDLobby);
             logger.info("  - " + numMembers + " members in lobby");
             for (int i = 0; i < numMembers; i++) {
                 SteamID member = matchmaking.getLobbyMemberByIndex(steamIDLobby, i);
                 logger.info("    - " + i + ": accountID=" + member.getAccountID());
+            }
+
+            if (numMembers == 2)
+            {
+                BaseMod.setRichPresence(TEXT[3]);
+                chat.receiveMessage(TEXT[1]); //Entered game.
+            }
+            else if (numMembers == 1)
+            {
+                chat.receiveMessage(TEXT[7]); //Entered invalid game.
+            }
+            else //Too many members??? this should be impossible. Handle this on the host side?
+            {
+                BaseMod.setRichPresence(TEXT[2] + numMembers + " / 2)");
             }
 
             isMirth = isHost ? isMirth : !matchmaking.getLobbyData(steamIDLobby, hostIsMirthKey).equals(metadataTrue);
@@ -229,17 +239,6 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
                         ((MirthAndMalice) CardCrawlGame.characterManager.getAllCharacters().get(i)).setMirth(isMirth);
                     }
                 }
-            }
-
-            if (numMembers == 2)
-            {
-                //start game
-                //MultiplayerHelper.sendP2PString(hostID, "start");
-                BaseMod.setRichPresence(TEXT[3]);
-            }
-            else
-            {
-                BaseMod.setRichPresence(TEXT[2] + numMembers + " / 2)");
             }
         }
         else
@@ -430,6 +429,8 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
                 //matchmaking.joinLobby(steamIDLobby);
                 BaseMod.setRichPresence(TEXT[2] + "1 / 2)");
                 logger.info(currentUser.getSteamID());
+
+                lobbyMenu.displayLobbyInfo(new ActiveLobbyData(lobbyMenu.nameInput.getText(), AbstractDungeon.isAscensionMode ? AbstractDungeon.ascensionLevel : 0, CardCrawlGame.playerName, null, isMirth));
             }
         }
         else

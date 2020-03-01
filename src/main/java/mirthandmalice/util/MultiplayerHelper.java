@@ -49,6 +49,7 @@ import static mirthandmalice.patch.combat.PotionUse.*;
 import static mirthandmalice.patch.combat.ShowHover.otherHoveredCard;
 import static mirthandmalice.patch.rewards.ObtainPotions.*;
 import static mirthandmalice.MirthAndMaliceMod.*;
+import static mirthandmalice.util.HandleMatchmaking.*;
 
 //Handles all multiplayer post-game start. For setting up multiplayer, see HandleMatchmaking.java as well as UseMultiplayerQueue.java
 public class MultiplayerHelper implements SteamNetworkingCallback {
@@ -149,24 +150,24 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
     {
         if (communication != null && dest != null && dest.isValid())
         {
-        try
-        {
-            packetSendBuffer.clear();
+            try
+            {
+                packetSendBuffer.clear();
 
-            packetSendBuffer.put(msg.getBytes(CHARSET));
+                packetSendBuffer.put(msg.getBytes(CHARSET));
 
-            packetSendBuffer.flip();
+                packetSendBuffer.flip();
 
-            if (!msg.equals("ping") && !msg.contains("hover") && !msg.startsWith("drag")) //these messages spam too much and are unhelpful
-                logger.info("Sending P2P message: " + msg);
+                if (!msg.equals("ping") && !msg.contains("hover") && !msg.startsWith("drag")) //these messages spam too much and are unhelpful
+                    logger.info("Sending P2P message: " + msg);
 
-            communication.sendP2PPacket(dest, packetSendBuffer, SteamNetworking.P2PSend.Reliable, defaultChannel);
-            currentPartner = dest;
-        }
-        catch (Exception e)
-        {
-            logger.error(e.getMessage());
-        }
+                communication.sendP2PPacket(dest, packetSendBuffer, SteamNetworking.P2PSend.Reliable, defaultChannel);
+                currentPartner = dest;
+            }
+            catch (Exception e)
+            {
+                logger.error(e.getMessage());
+            }
         }
     }
     public static void sendP2PString(String msg)
@@ -666,8 +667,11 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
             active = true;
             currentPartner = sender;
             partnerName = msg.substring(7);
+
             if (HandleMatchmaking.isHost)
             {
+                lobbyMenu.displayLobbyInfo(new ActiveLobbyData(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyNameKey), Integer.parseInt(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyAscensionKey)), CardCrawlGame.playerName, partnerName, matchmaking.getLobbyData(currentLobbyID, hostIsMirthKey).equals(metadataTrue)));
+
                 chat.receiveMessage(HandleMatchmaking.TEXT[4]);
                 logger.info("Connection established.");
                 HandleMatchmaking.leave();
@@ -675,10 +679,10 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                 sendP2PString("ping");
                 ping = 0;
                 lastPing = 0;
-                beginGameStartTimer();
             }
             else
             {
+                lobbyMenu.displayLobbyInfo(new ActiveLobbyData(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyNameKey), Integer.parseInt(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyAscensionKey)), partnerName, CardCrawlGame.playerName, matchmaking.getLobbyData(currentLobbyID, hostIsMirthKey).equals(metadataTrue)));
                 sendP2PString("success" + CardCrawlGame.playerName);
             }
         }

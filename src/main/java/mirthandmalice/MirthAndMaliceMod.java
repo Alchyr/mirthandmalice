@@ -76,6 +76,7 @@ If any relic is found to be disabled, send list of not found/disabled relics bac
 These relics will be removed from host pool
 
 
+Adjust peek button upwards so it does not overlap energy orb
 
 
 +Upon entering next act and generating map, if other player has already voted, re-check voted node so that it is rendered/works properly.
@@ -471,13 +472,13 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
 
             ModHelper.setModsFalse();
             AbstractDungeon.generateSeeds();
-            AbstractDungeon.isAscensionMode = CardCrawlGame.mainMenuScreen.charSelectScreen.isAscensionMode;
+            /*AbstractDungeon.isAscensionMode = CardCrawlGame.mainMenuScreen.charSelectScreen.isAscensionMode;
             if (AbstractDungeon.isAscensionMode) {
                 AbstractDungeon.ascensionLevel = CardCrawlGame.mainMenuScreen.charSelectScreen.ascensionLevel;
             } else {
                 AbstractDungeon.ascensionLevel = 0;
-            }
-            MultiplayerHelper.sendP2PString("ascension" + AbstractDungeon.ascensionLevel);
+            }*/
+            MultiplayerHelper.sendP2PString("ascension" + AbstractDungeon.ascensionLevel); //ascension is adjusted in lobby creation, which must have happened if you are host (which is who calls this method)
 
             MultiplayerHelper.sendP2PString("start_game");
 
