@@ -68,7 +68,7 @@ public class LobbyMenu {
     //for lobby list
     private static final float NAME_LABEL_X = PANEL_X + 75.0f * Settings.scale;
     private static final float PUBLIC_LABEL_X = PANEL_X + 450.0f * Settings.scale;
-    private static final float ASCENSION_SYMBOL_X = PANEL_X + 580.0f * Settings.scale;
+    private static final float ASCENSION_SYMBOL_X = PANEL_X + 350.0f * Settings.scale;
     private static final float CHARACTER_LABEL_X = PANEL_X + 660.0f * Settings.scale;
 
     private static final float ICON_W = 64.0F * Settings.scale;
@@ -278,6 +278,13 @@ public class LobbyMenu {
         mode = 4;
 
         inLobby = data;
+    }
+    public void setOtherPlayer(String otherPlayer)
+    {
+        if (inLobby != null)
+        {
+            inLobby.otherName = otherPlayer;
+        }
     }
 
     public void update()
@@ -695,15 +702,18 @@ public class LobbyMenu {
     private void renderLobbyInfo(SpriteBatch sb)
     {
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.name, NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.WHITE);
-        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, "|", PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, "Ascension " + (inLobby.ascension != 0 ? inLobby.ascension : "Off"), PUBLIC_LABEL_X + 50.0f * Settings.scale, LABEL_Y, Color.GOLD);
+        FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[17] + " " + (inLobby.ascension != 0 ? inLobby.ascension : "Off"), PUBLIC_LABEL_X + 50.0f * Settings.scale, LABEL_Y, Color.GOLD);
 
 
         float y = LOBBY_START_Y;
         float x = NAME_LABEL_X + ICON_W;
 
-        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostName, x, y + OTHER_RENDER_OFFSET, Color.GOLD);
-        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[1] : characterStrings.NAMES[2], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.GOLD);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[23], x, y + OTHER_RENDER_OFFSET, Color.GOLD);
+
+        x += 180.0f * Settings.scale;
+
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostName, x, y + OTHER_RENDER_OFFSET, Color.WHITE);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, inLobby.hostIsMirth ? characterStrings.NAMES[1] : characterStrings.NAMES[2], CHARACTER_LABEL_X, y + OTHER_RENDER_OFFSET, Color.WHITE);
         y -= LINE_HEIGHT;
 
         if (inLobby.otherName != null)
@@ -729,7 +739,7 @@ public class LobbyMenu {
 
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y - ICON_W / 2.0f, ICON_W / 2.0f, ICON_W / 2.0f, ICON_W, ICON_W, Settings.scale, Settings.scale, 0, 0, 0, (int) ICON_W, (int) ICON_W, false, false);
+        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y, ICON_W, ICON_W);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
 
         int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));

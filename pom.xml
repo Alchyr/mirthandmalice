@@ -5,7 +5,7 @@
     <artifactId>mirthandmalice</artifactId>
     <name>Mirth and Malice</name>
     <version>0.0.0</version>
-    <description>This is a multiplayer mod.\nBETA ONLY.\n\nImportant to know: You can only play with people using the exact same mod list as you. As such, you are STRONGLY recommended to be only using BaseMod, stslib, and this mod, both for matchmaking and because bugs are guaranteed once you add other mods.</description>
+    <description>This is a multiplayer mod.\n\n\nImportant to know: You can only play with people using the exact same mod list as you. As such, you are STRONGLY recommended to be only using BaseMod, stslib, and this mod, both for matchmaking and because bugs are guaranteed once you add other mods.\nList of mods that will be ignored for compatibility: </description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>

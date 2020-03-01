@@ -9,6 +9,7 @@ import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.ui.LobbyMenu;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -211,11 +212,15 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
             if (numMembers == 2)
             {
                 BaseMod.setRichPresence(TEXT[3]);
-                chat.receiveMessage(TEXT[1]); //Entered game.
+                //chat.receiveMessage(TEXT[1]); //Entered game.
             }
             else if (numMembers == 1)
             {
                 chat.receiveMessage(TEXT[7]); //Entered invalid game.
+                matchmaking.leaveLobby(steamIDLobby);
+
+                HandleMatchmaking.startFindLobby();
+                lobbyMenu.show(true);
             }
             else //Too many members??? this should be impossible. Handle this on the host side?
             {
@@ -270,6 +275,27 @@ public class HandleMatchmaking implements SteamMatchmakingCallback {
                 logger.info("This is host:");
                 logger.info("  - Establishing P2P connection with " + IDChanged.getAccountID());
                 MultiplayerHelper.sendP2PString(IDChanged, "connect" + CardCrawlGame.playerName);
+            }
+        }
+        else
+        {
+            if (isHost)
+            {
+                if (matchmaking.getNumLobbyMembers(lobbyID) == 1)
+                {
+                    logger.info("Only one.");
+                    lobbyMenu.setOtherPlayer(null); //in case someone joins and leaves very quickly
+                }
+                else
+                {
+                    //kick extra players
+                }
+            }
+            else
+            {
+                leave();
+                startNormalSearch();
+                lobbyMenu.show(true);
             }
         }
     }
