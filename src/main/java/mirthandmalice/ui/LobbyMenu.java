@@ -659,9 +659,35 @@ public class LobbyMenu {
                 case 4: //Lobby view.
                     if (isHost)
                     {
+                        refreshButtonHitbox.update();
                         lobbyCreateHitbox.update();
 
-                        if (lobbyCreateHitbox.hovered && InputHelper.justClickedLeft)
+                        if (refreshButtonHitbox.hovered) {
+                            refreshButtonScale = 1.15f;
+                            refreshButtonColor.r = 1.0f;
+                            refreshButtonColor.g = 1.0f;
+                            refreshButtonColor.b = 1.0f;
+                        }
+                        else
+                        {
+                            refreshButtonScale = 1.0f;
+                            refreshButtonColor.r = 0.8f;
+                            refreshButtonColor.g = 0.8f;
+                            refreshButtonColor.b = 0.8f;
+                        }
+
+                        hoveredIndex = -1;
+                        if (refreshButtonHitbox.hovered && InputHelper.justClickedLeft)
+                        {
+                            InputHelper.justClickedLeft = false;
+                            HandleMatchmaking.leave();
+                            HandleMatchmaking.startFindLobby();
+                            searching = true;
+                            mode = 0;
+                            this.lobbies.clear();
+                            this.inLobby = null;
+                        }
+                        else if (lobbyCreateHitbox.hovered && InputHelper.justClickedLeft)
                         {
                             this.hide();
                             HandleMatchmaking.leave();
@@ -681,45 +707,81 @@ public class LobbyMenu {
             sb.setColor(Color.WHITE);
             sb.draw(panelBack, PANEL_X, PANEL_Y, 0, 0, PANEL_WIDTH, PANEL_HEIGHT, Settings.scale, Settings.scale, 0, 0, 0, PANEL_WIDTH, PANEL_HEIGHT, false, false);
 
-            sb.setColor(refreshButtonColor);
-            sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
-
-            sb.setColor(createButtonColor);
-            sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
-
-            sb.setColor(Color.WHITE);
-
-
             if (receivePassword)
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[15], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
             }
             else if (mode == 1)
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[8], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
             }
             else if (searching)
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[6], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
             }
             else if (mode == 2) //creating
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 renderCreationUI(sb);
             }
             else if (mode == 3)
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[22], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
             }
             else if (mode == 4) //in lobby.
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 renderLobbyInfo(sb);
             }
             else if (lobbies.isEmpty())
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[3], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
             }
             else if (mode == 0)
             {
+                sb.setColor(refreshButtonColor);
+                sb.draw(refreshButton, REFRESH_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, refreshButtonScale * Settings.scale, refreshButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
+                sb.setColor(createButtonColor);
+                sb.draw(createButton, CREATE_X, BUTTON_Y, BUTTON_OFFSET, BUTTON_OFFSET, BUTTON_SIZE, BUTTON_SIZE, createButtonScale * Settings.scale, createButtonScale * Settings.scale, 0, 0, 0, BUTTON_SIZE, BUTTON_SIZE, false, false);
+
                 renderLobbySelect(sb);
             }
         }
@@ -765,7 +827,7 @@ public class LobbyMenu {
 
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y - 2.0F * Settings.scale, ICON_W, ICON_W);
+        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y + 28.0F * Settings.scale, ICON_W, ICON_W);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
 
         int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));
