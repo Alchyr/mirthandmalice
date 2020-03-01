@@ -182,8 +182,8 @@ public class LobbyMenu {
         this.ascRightHb = new Hitbox(70.0F * Settings.scale, 70.0F * Settings.scale);
 
         this.ascensionModeHb.move(PANEL_CENTER_X - ASC_LEFT_W / 2.0F - 50.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale);
-        this.ascLeftHb.move(PANEL_CENTER_X + 200.0F * Settings.scale - ASC_RIGHT_W * 0.5F, PANEL_Y + 200.0F * Settings.scale);
-        this.ascRightHb.move(PANEL_CENTER_X + 200.0F * Settings.scale + ASC_RIGHT_W * 1.5F, PANEL_Y + 200.0F * Settings.scale);
+        this.ascLeftHb.move(PANEL_CENTER_X + 120.0F * Settings.scale - ASC_RIGHT_W * 0.5F, PANEL_Y + 200.0F * Settings.scale);
+        this.ascRightHb.move(PANEL_CENTER_X + 120.0F * Settings.scale + ASC_RIGHT_W * 1.5F, PANEL_Y + 200.0F * Settings.scale);
     }
 
     public void show(boolean searching)
@@ -617,7 +617,6 @@ public class LobbyMenu {
                                     break;
                                 }
                             }
-
                         }
 
                         AbstractDungeon.isAscensionMode = this.isAscensionMode;
@@ -794,12 +793,12 @@ public class LobbyMenu {
         sb.draw(ImageMaster.OPTION_TOGGLE, PANEL_CENTER_X - ASC_LEFT_W - 16.0F - 30.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale - 16.0F, 16.0F, 16.0F, 32.0F, 32.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 32, 32, false, false);// 533
         if (this.ascensionModeHb.hovered) {
             FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GREEN_TEXT_COLOR);
-            TipHelper.renderGenericTip((float)InputHelper.mX - 140.0F * Settings.scale, (float)InputHelper.mY + 340.0F * Settings.scale, TEXT[19], TEXT[20]);
+            TipHelper.renderGenericTip((float)InputHelper.mX - 140.0F * Settings.scale, (float)InputHelper.mY + 50.0F * Settings.scale, TEXT[19], TEXT[20]);
         } else {
             FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GOLD_COLOR);
         }
 
-        FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[18] + this.ascensionLevel, PANEL_CENTER_X + ASC_RIGHT_W / 2.0F + 200.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale, Settings.BLUE_TEXT_COLOR);
+        FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[18] + this.ascensionLevel, PANEL_CENTER_X + ASC_RIGHT_W / 2.0F + 120.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale, Settings.BLUE_TEXT_COLOR);
         if (this.isAscensionMode) {
             sb.setColor(Color.WHITE);
             sb.draw(ImageMaster.OPTION_TOGGLE_ON, PANEL_CENTER_X - ASC_LEFT_W - 16.0F - 30.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale - 16.0F, 16.0F, 16.0F, 32.0F, 32.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 32, 32, false, false);
