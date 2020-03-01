@@ -507,10 +507,10 @@ public class MirthAndMaliceMod implements EditCardsSubscriber, EditRelicsSubscri
         if (lobbyMenu != null)
             lobbyMenu.render(sb);
 
-        if (MultiplayerHelper.active)
+        /*if (MultiplayerHelper.active) //Ping is currently rendered in the RenderPing patch, in ui patches.
         {
             FontHelper.renderFont(sb, FontHelper.tipBodyFont, "Ping: " + MultiplayerHelper.lastPing, Settings.WIDTH / 2.0f - PING_X_OFFSET, PING_Y_OFFSET, Color.WHITE.cpy());
-        }
+        }*/
     }
 
     public MirthAndMaliceMod()
