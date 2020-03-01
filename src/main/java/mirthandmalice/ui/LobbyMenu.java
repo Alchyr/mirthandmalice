@@ -676,14 +676,6 @@ public class LobbyMenu {
             {
                 renderCreationUI(sb);
             }
-            else if (lobbies.isEmpty())
-            {
-                FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[3], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
-            }
-            else if (mode == 0)
-            {
-                renderLobbySelect(sb);
-            }
             else if (mode == 3)
             {
                 FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[22], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
@@ -691,6 +683,14 @@ public class LobbyMenu {
             else if (mode == 4) //in lobby.
             {
                 renderLobbyInfo(sb);
+            }
+            else if (lobbies.isEmpty())
+            {
+                FontHelper.renderFontCentered(sb, FontHelper.buttonLabelFont, TEXT[3], PANEL_CENTER_X, PANEL_CENTER_Y, Color.WHITE);
+            }
+            else if (mode == 0)
+            {
+                renderLobbySelect(sb);
             }
         }
     }
@@ -793,7 +793,7 @@ public class LobbyMenu {
         sb.draw(ImageMaster.OPTION_TOGGLE, PANEL_CENTER_X - ASC_LEFT_W - 16.0F - 30.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale - 16.0F, 16.0F, 16.0F, 32.0F, 32.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 32, 32, false, false);// 533
         if (this.ascensionModeHb.hovered) {
             FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GREEN_TEXT_COLOR);
-            TipHelper.renderGenericTip((float)InputHelper.mX - 140.0F * Settings.scale, (float)InputHelper.mY + 50.0F * Settings.scale, TEXT[19], TEXT[20]);
+            TipHelper.renderGenericTip((float)InputHelper.mX - 140.0F * Settings.scale, (float)InputHelper.mY + 100.0F * Settings.scale, TEXT[19], TEXT[20]);
         } else {
             FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GOLD_COLOR);
         }
