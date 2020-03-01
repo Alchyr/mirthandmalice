@@ -10,10 +10,7 @@ import com.codedisaster.steamworks.SteamMatchmaking;
 import com.megacrit.cardcrawl.core.CardCrawlGame;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
-import com.megacrit.cardcrawl.helpers.FontHelper;
-import com.megacrit.cardcrawl.helpers.Hitbox;
-import com.megacrit.cardcrawl.helpers.ImageMaster;
-import com.megacrit.cardcrawl.helpers.TipHelper;
+import com.megacrit.cardcrawl.helpers.*;
 import com.megacrit.cardcrawl.helpers.controller.CInputActionSet;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
@@ -192,6 +189,19 @@ public class LobbyMenu {
         receivePassword = false;
         this.hoveredIndex = -1;
         this.visible = true;
+
+        for (CharacterOption o : CardCrawlGame.mainMenuScreen.charSelectScreen.options)
+        {
+            if (o.selected)
+            {
+                Prefs pref = o.c.getPrefs();
+
+                if (pref != null) {
+                    this.ascensionLevel = pref.getInteger("LAST_ASCENSION_LEVEL", 1);
+                }
+                break;
+            }
+        }
     }
     public void show(ArrayList<SteamID> lobbies)
     {
@@ -199,6 +209,19 @@ public class LobbyMenu {
         this.mode = 0;
         this.visible = true;
         receivePassword = false;
+
+        for (CharacterOption o : CardCrawlGame.mainMenuScreen.charSelectScreen.options)
+        {
+            if (o.selected)
+            {
+                Prefs pref = o.c.getPrefs();
+
+                if (pref != null) {
+                    this.ascensionLevel = pref.getInteger("LAST_ASCENSION_LEVEL", 1);
+                }
+                break;
+            }
+        }
     }
 
     public void setLobbies(ArrayList<SteamID> lobbies)
@@ -739,7 +762,7 @@ public class LobbyMenu {
 
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y, ICON_W, ICON_W);
+        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y - ICON_W, ICON_W, ICON_W);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
 
         int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));
@@ -808,8 +831,8 @@ public class LobbyMenu {
             FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[17], PANEL_CENTER_X - ASC_LEFT_W / 2.0F, PANEL_Y + 200.0F * Settings.scale, Settings.GOLD_COLOR);
         }
 
-        FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[18] + this.ascensionLevel, PANEL_CENTER_X + ASC_RIGHT_W / 2.0F + 120.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale, Settings.BLUE_TEXT_COLOR);
         if (this.isAscensionMode) {
+            FontHelper.renderFontCentered(sb, FontHelper.cardTitleFont, TEXT[18] + this.ascensionLevel, PANEL_CENTER_X + ASC_RIGHT_W / 2.0F + 120.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale, Settings.BLUE_TEXT_COLOR);
             sb.setColor(Color.WHITE);
             sb.draw(ImageMaster.OPTION_TOGGLE_ON, PANEL_CENTER_X - ASC_LEFT_W - 16.0F - 30.0F * Settings.scale, PANEL_Y + 200.0F * Settings.scale - 16.0F, 16.0F, 16.0F, 32.0F, 32.0F, Settings.scale, Settings.scale, 0.0F, 0, 0, 32, 32, false, false);
 
