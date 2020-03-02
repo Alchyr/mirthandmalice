@@ -2,7 +2,7 @@
   "mirthandmalice:Forget": {
     "NAME": "Forget",
     "DESCRIPTIONS": [
-      "When this enemy loses HP, apply #b",
+      "When this enemy takes unblocked attack damage, apply #b",
       " #yWeak to it."
     ]
   },
@@ -11,6 +11,13 @@
     "DESCRIPTIONS": [
       "At the start of your turn, gain #b",
       " #yVigor."
+    ]
+  },
+  "mirthandmalice:Corrosion": {
+    "NAME": "Corrosion",
+    "DESCRIPTIONS": [
+      "Whenever an enemy gains #yBlock, apply #b",
+      " #yAtrophy to it."
     ]
   },
   "mirthandmalice:It": {

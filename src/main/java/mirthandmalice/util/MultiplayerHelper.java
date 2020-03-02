@@ -690,6 +690,16 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
             currentPartner = sender;
             partnerName = msg.substring(7);
             sendP2PString("success" + CardCrawlGame.playerName);
+
+
+            if (HandleMatchmaking.isHost)
+            {
+                lobbyMenu.displayLobbyInfo(new ActiveLobbyData(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyNameKey), Integer.parseInt(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyAscensionKey)), CardCrawlGame.playerName, partnerName, matchmaking.getLobbyData(currentLobbyID, hostIsMirthKey).equals(metadataTrue)));
+            }
+            else
+            {
+                lobbyMenu.displayLobbyInfo(new ActiveLobbyData(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyNameKey), Integer.parseInt(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyAscensionKey)), partnerName, CardCrawlGame.playerName, matchmaking.getLobbyData(currentLobbyID, hostIsMirthKey).equals(metadataTrue)));
+            }
         }
     }
 

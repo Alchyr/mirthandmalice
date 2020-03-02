@@ -25,11 +25,12 @@ public class MirthMaliceAuraEffect extends AbstractGameEffect {
 
         if (isMirth)
         {
-            this.color = new Color(MathUtils.random(0.9F, 1.0F), MathUtils.random(0.9F, 1.0F), MathUtils.random(0.9F, 1.0F), 0.0F);
+            this.color = new Color(MathUtils.random(0.3F, 0.5F), MathUtils.random(0.0F, 0.15F), MathUtils.random(0.0F, 0.15F), 0.0F);
         }
         else
         {
-            this.color = new Color(MathUtils.random(0.0F, 0.15F), MathUtils.random(0.0F, 0.15F), MathUtils.random(0.0F, 0.15F), 0.0F);
+            float v = MathUtils.random(0.0F, 0.2F);
+            this.color = new Color(v, v, v, 0.0F);
         }
 
         this.x = AbstractDungeon.player.hb.cX + MathUtils.random(-AbstractDungeon.player.hb.width / 16.0F, AbstractDungeon.player.hb.width / 16.0F);// 44

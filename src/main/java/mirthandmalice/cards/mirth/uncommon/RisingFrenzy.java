@@ -35,7 +35,7 @@ public class RisingFrenzy extends MirthCard {
 
     @Override
     public void applyPowers() {
-        if (ManifestField.isManifested())
+        if (ManifestField.inHandManifested(this))
         {
             this.target = CardTarget.ALL;
             this.magicNumber = this.baseMagicNumber;
@@ -52,7 +52,7 @@ public class RisingFrenzy extends MirthCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        if (ManifestField.isManifested())
+        if (ManifestField.inUseManifested())
         {
             applySelf(new VigorPower(p, this.magicNumber));
             this.superFlash();

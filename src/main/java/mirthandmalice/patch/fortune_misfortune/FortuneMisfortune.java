@@ -58,7 +58,7 @@ public class FortuneMisfortune {
     )
     public static class CardRendering
     {
-        private static final float SPACING = 35.0f * Settings.scale;
+        private static float SPACING;
         private static final int SIZE = 30;
         private static final float CENTER = SIZE / 2.0f;
 
@@ -84,6 +84,7 @@ public class FortuneMisfortune {
 
             Color oldColor = sb.getColor();
             sb.setColor((Color) renderColor.get(__instance));
+            SPACING = 35.0f * Settings.scale;
 
             int val = Fields.fortune.get(__instance);
             int i = 0;

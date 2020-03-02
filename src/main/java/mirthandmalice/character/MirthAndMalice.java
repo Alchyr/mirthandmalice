@@ -45,12 +45,10 @@ import mirthandmalice.cards.malice.basic.Caution;
 import mirthandmalice.cards.malice.basic.MaliceDefend;
 import mirthandmalice.cards.malice.basic.MaliceStrike;
 import mirthandmalice.cards.malice.basic.Wilt;
-import mirthandmalice.cards.malice.uncommon.Hemophilia;
 import mirthandmalice.cards.mirth.basic.Innocence;
 import mirthandmalice.cards.mirth.basic.Indulgence;
 import mirthandmalice.cards.mirth.basic.MirthDefend;
 import mirthandmalice.cards.mirth.basic.MirthStrike;
-import mirthandmalice.cards.mirth.deprecated.Scorch;
 import mirthandmalice.effects.MaliceParticleEffect;
 import mirthandmalice.effects.MirthMaliceAuraEffect;
 import mirthandmalice.effects.MirthParticleEffect;
@@ -234,14 +232,13 @@ public class MirthAndMalice extends CustomPlayer {
 
         while (manifestSmallParticleTimer <= 0.0f)
         {
+            manifestSmallParticleTimer += MathUtils.random(0.1f, 0.2f);
             if (ManifestField.mirthManifested.get(this))
             {
-                manifestSmallParticleTimer += MathUtils.random(0.05f, 0.02f);
                 AbstractDungeon.effectsQueue.add(new MirthParticleEffect());
             }
             else
             {
-                manifestSmallParticleTimer += MathUtils.random(0.1f, 0.15f);
                 AbstractDungeon.effectsQueue.add(new MaliceParticleEffect());
             }
         }

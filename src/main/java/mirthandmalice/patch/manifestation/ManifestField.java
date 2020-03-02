@@ -6,6 +6,7 @@ import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.characters.AbstractPlayer;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.patch.energy_division.TrackCardSource;
 
 @SpirePatch(
         clz = AbstractPlayer.class,
@@ -38,6 +39,17 @@ public class ManifestField {
             if (AbstractDungeon.player.hand.contains(c))
                 return isManifested();
             else if (((MirthAndMalice) AbstractDungeon.player).otherPlayerHand.contains(c))
+                return otherManifested();
+        }
+        return true;
+    }
+    public static boolean inUseManifested()
+    {
+        if (AbstractDungeon.player instanceof MirthAndMalice)
+        {
+            if (TrackCardSource.useMyEnergy)
+                return isManifested();
+            else if (TrackCardSource.useOtherEnergy)
                 return otherManifested();
         }
         return true;

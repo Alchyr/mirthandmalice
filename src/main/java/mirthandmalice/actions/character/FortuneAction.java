@@ -64,8 +64,6 @@ public class FortuneAction extends AbstractGameAction {
                         break;
                     }
                 }
-                AbstractDungeon.actionManager.addToTop(new GainBlockAction(m, AbstractDungeon.player, fortuneAmount * this.amount, true));
-                AbstractDungeon.actionManager.addToTop(new ImageAboveCreatureAction(m, FORTUNE_TEXTURE));
             }
         }
 

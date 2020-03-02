@@ -827,7 +827,7 @@ public class LobbyMenu {
 
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.buttonLabelFont, TEXT[0], NAME_LABEL_X, OTHER_RENDER_LABEL_Y, Color.GOLD);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[1], PUBLIC_LABEL_X, LABEL_Y, Color.GOLD);
-        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y + 28.0F * Settings.scale, ICON_W, ICON_W);
+        sb.draw(ImageMaster.TP_ASCENSION, ASCENSION_SYMBOL_X - ICON_W / 2.0f, LABEL_Y + OTHER_RENDER_OFFSET, ICON_W, ICON_W);
         FontHelper.renderFontCenteredTopAligned(sb, FontHelper.buttonLabelFont, TEXT[2], CHARACTER_LABEL_X, LABEL_Y, Color.GOLD);
 
         int max = Math.min(lobbies.size(), (page * LOBBIES_PER_PAGE + LOBBIES_PER_PAGE));

@@ -26,7 +26,8 @@ public class MirthParticleEffect extends AbstractGameEffect {
         this.duration = MathUtils.random(1.3F, 1.8F);
         this.scale = MathUtils.random(0.4F, 0.7F) * Settings.scale;
         this.dur_div2 = this.duration / 2.0F;
-        this.color = new Color(MathUtils.random(0.8F, 1.0F), MathUtils.random(0.8F, 1.0F), MathUtils.random(0.8F, 1.0F), 0.0F);
+        float v = MathUtils.random(0.45F, 0.6F);
+        this.color = new Color(MathUtils.random(0.8F, 1.0F), v, v, 0.0F);
 
         float distance = MathUtils.random(MIN_OFFSET, MAX_OFFSET) * (MathUtils.randomBoolean() ? 1 : -1);
         this.rotation = MathUtils.random(-MathUtils.PI, MathUtils.PI);

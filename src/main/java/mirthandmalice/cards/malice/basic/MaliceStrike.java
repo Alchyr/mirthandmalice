@@ -33,7 +33,6 @@ public class MaliceStrike extends MaliceCard {
 
         setDamage(DAMAGE, UPG_DAMAGE);
 
-        tags.add(BASIC_STRIKE);
         tags.add(AbstractCard.CardTags.STRIKE);
         tags.add(CardTags.STARTER_STRIKE);
     }
