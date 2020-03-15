@@ -1,11 +1,16 @@
 package mirthandmalice.actions.general;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.megacrit.cardcrawl.actions.AbstractGameAction;
 import com.megacrit.cardcrawl.cards.AbstractCard;
 import com.megacrit.cardcrawl.cards.CardGroup;
+import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import mirthandmalice.character.MirthAndMalice;
+import mirthandmalice.effects.MarkEffect;
 import mirthandmalice.patch.energy_division.TrackCardSource;
+import mirthandmalice.util.MathHelper;
 
 public class MarkRandomCardInDrawAction extends AbstractGameAction
 {
@@ -58,69 +63,110 @@ public class MarkRandomCardInDrawAction extends AbstractGameAction
 
             if (cards.size() >= amount)
             {
+                Vector2[] points = MathHelper.getCirclePoints(Settings.WIDTH / 2.0f, Settings.HEIGHT / 2.0f, (80.0f + amount * 5.0f) * Settings.scale, amount, MathUtils.random(360.0f));
+
                 for (int i = 0; i < amount; ++i)
                 {
                     AbstractCard c = cards.getRandomCard(AbstractDungeon.cardRandomRng);
                     cards.group.remove(c);
+
+                    AbstractDungeon.effectList.add(new MarkEffect(this.fortune, points[i], getGroup(c)));
                     addToTop(new MarkCardAction(c, fortune));
                 }
             }
             else if (!cards.isEmpty())
             {
+                Vector2[] points = MathHelper.getCirclePoints(Settings.WIDTH / 2.0f, Settings.HEIGHT / 2.0f, (80.0f + cards.size() * 5.0f) * Settings.scale, cards.size(), MathUtils.random(360.0f));
+
                 for (int i = 0; i < amount; ++i)
                 {
-                    AbstractCard c = ((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.getRandomCard(AbstractDungeon.cardRandomRng);
+                    AbstractCard c = cards.group.remove(AbstractDungeon.cardRandomRng.random(cards.size() - 1));
+
+                    AbstractDungeon.effectList.add(new MarkEffect(this.fortune, points[i++], getGroup(c)));
                     addToTop(new MarkCardAction(c, fortune));
+
+                    if (cards.isEmpty())
+                        break;
                 }
             }
         }
         else if (other && AbstractDungeon.player instanceof MirthAndMalice)
         {
-            if (((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.size() >= amount)
+            CardGroup cards = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
+            cards.group.addAll(((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.group);
+
+            if (cards.size() >= amount)
             {
-                CardGroup cards = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-                cards.group.addAll(((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.group);
+                Vector2[] points = MathHelper.getCirclePoints(Settings.WIDTH / 2.0f, Settings.HEIGHT / 2.0f, (80.0f + amount * 5.0f) * Settings.scale, amount, MathUtils.random(360.0f));
 
                 for (int i = 0; i < amount; ++i)
                 {
                     AbstractCard c = cards.getRandomCard(AbstractDungeon.cardRandomRng);
                     cards.group.remove(c);
+
+                    AbstractDungeon.effectList.add(new MarkEffect(this.fortune, points[i], ((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw));
                     addToTop(new MarkCardAction(c, fortune));
                 }
             }
-            else if (!((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.isEmpty())
+            else if (!cards.isEmpty())
             {
+                Vector2[] points = MathHelper.getCirclePoints(Settings.WIDTH / 2.0f, Settings.HEIGHT / 2.0f, (80.0f + cards.size() * 5.0f) * Settings.scale, cards.size(), MathUtils.random(360.0f));
+
                 for (int i = 0; i < amount; ++i)
                 {
-                    AbstractCard c = ((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.getRandomCard(AbstractDungeon.cardRandomRng);
+                    AbstractCard c = cards.group.remove(AbstractDungeon.cardRandomRng.random(cards.size() - 1));
+
+                    AbstractDungeon.effectList.add(new MarkEffect(this.fortune, points[i++], ((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw));
                     addToTop(new MarkCardAction(c, fortune));
+
+                    if (cards.isEmpty())
+                        break;
                 }
             }
         }
         else
         {
-            if (AbstractDungeon.player.drawPile.size() >= amount)
+            CardGroup cards = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
+            cards.group.addAll(AbstractDungeon.player.drawPile.group);
+
+            if (cards.size() >= amount)
             {
-                CardGroup cards = new CardGroup(CardGroup.CardGroupType.UNSPECIFIED);
-                cards.group.addAll(AbstractDungeon.player.drawPile.group);
+                Vector2[] points = MathHelper.getCirclePoints(Settings.WIDTH / 2.0f, Settings.HEIGHT / 2.0f, (80.0f + amount * 5.0f) * Settings.scale, amount, MathUtils.random(360.0f));
 
                 for (int i = 0; i < amount; ++i)
                 {
                     AbstractCard c = cards.getRandomCard(AbstractDungeon.cardRandomRng);
                     cards.group.remove(c);
+
+                    AbstractDungeon.effectList.add(new MarkEffect(this.fortune, points[i], AbstractDungeon.player.drawPile));
                     addToTop(new MarkCardAction(c, fortune));
                 }
             }
-            else if (!AbstractDungeon.player.drawPile.isEmpty())
+            else if (!cards.isEmpty())
             {
+                Vector2[] points = MathHelper.getCirclePoints(Settings.WIDTH / 2.0f, Settings.HEIGHT / 2.0f, (80.0f + cards.size() * 5.0f) * Settings.scale, cards.size(), MathUtils.random(360.0f));
+
                 for (int i = 0; i < amount; ++i)
                 {
-                    AbstractCard c = AbstractDungeon.player.drawPile.getRandomCard(AbstractDungeon.cardRandomRng);
+                    AbstractCard c = cards.group.remove(AbstractDungeon.cardRandomRng.random(cards.size() - 1));
+
+                    AbstractDungeon.effectList.add(new MarkEffect(this.fortune, points[i++], AbstractDungeon.player.drawPile));
                     addToTop(new MarkCardAction(c, fortune));
+
+                    if (cards.isEmpty())
+                        break;
                 }
             }
         }
 
         this.isDone = true;
+    }
+
+    private static CardGroup getGroup(AbstractCard c)
+    {
+        if (AbstractDungeon.player instanceof MirthAndMalice && ((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw.contains(c))
+                return ((MirthAndMalice) AbstractDungeon.player).otherPlayerDraw;
+
+        return AbstractDungeon.player.drawPile;
     }
 }

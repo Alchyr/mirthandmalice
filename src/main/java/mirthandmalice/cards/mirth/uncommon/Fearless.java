@@ -94,28 +94,21 @@ public class Fearless extends MaliceCard {
 
     @Override
     public void use(AbstractPlayer p, AbstractMonster m) {
-        if (!isMultiplied) //Safety check, in case apply powers was called from a location other than hand (which would mean it is not multiplied properly)
+        if (ManifestField.inUseManifested()) //Safety check, in case apply powers was called from a location other than hand (which would mean it is not multiplied properly)
         {
-            if (TrackCardSource.useMyEnergy)
+            if (isMultiplied)
             {
-                if (ManifestField.otherManifested()) //I played it, I'm not manifested.
-                {
-                    isMultiplied = true;
-                    this.block *= this.magicNumber;
-                    if (this.block != this.baseBlock)
-                        isBlockModified = true;
-                }
+                this.block /= this.magicNumber;
+                isBlockModified = this.block != this.baseBlock;
             }
-            else
-            {
-                if (ManifestField.isManifested()) //Other guy played it, I'm manifested.
-                {
-                    isMultiplied = true;
-                    this.block *= this.magicNumber;
-                    if (this.block != this.baseBlock)
-                        isBlockModified = true;
-                }
-            }
+            isMultiplied = false;
+        }
+        else
+        {
+            isMultiplied = true;
+            this.block *= this.magicNumber;
+            if (this.block != this.baseBlock)
+                isBlockModified = true;
         }
         AbstractDungeon.actionManager.addToBottom(new GainBlockAction(p, p, this.block));
         manifest();

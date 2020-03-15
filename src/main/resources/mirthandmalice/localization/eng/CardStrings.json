@@ -27,6 +27,13 @@
     "NAME": "Wilt",
     "DESCRIPTION": "Apply !M! mirthandmalice:Atrophy."
   },
+  "mirthandmalice:Reciprocate": {
+    "NAME": "Reciprocate",
+    "DESCRIPTION": "Enemy gains !B! Block. NL Gain Block equal to the enemy's Block.",
+    "EXTENDED_DESCRIPTION": [
+      "NL (Gain !M! Block.)"
+    ]
+  },
   "mirthandmalice:Indulgence": {
     "NAME": "Indulgence",
     "DESCRIPTION": "Deal !D! damage. NL Apply !M! mirthandmalice:Excess. NL mirthandmalice:Relinquish."

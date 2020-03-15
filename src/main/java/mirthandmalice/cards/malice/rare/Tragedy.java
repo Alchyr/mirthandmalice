@@ -42,6 +42,11 @@ public class Tragedy extends MaliceCard {
         this.rawDescription = cardStrings.DESCRIPTION;
         this.initializeDescription();
     }
+    @Override
+    public void onMoveToDiscard() {
+        this.rawDescription = cardStrings.DESCRIPTION;
+        this.initializeDescription();
+    }
 
     @Override
     public void calculateCardDamage(AbstractMonster mo) {

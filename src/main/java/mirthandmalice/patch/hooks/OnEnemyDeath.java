@@ -34,7 +34,7 @@ public class OnEnemyDeath {
         }
 
         //check for minions
-        boolean allMinion = true;
+        /*boolean allMinion = true;
         for (AbstractMonster m : AbstractDungeon.getMonsters().monsters)
         {
             if (!m.isDeadOrEscaped() && !m.hasPower(MinionPower.POWER_ID))
@@ -51,7 +51,7 @@ public class OnEnemyDeath {
                 if (!m.isDeadOrEscaped() && m.id.equals(Spark.ID))
                 AbstractDungeon.actionManager.addToBottom(new KillEnemyAction(m));
             }
-        }
+        }*/
     }
 
     private static class Locator extends SpireInsertLocator
