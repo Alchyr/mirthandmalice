@@ -96,13 +96,23 @@ public class MarkEffect extends AbstractGameEffect {
 
     @Override
     public void update() {
-        super.update();
+        this.duration -= Gdx.graphics.getDeltaTime();
+
+        if (this.duration < this.startingDuration / 4.0F) {
+            this.color.a = this.duration / (this.startingDuration / 4.0F);
+        }
+
 
         this.x = Interpolation.circleIn.apply(sX, tX, 1 - (this.duration / this.startingDuration));
         this.y = Interpolation.circleIn.apply(sY, tY, 1 - (this.duration / this.startingDuration));
 
         this.rotation += this.spin;
         this.spin += Gdx.graphics.getDeltaTime() + spinAccel;
+
+        if (this.duration < 0.0F) {
+            this.isDone = true;
+            this.color.a = 0.0F;
+        }
     }
 
     @Override

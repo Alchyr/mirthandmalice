@@ -160,11 +160,19 @@
       "'s current energy count. Cards require energy to play."
     ]
   },
-  "mirthandmalice:Refute": {
+  "mirthandmalice:Erase": {
     "TEXT": [
       "Select a Card to Exhaust.",
       "Waiting for ",
       " to choose a card."
+    ]
+  },
+  "mirthandmalice:Introspection": {
+    "TEXT": [
+      "Select Cards to Put on Top of Your Draw Pile.",
+      "Waiting for ",
+      " to choose ",
+      " cards."
     ]
   },
   "mirthandmalice:Originate": {

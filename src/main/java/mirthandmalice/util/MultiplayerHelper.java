@@ -701,6 +701,10 @@ public class MultiplayerHelper implements SteamNetworkingCallback {
                 lobbyMenu.displayLobbyInfo(new ActiveLobbyData(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyNameKey), Integer.parseInt(matchmaking.getLobbyData(currentLobbyID, HandleMatchmaking.lobbyAscensionKey)), partnerName, CardCrawlGame.playerName, matchmaking.getLobbyData(currentLobbyID, hostIsMirthKey).equals(metadataTrue)));
             }
         }
+        else if (msg.equals("hide"))
+        {
+            lobbyMenu.hide();
+        }
     }
 
     public static void reset()

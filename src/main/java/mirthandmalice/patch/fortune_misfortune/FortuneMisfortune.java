@@ -92,7 +92,7 @@ public class FortuneMisfortune {
             if (val > 0)
             {
                 for (i = 0; i < val; ++i) {
-                    Vector2 offset = new Vector2(-120 + (i % PER_LINE) * SPACING, 190 + (i / PER_LINE) * 30.0f);
+                    Vector2 offset = new Vector2(-115 + (i % PER_LINE) * SPACING, 195 + (i / PER_LINE) * 30.0f);
                     offset.rotate(__instance.angle);
                     offset.scl(__instance.drawScale * Settings.scale);
                     sb.draw(

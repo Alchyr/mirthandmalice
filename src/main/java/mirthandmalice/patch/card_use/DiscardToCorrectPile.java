@@ -16,7 +16,7 @@ import mirthandmalice.patch.combat.SoulAltOnToDeck;
 import mirthandmalice.util.OtherPlayerCardQueueItem;
 
 public class DiscardToCorrectPile {
-    public static boolean useOtherDiscard = false;
+    public static boolean removeFromOtherHand = false;
 
     @SpirePatch(
             clz = GameActionManager.class,
@@ -31,7 +31,7 @@ public class DiscardToCorrectPile {
         {
             if (__instance.cardQueue.get(0) instanceof OtherPlayerCardQueueItem)
             {
-                useOtherDiscard = true;
+                removeFromOtherHand = true;
             }
         }
 
@@ -77,9 +77,20 @@ public class DiscardToCorrectPile {
         }
 
         @SpireInsertPatch(
+                locator = ReboundLocator.class
+        )
+        public static void returnToDraw(UseCardAction __instance, AbstractCard ___targetCard)
+        {
+            if (UseCardActionDestination.CardFields.returnDraw.get(___targetCard))
+            {
+                __instance.reboundCard = true;
+            }
+        }
+
+        @SpireInsertPatch(
                 locator = ReturnLocator.class
         )
-        public static SpireReturn returnToHand(UseCardAction __instance)
+        public static SpireReturn<?> returnToHand(UseCardAction __instance)
         {
             if (UseCardActionDestination.returnHand.get(__instance))
             {
@@ -126,7 +137,7 @@ public class DiscardToCorrectPile {
             public int[] Locate(CtBehavior ctMethodToPatch) throws Exception
             {
                 Matcher finalMatcher = new Matcher.MethodCallMatcher(CardGroup.class, "moveToDeck");
-                return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
+                return LineFinder.findAllInOrder(ctMethodToPatch, finalMatcher);
             }
         }
         private static class ReturnLocator extends SpireInsertLocator
@@ -138,10 +149,20 @@ public class DiscardToCorrectPile {
                 return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
             }
         }
+        private static class ReboundLocator extends SpireInsertLocator
+        {
+            @Override
+            public int[] Locate(CtBehavior ctMethodToPatch) throws Exception
+            {
+                Matcher finalMatcher = new Matcher.FieldAccessMatcher(UseCardAction.class, "reboundCard");
+                return LineFinder.findInOrder(ctMethodToPatch, finalMatcher);
+            }
+        }
     }
 
+    //called at battle start
     public static void reset()
     {
-        useOtherDiscard = false;
+        removeFromOtherHand = false;
     }
 }

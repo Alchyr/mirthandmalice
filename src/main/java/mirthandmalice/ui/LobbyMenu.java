@@ -302,6 +302,8 @@ public class LobbyMenu {
         mode = 4;
 
         inLobby = data;
+
+        logger.info("Displaying lobby data: " + data.name);
     }
     public void setOtherPlayer(String otherPlayer)
     {
@@ -680,6 +682,7 @@ public class LobbyMenu {
                         if (refreshButtonHitbox.hovered && InputHelper.justClickedLeft)
                         {
                             InputHelper.justClickedLeft = false;
+                            sendP2PString("leave");
                             HandleMatchmaking.leave();
                             HandleMatchmaking.startFindLobby();
                             searching = true;
@@ -692,6 +695,7 @@ public class LobbyMenu {
                             this.hide();
                             HandleMatchmaking.leave();
                             sendP2PString("leave");
+                            sendP2PString("hide");
                             beginGameStartTimer();
                         }
                     }

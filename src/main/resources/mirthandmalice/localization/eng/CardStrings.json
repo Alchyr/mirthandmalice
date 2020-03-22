@@ -103,6 +103,11 @@
     "DESCRIPTION": "Gain !B! Block. NL Mark this card with mirthandmalice:Fortune.",
     "UPGRADE_DESCRIPTION": "Gain !B! Block. NL Mark this card and a random card in your hand with mirthandmalice:Fortune."
   },
+  "mirthandmalice:Optimism": {
+    "NAME": "Optimism",
+    "DESCRIPTION": "Mark the top card of your draw pile with mirthandmalice:Fortune. NL Shuffle this card into your partner's draw pile.",
+    "UPGRADE_DESCRIPTION": "Mark this and the top card of your draw pile with mirthandmalice:Fortune. NL Shuffle this card into your partner's draw pile."
+  },
   "mirthandmalice:IllOmen": {
     "NAME": "Ill Omen",
     "DESCRIPTION": "Deal !D! damage. NL Mark a random card in your draw pile with mirthandmalice:Misfortune.",
@@ -148,6 +153,10 @@
   "mirthandmalice:SuppressingStrike": {
     "NAME": "Constrain",
     "DESCRIPTION": "Deal !D! damage. NL Gain 1 mirthandmalice:Seal."
+  },
+  "mirthandmalice:Torture": {
+    "NAME": "Torture",
+    "DESCRIPTION": "Deal !D! damage !M! times."
   },
   "mirthandmalice:Attrition": {
     "NAME": "Attrition",
@@ -206,6 +215,11 @@
     "NAME": "Erase",
     "DESCRIPTION": "Exhaust a card in a draw pile. NL Draw a card. NL Exhaust.",
     "UPGRADE_DESCRIPTION": "Exhaust a card in a draw pile. NL Draw a card."
+  },
+  "mirthandmalice:Introspection": {
+    "NAME": "Introspection",
+    "DESCRIPTION": "Put !M! cards in your draw pile on top of your draw pile. NL Exhaust.",
+    "UPGRADE_DESCRIPTION": "Put !M! cards in your draw pile on top of your draw pile."
   },
   "mirthandmalice:Untarnished": {
     "NAME": "Untarnished",

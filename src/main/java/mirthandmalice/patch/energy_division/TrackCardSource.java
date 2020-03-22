@@ -12,8 +12,6 @@ import mirthandmalice.character.MirthAndMalice;
 import mirthandmalice.patch.card_use.DiscardToCorrectPile;
 import mirthandmalice.patch.enums.CharacterEnums;
 
-import static mirthandmalice.MirthAndMaliceMod.logger;
-
 public class TrackCardSource {
     public static boolean useOtherEnergy = false;
     public static boolean useMyEnergy = false;
@@ -55,7 +53,7 @@ public class TrackCardSource {
         public static void setEnergyUser(AbstractPlayer __instance, AbstractCard c, AbstractMonster m, int energyOnUse)
         {
             if (__instance instanceof MirthAndMalice) {
-                if (DiscardToCorrectPile.useOtherDiscard) //Takes advantage of same code that decides where cards go when played
+                if (DiscardToCorrectPile.removeFromOtherHand) //Takes advantage of same code that determines which hand a card was played from
                 {
                     if (c.type == AbstractCard.CardType.ATTACK)
                     {

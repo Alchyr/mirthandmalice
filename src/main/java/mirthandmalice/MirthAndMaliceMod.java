@@ -145,8 +145,20 @@ Singing Bowl - Sync hp gain (nerf to 1? eh)
 
 Colorless cards:
 Mind Blast
-Secret Weapon/Tool thing
+Secret Weapon/Technique
 Jack Of All Trades/Transmutation
+Forethought
+Impatience
+Jack of All Trades
+Madness
+Purity
+Apotheosis
+Magnetism
+Mayhem
+Thinking Ahead
+Violence
+Ritual Dagger (increasing damage based on deck)
+
 
 Curses:
 Anything to do with cards in hand.

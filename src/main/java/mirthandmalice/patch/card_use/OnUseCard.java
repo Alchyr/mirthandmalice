@@ -22,10 +22,27 @@ public class OnUseCard {
     {
         if (__instance instanceof MirthAndMalice)
         {
-            if (DiscardToCorrectPile.useOtherDiscard) //This card was queued by other player, from other player hand.
+            if (DiscardToCorrectPile.removeFromOtherHand) //This card was queued by other player, from other player hand.
             {
-                DiscardToCorrectPile.useOtherDiscard = false;
+                DiscardToCorrectPile.removeFromOtherHand = false;
 
+                if (!UseCardActionDestination.CardFields.swapPiles.get(c))
+                {
+                    int index = AbstractDungeon.actionManager.actions.size();
+                    UseCardAction action = null;
+                    while (action == null && index > 0)
+                    {
+                        --index;
+                        if (AbstractDungeon.actionManager.actions.get(index) instanceof UseCardAction)
+                        {
+                            action = (UseCardAction)AbstractDungeon.actionManager.actions.get(index);
+                            UseCardActionDestination.useAlternatePile.set(action, true);
+                        }
+                    }
+                }
+            }
+            else if (UseCardActionDestination.CardFields.swapPiles.get(c))
+            {
                 int index = AbstractDungeon.actionManager.actions.size();
                 UseCardAction action = null;
                 while (action == null && index > 0)
